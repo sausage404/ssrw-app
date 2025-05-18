@@ -1,18 +1,19 @@
-import { decrypt } from '@/lib/session';
-import { cookies } from 'next/headers';
+import { getCurrentUser } from '@/lib/session';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
-    console.log((await cookies()).get('session'))
-    const cookie = (await cookies()).get('session')?.value
-    const user = await decrypt(cookie)
+    const user = await getCurrentUser();
 
     if (!user) {
         return NextResponse.json(
-            { error: 'Unauthorized' },
+            { success: false, message: 'Unauthorized' },
             { status: 401 }
         );
     }
 
-    return NextResponse.json({ success: true, user });
+    return NextResponse.json({
+        success: true,
+        message: 'User authenticated',
+        user
+    });
 }

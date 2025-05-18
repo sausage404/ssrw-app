@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { decrypt } from './lib/session';
+import { getCurrentUser } from './lib/session';
 
 const protectedRoutes = ['/dashboard', '/profile'];
 
-export function middleware(request: NextRequest): NextResponse {
-    const token = request.cookies.get('session')?.value;
-    const isAuthenticated = token && decrypt(token);
+export async function middleware(request: NextRequest) {
+    const isAuthenticated = await getCurrentUser();
 
     const isProtectedRoute = protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route));
 

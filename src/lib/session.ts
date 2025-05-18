@@ -5,6 +5,7 @@ import { z } from 'zod'
 import user from '@/schema/user'
 
 const secretKey = process.env.SESSION_SECRET
+const cookieName = 'session'
 const encodedKey = new TextEncoder().encode(secretKey)
 
 export async function encrypt(payload: z.infer<typeof user.user>) {
@@ -22,45 +23,69 @@ export async function decrypt(session: string | undefined = '') {
         })
         return payload
     } catch (error) {
-        console.log('Failed to verify session')
+        console.log('Failed to verify session:', error)
+        return null
     }
 }
 
 export async function createSession(payload: z.infer<typeof user.user>) {
-    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-    const session = await encrypt(payload)
-    const cookieStore = await cookies()
+    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    const session = await encrypt(payload);
 
-    cookieStore.set('session', session, {
+    (await cookies()).set(cookieName, session, {
         httpOnly: true,
-        secure: true,
+        secure: process.env.NODE_ENV === 'production',
         expires: expiresAt,
         sameSite: 'lax',
         path: '/',
     })
+
+    return session
+}
+
+export async function getSession() {
+    const cookieStore = (await cookies())
+    const session = cookieStore.get(cookieName)?.value
+
+    if (!session) {
+        return null
+    }
+
+    return session
+}
+
+export async function getCurrentUser() {
+    const session = await getSession()
+
+    if (!session) {
+        return null
+    }
+
+    const payload = await decrypt(session)
+    return payload
 }
 
 export async function deleteSession() {
-    const cookieStore = await cookies()
-    cookieStore.delete('session')
+    (await cookies()).delete(cookieName)
 }
 
 export async function updateSession() {
-    const session = (await cookies()).get('session')?.value
-    const payload = await decrypt(session)
+    const session = await getSession()
+    const payload = session ? await decrypt(session) : null
 
     if (!session || !payload) {
         return null
     }
 
-    const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+    const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
-    const cookieStore = await cookies()
-    cookieStore.set('session', session, {
+    (await cookies()).set(cookieName, session, {
         httpOnly: true,
-        secure: true,
+        secure: process.env.NODE_ENV === 'production',
         expires: expires,
         sameSite: 'lax',
         path: '/',
     })
+
+    return payload
 }
