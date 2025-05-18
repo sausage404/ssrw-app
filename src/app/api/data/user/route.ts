@@ -47,11 +47,11 @@ export async function POST(request: NextRequest) {
     }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
-    try {
-        await db.user.delete(params.id);
-        return NextResponse.json({ success: true, message: 'User deleted successfully' });
-    } catch (error) {
-        return NextResponse.json({ success: false, message: 'Failed to delete user' }, { status: 500 });
-    }
-}
+// export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+//     try {
+//         await db.user.delete(params.id);
+//         return NextResponse.json({ success: true, message: 'User deleted successfully' });
+//     } catch (error) {
+//         return NextResponse.json({ success: false, message: 'Failed to delete user' }, { status: 500 });
+//     }
+// }
