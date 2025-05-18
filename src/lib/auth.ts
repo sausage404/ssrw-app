@@ -2,31 +2,37 @@
 
 import user from '@/schema/user';
 import { SheetBase } from './sheet';
-import axios from 'axios';
 import { z } from 'zod';
-
-export type UserData = Omit<{
-    iat?: number;
-    exp?: number;
-} & SheetBase<z.infer<typeof user.user>>, 'password'>;
-
-export interface AuthResponse {
-    success: boolean;
-    message: string;
-    user?: UserData;
-}
+import { deleteSession, encrypt } from './session';
+import { db } from '@/config';
+import { cookies } from 'next/headers';
 
 export const signIn = async (credentials: z.infer<typeof user.credentials>) => {
-    const { data } = await axios.post<AuthResponse>(`${process.env.BASE_URL}/api/auth/signin`, credentials);
-    return data;
+    const validation = user.credentials.safeParse(credentials);
+
+    if (!validation.success) {
+        throw new Error(validation.error.message);
+    }
+
+    const existingUser = db.user.find(item => item.email === credentials.email);
+
+    if (!existingUser) {
+        throw new Error('Invalid email or password');
+    }
+
+    const sessionToken = await encrypt(existingUser);
+
+    (await cookies()).set('session', sessionToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        sameSite: 'lax',
+        path: '/',
+    });
+
+    return existingUser;
 }
 
 export const signOut = async () => {
-    const { data } = await axios.post<AuthResponse>(`${process.env.BASE_URL}/api/auth/signout`);
-    return data;
-}
-
-export const auth = async () => {
-    const response = await axios.get<AuthResponse>(`${process.env.BASE_URL}/api/auth/me`);
-    return response.data;
+    await deleteSession()
 }

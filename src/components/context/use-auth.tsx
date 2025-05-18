@@ -1,9 +1,10 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { auth, signIn, signOut, UserData } from '@/lib/auth';
+import { signIn, signOut } from '@/lib/auth';
 import user from '@/schema/user';
 import { z } from 'zod';
+import { getCurrentUser, UserData } from '@/lib/session';
 
 export interface AuthState {
     user: UserData | null;
@@ -30,11 +31,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const data = await auth();
+                const data = await getCurrentUser();
 
-                if (data.success && data.user) {
+                if (data) {
                     setState({
-                        user: data.user,
+                        user: data,
                         loading: false,
                         error: null
                     });
@@ -63,12 +64,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
             const data = await signIn(credentials);
 
-            if (!data.success || !data.user) {
-                throw new Error(data.message);
-            }
+            if (!data)
+                return;
 
             setState({
-                user: data.user,
+                user: data,
                 loading: false,
                 error: null
             });
