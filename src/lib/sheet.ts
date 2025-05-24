@@ -60,7 +60,7 @@ export class Sheet<V> {
                 const value = row[index];
 
                 // Handle date fields
-                if (key === 'createdAt' || key === 'updatedAt') {
+                if (value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/)) {
                     obj[key] = value ? new Date(value) : new Date();
                 } else {
                     obj[key] = value;
@@ -110,7 +110,7 @@ export class Sheet<V> {
     }
 
     public async update(id: string, data: Partial<SheetBase<V>>): Promise<V | null> {
-        const item = this.map.get(id);
+        const item = await this.get(id);
         if (!item) return null;
 
         const updatedItem = {
@@ -128,7 +128,7 @@ export class Sheet<V> {
         const rows = response.data.values || [];
         let rowIndex = -1;
 
-        for (let i = 1; i < rows.length; i++) {
+        for (let i = 0; i < rows.length; i++) {
             if (rows[i][0] === id) {
                 rowIndex = i + 1; // +1 because sheets are 1-indexed
                 break;
@@ -206,8 +206,8 @@ export class Sheet<V> {
         return Array.from(this.map.values());
     }
 
-    public find(predicate: (value: V) => boolean): SheetBase<V> | undefined {
-        for (const value of this.map.values()) {
+    public async find(predicate: (value: V) => boolean): Promise<SheetBase<V> | undefined> {
+        for (const value of await this.getAll()) {
             if (predicate(value)) {
                 return value;
             }

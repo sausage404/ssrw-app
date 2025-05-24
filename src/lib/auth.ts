@@ -5,6 +5,8 @@ import { z } from 'zod';
 import { deleteSession, encrypt } from './session';
 import { db } from '@/config';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import bcrypt from 'bcrypt';
 
 export const signIn = async (credentials: z.infer<typeof user.credentials>) => {
     const validation = user.credentials.safeParse(credentials);
@@ -13,7 +15,11 @@ export const signIn = async (credentials: z.infer<typeof user.credentials>) => {
         throw new Error(validation.error.message);
     }
 
-    const existingUser = db.user.find(item => item.email === credentials.email);
+    const existingUser = await db().user.find(item => {
+        const emailMatch = item.email === credentials.email;
+        const passwordMatch = bcrypt.compareSync(credentials.password, item.password);
+        return emailMatch && passwordMatch;
+    });
 
     if (!existingUser) {
         throw new Error('Invalid email or password');
@@ -33,5 +39,6 @@ export const signIn = async (credentials: z.infer<typeof user.credentials>) => {
 }
 
 export const signOut = async () => {
-    await deleteSession()
+    await deleteSession();
+    redirect("/auth")
 }

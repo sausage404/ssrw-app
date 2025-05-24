@@ -5,8 +5,9 @@ import user from '@/schema/user'
 import { JWTPayload, SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 import { SheetBase } from './sheet'
+import bcrypt from 'bcrypt'
 
-export type UserData = JWTPayload & SheetBase<z.infer<typeof user.user>>;
+export type Auth = JWTPayload & SheetBase<z.infer<typeof user.user>>;
 
 const secretKey = process.env.SESSION_SECRET
 const cookieName = 'session'
@@ -73,13 +74,9 @@ export async function deleteSession() {
     (await cookies()).delete(cookieName)
 }
 
-export async function updateSession() {
-    const session = await getSession()
-    const payload = session ? await decrypt(session) : null
+export async function updateSession(payload: SheetBase<z.infer<typeof user.user>>) {
 
-    if (!session || !payload) {
-        return null
-    }
+    const session = await encrypt(payload);
 
     const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 

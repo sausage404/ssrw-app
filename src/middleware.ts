@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUser } from './lib/session';
 
-const protectedRoutes = ['/dashboard', '/profile'];
+const protectedRoutes = ['/dashboard', '/setting'];
 
 export async function middleware(request: NextRequest) {
     const isAuthenticated = await getCurrentUser();
@@ -9,12 +9,12 @@ export async function middleware(request: NextRequest) {
     const isProtectedRoute = protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route));
 
     if (isProtectedRoute && !isAuthenticated) {
-        const url = new URL('/login', request.url);
+        const url = new URL('/auth', request.url);
         url.searchParams.set('from', request.nextUrl.pathname);
         return NextResponse.redirect(url);
     }
 
-    if (request.nextUrl.pathname === '/login' && isAuthenticated) {
+    if (request.nextUrl.pathname === '/auth' && isAuthenticated) {
         return NextResponse.redirect(new URL('/', request.url));
     }
 

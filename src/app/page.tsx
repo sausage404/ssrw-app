@@ -1,11 +1,10 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { BookCopy, BookOpenText, BrainCircuit, Layers, ScrollText, UserRoundPlus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import constant from "@/constant";
 
-
-export default function Home() {
+export default () => {
   return (
     <React.Fragment>
       <div className="container-fluid mx-auto w-full border-x border-dashed">
@@ -37,66 +36,27 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="container-fluid mx-auto w-full border-x border-dashed">
-        <div className="flex flex-col items-start gap-1">
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 divide-x divide-dashed w-full">
-            {[
-              {
-                icon: <UserRoundPlus className="text-primary" />,
-                title: "ระบบรับสมัครนักเรียน",
-                desc: "หากท่านต้องการเข้าเรียน ท่านสามารถดูรายละเอียดของระบบรับสมัครนักเรียนได้ที่นี่",
-                href: "/register",
-              },
-              {
-                icon: <BookOpenText className="text-primary" />,
-                title: "ตรวจสอบผลการเรียน",
-                desc: "สำหรับนักเรียนที่ต้องการตรวจสอบผลการเรียน สามารถเข้าไปดูรายละเอียดได้ที่นี่",
-                href: "/register",
-              },
-              {
-                icon: <ScrollText className="text-primary" />,
-                title: "ระบบนิเทศบุคลากร",
-                desc: "ท่านสามารถเข้านิเทศบุคลากรและตรวจสอบผลการนิเทศบุคลากรได้ที่นี่",
-                href: "/register",
-              },
-              {
-                icon: <BrainCircuit className="text-primary" />,
-                title: "ระบบประเมินสมรรถนะนักเรียน",
-                desc: "ท่านสามารถประเมินสมรรถนะนักเรียนและตรวจสอบผลการประเมินสมรรถนะนักเรียนได้ที่นี่",
-                href: "/register",
-              },
-              {
-                icon: <BookCopy className="text-primary" />,
-                title: "ระบบส่งเอกสารงานวิชาการ",
-                desc: "ท่านสามารถส่งเอกสารงานวิชาการ ตรวจสอบผลการส่งเอกสารงานวิชาการและแก้ไขได้ที่นี่",
-                href: "/register",
-              },
-              {
-                icon: <Layers className="text-primary" />,
-                title: "รายการเอกสาร",
-                desc: "รายการเอกสาร template สำหรับงานเอกสาร สามารถดูรายละเอียดได้ที่นี่",
-                href: "/register",
-              }
-            ].map(({ icon, title, desc, href }, i) => (
-              <div className="p-4 border-t border-dashed" key={i}>
-                <h3 className="flex gap-2 items-center text-xl font-semibold leading-tight tracking-tighter lg:leading-[1.5]">
-                  {icon}
-                  {title}
-                </h3>
-                <p className="max-w-2xl text-sm font-light text-muted-foreground sm:text-base">
-                  {desc}
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  asChild
-                  className="mt-2"
-                >
-                  <Link href={href}>ดูรายละเอียด</Link>
-                </Button>
-              </div>
-            ))}
-          </div>
+      <div className="container-fluid mx-auto w-full border-x border-t border-dashed p-8">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 w-full gap-8">
+          {constant.features.map((data, i) => (
+            <div key={i}>
+              <h3 className="flex gap-2 items-center text-xl font-semibold leading-tight tracking-tighter lg:leading-[1.5]">
+                <data.icon className="text-primary" />
+                {data.title}
+              </h3>
+              <p className="max-w-2xl text-sm font-light text-muted-foreground sm:text-base">
+                {data.desc}
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                asChild
+                className="mt-2"
+              >
+                <Link href={data.href}>ดูรายละเอียด</Link>
+              </Button>
+            </div>
+          ))}
         </div>
       </div>
     </React.Fragment>

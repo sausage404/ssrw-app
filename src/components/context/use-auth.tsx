@@ -1,24 +1,26 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { signIn, signOut } from '@/lib/auth';
+import { signIn } from '@/lib/auth';
 import user from '@/schema/user';
 import { z } from 'zod';
-import { getCurrentUser, UserData } from '@/lib/session';
+import { deleteSession, getCurrentUser, Auth, updateSession } from '@/lib/session';
+import { useRouter } from 'next/navigation';
 
 export interface AuthState {
-    user: UserData | null;
+    auth: Auth | null;
     loading: boolean;
     error: string | null;
 }
 
 export interface AuthContextType extends AuthState {
+    refresh: (data: Auth) => Promise<void>;
     signIn: (credentials: z.infer<typeof user.credentials>) => Promise<void>;
     signOut: () => Promise<void>;
 }
 
 const initialState: AuthState = {
-    user: null,
+    auth: null,
     loading: true,
     error: null
 };
@@ -28,6 +30,8 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [state, setState] = useState<AuthState>(initialState);
 
+    const router = useRouter();
+
     useEffect(() => {
         const checkAuth = async () => {
             try {
@@ -35,20 +39,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
                 if (data) {
                     setState({
-                        user: data,
+                        auth: data,
                         loading: false,
                         error: null
                     });
                 } else {
                     setState({
-                        user: null,
+                        auth: null,
                         loading: false,
                         error: null
                     });
                 }
             } catch (error) {
                 setState({
-                    user: null,
+                    auth: null,
                     loading: false,
                     error: null
                 });
@@ -68,14 +72,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 return;
 
             setState({
-                user: data,
+                auth: data,
                 loading: false,
                 error: null
             });
 
         } catch (error) {
             setState({
-                user: null,
+                auth: null,
                 loading: false,
                 error: error instanceof Error ? error.message : 'Login failed'
             });
@@ -86,13 +90,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setState({ ...state, loading: true });
 
         try {
-            await signOut();
+            await deleteSession();
 
             setState({
-                user: null,
+                auth: null,
                 loading: false,
                 error: null
             });
+
+            router.push("/auth");
 
         } catch (error) {
             setState({
@@ -103,8 +109,36 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
     };
 
+    const refresh = async (data: Auth) => {
+        setState({ ...state, loading: true });
+
+        try {
+            await updateSession(data);
+
+            if (data) {
+                setState({
+                    auth: data,
+                    loading: false,
+                    error: null
+                });
+            } else {
+                setState({
+                    auth: null,
+                    loading: false,
+                    error: null
+                });
+            }
+        } catch (error) {
+            setState({
+                auth: null,
+                loading: false,
+                error: null
+            });
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ ...state, signIn: login, signOut: logout }}>
+        <AuthContext.Provider value={{ ...state, signIn: login, refresh, signOut: logout }}>
             {children}
         </AuthContext.Provider>
     );
