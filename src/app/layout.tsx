@@ -5,6 +5,7 @@ import { ThemeProvider } from "next-themes";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { AuthProvider } from "@/components/context/use-auth";
+import { Toaster } from "@/components/ui/sonner";
 
 const mitr = Sarabun({
   subsets: ["latin"],
@@ -60,6 +61,7 @@ export default function RootLayout({
             <Header />
             {children}
             <Footer />
+            <Toaster />
           </ThemeProvider>
         </AuthProvider>
       </body>

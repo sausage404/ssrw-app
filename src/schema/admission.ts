@@ -55,27 +55,10 @@ export default {
         guardianJob: z.string().min(1, "กรุณากรอกอาชีพผู้ปกครอง"),
         guardianPhone: z.string().min(10, "กรุณากรอกหมายเลขโทรศัพท์ผู้ปกครอง"),
         guardianRelation: z.string().min(1, "กรุณากรอกความสัมพันธ์กับผู้ปกครอง"),
-        studentPhoto: z.instanceof(File)
-            .refine((file) => file.type.startsWith("image/"), {
-                message: "กรุณาเลือกรูปภาพ",
-            })
-            .refine((file) => file.size <= 5 * 1024 * 1024, {
-                message: "กรุณาเลือกรูปภาพขนาดไม่เกิน 5MB",
-            }),
-        houseRecord: z.instanceof(File)
-            .refine((file) => file.type.startsWith("image/"), {
-                message: "กรุณาเลือกรูปภาพ",
-            })
-            .refine((file) => file.size <= 5 * 1024 * 1024, {
-                message: "กรุณาเลือกรูปภาพขนาดไม่เกิน 5MB",
-            }).optional(),
-        studentRecord: z.instanceof(File)
-            .refine((file) => file.type.startsWith("image/"), {
-                message: "กรุณาเลือกรูปภาพ",
-            })
-            .refine((file) => file.size <= 5 * 1024 * 1024, {
-                message: "กรุณาเลือกรูปภาพขนาดไม่เกิน 5MB",
-            }).optional()
+        studentPhoto: z.string().optional(),
+        houseRecord: z.string().optional(),
+        studentRecord: z.string().optional(),
+        pdf: z.string().optional(),
     }),
     status,
     bloodType

@@ -1,5 +1,11 @@
 import { BookCopy, BookOpenText, BrainCircuit, Layers, ScrollText, UserRoundPlus } from "lucide-react";
 
+const folder = {
+    studentPhoto: "1VFLxSuPrZaE4gvXI1_pGqqat1galiXfx",
+    pdf: "1sGFOnO_zf9NDQ3cHZcAWbhpLG6XvmbIx",
+    studentRecord: "1pvf08CsiZzW0Z3e6n7nNdnjQzH3wn3UP",
+    houseRecord: "1ftHJXrbDIolFrH_19xPhlao-Cm4k0WT6",
+}
 
 const features = [
     {
@@ -58,6 +64,7 @@ const admissionPlan = {
 }
 
 export default {
+    folder,
     features,
     admissionPlan
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import admission from "@/schema/admission";
@@ -12,26 +12,21 @@ import FieldInfomation from "../../components/field-infomation";
 import FieldStudentInfo from "../../components/field-student-info";
 import FieldOldSchoolInfo from "../../components/field-old-school-info";
 import FieldGuardianInfo from "../../components/field-guardian-info";
-import FieldImage from "../../components/field-image";
 import { Button } from "@/components/ui/button";
-import { getFullName, zodDefault } from "@/lib/utils";
-import axios from "axios";
+import { zodDefault } from "@/lib/utils";
+import service from "./service";
+import InputImage from "@/components/input-image";
+import { toast } from "sonner";
 
 export default ({ data, length }: Readonly<{
     data: z.infer<typeof admissionForm.admissionForm>,
     length: number
 }>) => {
-    const openedAt = new Date(data.openedAt).toLocaleDateString("th-TH", {
-        day: "numeric",
-        month: "long",
-        year: "numeric"
-    });
+    const [studentPhoto, setStudentPhoto] = React.useState<File | null>(null);
+    const [houseRecord, setHouseRecord] = React.useState<File | null>(null);
+    const [studentRecord, setStudentRecord] = React.useState<File | null>(null);
 
-    const closedAt = new Date(data.closedAt).toLocaleDateString("th-TH", {
-        day: "numeric",
-        month: "long",
-        year: "numeric"
-    });
+    const [isPending, startTransition] = React.useTransition();
 
     const form = useForm<z.infer<typeof admission.admission>>({
         resolver: zodResolver(admission.admission),
@@ -61,44 +56,43 @@ export default ({ data, length }: Readonly<{
             road: "-",
             alley: "-",
         },
+        disabled: isPending
     })
 
-    useEffect(() => {
-        console.log(admission.admission.safeParse(form.watch()).error?.message);
-    }, [form.watch()])
-
-    const onSubmit = async (data: z.infer<typeof admission.admission>) => {
-        try {
-            const fullName = getFullName(data);
-            const formData = new FormData();
-            formData.append("name", fullName);
-            formData.append("studentPhoto", data.studentPhoto);
-            const { data: id } = await axios.post("/api/data/student-photo", formData);
-            const { data: template } = await axios.get("/html/admission.html", {
-                responseType: "text"
+    const onSubmit = (data: z.infer<typeof admission.admission>) => {
+        startTransition(async () => {
+            const { success, message } = await service(data, length, {
+                studentPhoto,
+                houseRecord,
+                studentRecord
             });
-            let html = template;
-            Object.entries({
-                ...data,
-                no: length + 1,
-                round: admissionForm.roundView[data.round],
-                type: admissionForm.typeView[data.type],
-                studentPhoto: `https://drive.google.com/uc?export=view&id=${id}`,
-                birthDate: data.birthDate.toLocaleDateString("th-TH", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric"
-                })
-            }).forEach(([key, value]) => html = html.replaceAll(`{${key}}`, value));
-            const { data: file } = await axios.put("http://localhost:4000/pdf", {
-                html,
-                name: fullName,
-                isLocal: true
-            }, { responseType: "blob" });
-        } catch (error) {
-            console.error(error);
-        }
-    }
+            if (success) {
+                toast.success("สมัครเรียนสําเร็จ", {
+                    description: message
+                });
+                form.reset();
+                setStudentPhoto(null);
+                setHouseRecord(null);
+                setStudentRecord(null);
+            } else {
+                toast.error("สมัครเรียนไม่สําเร็จ", {
+                    description: message
+                });
+            }
+        });
+    };
+
+    const openedAt = new Date(data.openedAt).toLocaleDateString("th-TH", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
+
+    const closedAt = new Date(data.closedAt).toLocaleDateString("th-TH", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
 
     return (
         <Form {...form}>
@@ -119,9 +113,11 @@ export default ({ data, length }: Readonly<{
                         <FieldGuardianInfo form={form} />
                     </div>
                     <div className="md:max-w-[18rem] w-full divide-y divide-dashed">
-                        <FieldImage form={form} />
+                        <InputImage disabled={isPending} value={studentPhoto} onChange={(value) => setStudentPhoto(value)} placeholder="รูปภาพนักเรียน" />
+                        <InputImage disabled={isPending} value={houseRecord} onChange={(value) => setHouseRecord(value)} placeholder="รูปภาพทะเบียนบ้าน (เฉพาะสำหรับผู้ที่ไม่ได้สมัครที่โรงเรียน)" />
+                        <InputImage disabled={isPending} value={studentRecord} onChange={(value) => setStudentRecord(value)} placeholder="รูปภาพปพ (เฉพาะสำหรับผู้ที่ไม่ได้สมัครที่โรงเรียน)" />
                         <div className="p-4">
-                            <Button type="submit" className="w-full">สมัครเรียน</Button>
+                            <Button type="submit" className="w-full" disabled={isPending}>สมัครเรียน</Button>
                         </div>
                     </div>
                 </div>

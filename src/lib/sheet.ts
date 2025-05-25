@@ -74,6 +74,7 @@ export class Sheet<V> {
     }
 
     private objectToRow(item: SheetBase<V>): any[] {
+        console.log(item, this.columns);
         return this.columns.map(key => {
             const value = item[key];
 
@@ -90,6 +91,8 @@ export class Sheet<V> {
     }
 
     public async create(item: Omit<V, 'id' | 'createdAt' | 'updatedAt'>): Promise<SheetBase<V>> {
+        console.log(item, this.columns);
+
         const id = this.generateId();
         const now = new Date();
 
@@ -101,6 +104,8 @@ export class Sheet<V> {
         } as SheetBase<V>;
 
         const row = this.objectToRow(newItem);
+
+        console.log(row);
 
         await this.google.sheet.spreadsheets.values.append({
             spreadsheetId: this.spreadsheetId,

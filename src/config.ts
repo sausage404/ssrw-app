@@ -22,7 +22,8 @@ export const db = () => ({
             'role'
         ]
     ),
-    admissionForm: new Sheet<z.infer<typeof admissionForm.admissionForm>>(instance,
+    admissionForm: new Sheet<z.infer<typeof admissionForm.admissionForm>>(
+        instance,
         process.env.GOOGLE_SPREADSHEET_ID!,
         "admissionForm",
         [
@@ -37,14 +38,8 @@ export const db = () => ({
         instance,
         process.env.GOOGLE_SPREADSHEET_ID!,
         "admission",
-        Object.keys(admission.admission).filter((key) =>
-            key !== "id" && key !== "openedAt" && key !== "closedAt"
-        ) as (keyof z.infer<typeof admission.admission>)[]
+        Object.keys(admission.admission._def.shape()) as (keyof z.infer<typeof admission.admission>)[]
     )
 })
 
 export const drive = new Drive(instance);
-
-export const folder = {
-    studentPhoto: "1VFLxSuPrZaE4gvXI1_pGqqat1galiXfx"
-}

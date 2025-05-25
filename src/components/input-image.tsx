@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, type DragEvent, type ChangeEvent } from "react"
+import React, { useState, useRef, type DragEvent, type ChangeEvent } from "react"
 import { Upload, X, ImageIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -9,14 +9,24 @@ interface ImageDropInputProps {
     maxSize?: number // in MB
     className?: string
     placeholder?: string
+    value: File | null
+    disabled?: boolean
 }
 
-export default ({ onChange, maxSize = 5, className, placeholder }: ImageDropInputProps) => {
+export default ({ value, onChange, maxSize = 5, className, placeholder, disabled }: ImageDropInputProps) => {
     const [isDragOver, setIsDragOver] = useState(false)
-    const [selectedImage, setSelectedImage] = useState<File | null>(null)
+    const [selectedImage, setSelectedImage] = useState<File | null>(value)
     const [previewUrl, setPreviewUrl] = useState<string | null>(null)
     const [error, setError] = useState<string | null>(null)
     const fileInputRef = useRef<HTMLInputElement>(null)
+
+    React.useEffect(() => {
+        if (!value) {
+            setSelectedImage(null)
+            setPreviewUrl(null)
+            setError(null)
+        }
+    }, [value])
 
     const validateFile = (file: File): string | null => {
         // Check if file is an image
@@ -103,10 +113,12 @@ export default ({ onChange, maxSize = 5, className, placeholder }: ImageDropInpu
                         onClick={handleRemoveImage}
                         className={cn(
                             "flex items-center justify-center cursor-pointer",
-                            "absolute inset-0 bg-black/20 opacity-0 hover:opacity-100 transition-opacity duration-200"
+                            disabled ?
+                                "cursor-not-allowed absolute inset-0 bg-white/20 dark:bg-black/20" :
+                                "absolute inset-0 bg-black/20 opacity-0 hover:opacity-100 transition-opacity duration-200",
                         )}
                     >
-                        <X className="h-4 w-4" />
+                        {!disabled && <X className="h-4 w-4" />}
                     </div>
                     <div className="p-4 bg-background">
                         <p className="text-sm font-medium truncate">{selectedImage.name}</p>
@@ -118,6 +130,7 @@ export default ({ onChange, maxSize = 5, className, placeholder }: ImageDropInpu
                 <div
                     className={cn(
                         "rounded-md p-8 text-center cursor-pointer transition-colors duration-200",
+                        disabled && "cursor-not-allowed",
                         isDragOver && "border-primary bg-primary/5",
                         error && "border-destructive",
                     )}
@@ -154,7 +167,7 @@ export default ({ onChange, maxSize = 5, className, placeholder }: ImageDropInpu
                     <p className="text-sm text-destructive">{error}</p>
                 </div>
             )}
-            <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileSelect} className="hidden" />
+            <input ref={fileInputRef} disabled={disabled} type="file" accept="image/*" onChange={handleFileSelect} className="hidden" />
         </div>
     )
 }
