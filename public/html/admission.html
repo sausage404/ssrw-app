@@ -1,0 +1,144 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+    rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+    * {
+        font-family: 'Sarabun', sans-serif;
+    }
+</style>
+
+<div class="w-[210mm] h-[297mm] bg-white text-black">
+    <div class="space-y-6">
+        <!-- Header Section -->
+        <div class="flex items-center">
+            <img class="h-[3cm] mr-3 mt-3" src="https://ssrw.vercel.app/icon.png" alt="">
+            <div class="space-y-1">
+                <span class="block text-2xl">{type} ({round})</span>
+                <span class="block text-2xl">ใบสมัครเข้าเรียนต่อชั้นมัธยมศึกษาปีที่ {class} ปีการศึกษา
+                    {academicYear}</span>
+                <span class="block text-xl">โรงเรียนศรีสองรักษ์วิทยา อำเภอด่านซ้าย จังหวัดเลย</span>
+                <div class="text-sm flex items-center">
+                    ติดตามข่าวสารได้ที่ www.ssrw.ac.th
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/1200px-2021_Facebook_icon.svg.png"
+                        alt="" class="ml-3 mr-2 w-4 h-4">
+                    ศรีสองรักษ์วิทยา
+                </div>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="h-1 bg-blue-500 mt-3"></div>
+
+        <!-- Student Info Section -->
+        <div class="flex justify-between">
+            <div class="space-y-3">
+                <div>
+                    <span class="block"><strong>เลขประจำตัวนักเรียน ศ.ว.</strong> .....{studentId}.....
+                        <strong>เขตพื้นที่บริการ</strong> .....{serviceZone}.....
+                    </span>
+                    <span class="block"><strong>โรงเรียน</strong> .....{provenance}.....
+                        <strong>แผนการเรียนที่เลือก</strong>
+                        .....{plan}.....</span>
+                    <span class="block"><strong>แผนการเรียนที่สำรอง</strong> .....{reservePlan}.....</span>
+                </div>
+                <div>
+                    <strong>ข้อมูลนักเรียน</strong>
+                    <span class="block"><strong>ชื่อ-สกุล</strong> .....{prefix}{firstName}..{lastName}.....
+                        <strong>เกิดวันที่</strong> .....{birthDate}.....
+                    </span>
+                    <span class="block"><strong>เลขบัตรประชาชน</strong> .....{cardId}..... <strong>เชื้อชาติ</strong>
+                        .....{ethnicity}..... <strong>สัญชาติ</strong> .....{nationality}.....</span>
+                    <span class="block"><strong>ศาสนา</strong> .....{religion}..... <strong>กรุ๊ปเลือด</strong>
+                        .....{bloodType}.....<strong> โทรศัพท์มือถือ</strong> .....{phone}.....</span>
+                    <span class="block"><strong>ความสามารถพิเศษ</strong> .....{talent}..... </span>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <img src="{studentPhoto}" class="h-[4cm] object-cover" alt="">
+                <div class="p-1 text-center border-3 border-black rounded-lg flex items-center justify-center">
+                    <strong>เลขที่สมัคร {no}</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Address Section -->
+        <div>
+            <strong>ที่อยู่ปัจจุบัน</strong>
+            <span class="block"><strong>บ้านเลขที่</strong> .....{houseNo}..... <strong>หมู่ที่</strong>
+                .....{villageNo}..... <strong>หมู่บ้าน</strong> .....{village}.....
+                <strong>ถนน</strong> .....{road}..... <strong>ซอย</strong> .....{alley}.....
+            </span>
+            <span class="block"><strong>แขวง/ตำบล</strong>
+                .....{subDistrict}..... <strong>เขต/อำเภอ</strong> .....{district}.....
+                <strong>จังหวัด</strong> .....{province}......
+            </span>
+            <span class="block"><strong>รหัสไปรษณีย์</strong> .....{zipcode}.....</span>
+        </div>
+
+        <!-- Education Section -->
+        <div>
+            <strong>ข้อมูลการศึกษา</strong>
+            <span class="block"><strong>โรงเรียนเดิม</strong> .....{schoolName}.....
+                <strong>แขวง/ตำบล</strong>
+                .....{subDistrictOld}..... <strong>เขต/อำเภอ</strong>
+                .....{districtOld}.....</span>
+            <span class="block"><strong>จังหวัด</strong> .....{provinceOld}.....
+                <strong>รหัสไปรษณีย์</strong>
+                .....{zipcodeOld}..... <strong>เกรดเฉลี่ย</strong> .....{grade}.....</span>
+        </div>
+
+        <!-- Guardian Section -->
+        <div>
+            <strong>ข้อมูลผู้ปกครอง</strong>
+            <span class="block"><strong>ชื่อ-สกุลบิดา</strong> .....{fatherName}..... <strong>อาชีพ</strong>
+                .....{fatherJob}..... <strong>โทรศัพท์</strong> .....{fatherPhone}.....</span>
+            <span class="block"><strong>ชื่อ-สกุลมารดา</strong> .....{motherName}..... <strong>อาชีพ</strong>
+                .....{motherJob}..... <strong>โทรศัพท์</strong> .....{motherPhone}.....</span>
+            <span class="block"><strong>ชื่อ-สกุลผู้ปกครอง</strong> .....{guardianName}.....
+                <strong>อาชีพ</strong>
+                .....{guardianJob}..... <strong>โทรศัพท์</strong> .....{guardianPhone}.....</span>
+            <span class="block"><strong>ความเกี่ยวข้องกับนักเรียน</strong> .....{guardianRelation}.....</span>
+        </div>
+
+        <!-- Gray Divider -->
+        <div class="h-1 bg-gray-200 mt-3"></div>
+
+        <!-- Documents Section -->
+        <div>
+            <strong>หลักฐานที่ใช้ในการสมัคร</strong>
+            <div class="grid grid-cols-2">
+                <div>
+                    <span class="block">1. 𑂽 ใบสมัครของโรงเรียนศรีสองรักษ์วิทยา</span>
+                    <span class="block">3. 𑂽 สำเนาหลักฐานการจบการศึกษา (ปพ.1)<br />หรือใบรับรองผลการเรียน (ปพ.7)
+                        ตัวจริง</span>
+                </div>
+                <div>
+                    <span class="block">2. 𑂽 รูปถ่ายขนาด 1 นิ้วครึ่ง จำนวน 1 รูป</span>
+                    <span class="block">4. 𑂽 สำเนาทะเบียนบ้านของนักเรียน</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signature Section -->
+        <div class="mt-4">
+            <div class="text-center">
+                <span class="block">ลงชื่อ…………………………………………………เจ้าหน้าที่รับสมัคร</span>
+                <span class="block">(…………………………………………………)</span>
+            </div>
+            <div class="grid grid-cols-2 mt-4">
+                <div class="text-center">
+                    <span class="block">ลงชื่อ…………………………………………………ผู้สมัคร</span>
+                    <span class="block">( {prefix}{firstName} {lastName} )</span>
+                </div>
+                <div class="text-center">
+                    <span class="block">ลงชื่อ…………………………………………………ผู้ปกครอง</span>
+                    <span class="block">( {guardianName} )</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -14,10 +14,12 @@ import FieldOldSchoolInfo from "../../components/field-old-school-info";
 import FieldGuardianInfo from "../../components/field-guardian-info";
 import FieldImage from "../../components/field-image";
 import { Button } from "@/components/ui/button";
-import { zodDefault } from "@/lib/utils";
+import { getFullName, zodDefault } from "@/lib/utils";
+import axios from "axios";
 
-export default ({ data }: Readonly<{
-    data: z.infer<typeof admissionForm.admissionForm>
+export default ({ data, length }: Readonly<{
+    data: z.infer<typeof admissionForm.admissionForm>,
+    length: number
 }>) => {
     const openedAt = new Date(data.openedAt).toLocaleDateString("th-TH", {
         day: "numeric",
@@ -40,6 +42,16 @@ export default ({ data }: Readonly<{
                 const year = new Date().getFullYear();
                 return month > 3 && data.type === admissionForm.type.enum.move ? year - 1 : year
             })(),
+            ...(
+                (data.class < 4 ||
+                    (
+                        data.type === admissionForm.type.enum.move ||
+                        data.round === admissionForm.round.enum.special
+                    )
+                ) && {
+                    reservePlan: "-"
+                }
+            ),
             round: data.round,
             class: Number(data.class),
             type: data.type,
@@ -52,13 +64,40 @@ export default ({ data }: Readonly<{
     })
 
     useEffect(() => {
-        console.log(form.watch(),
-            admission.admission.safeParse(form.watch()).error?.message
-        );
+        console.log(admission.admission.safeParse(form.watch()).error?.message);
     }, [form.watch()])
 
     const onSubmit = async (data: z.infer<typeof admission.admission>) => {
-        console.log(data);
+        try {
+            const fullName = getFullName(data);
+            const formData = new FormData();
+            formData.append("name", fullName);
+            formData.append("studentPhoto", data.studentPhoto);
+            const { data: id } = await axios.post("/api/data/student-photo", formData);
+            const { data: template } = await axios.get("/html/admission.html", {
+                responseType: "text"
+            });
+            let html = template;
+            Object.entries({
+                ...data,
+                no: length + 1,
+                round: admissionForm.roundView[data.round],
+                type: admissionForm.typeView[data.type],
+                studentPhoto: `https://drive.google.com/uc?export=view&id=${id}`,
+                birthDate: data.birthDate.toLocaleDateString("th-TH", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                })
+            }).forEach(([key, value]) => html = html.replaceAll(`{${key}}`, value));
+            const { data: file } = await axios.put("http://localhost:4000/pdf", {
+                html,
+                name: fullName,
+                isLocal: true
+            }, { responseType: "blob" });
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     return (

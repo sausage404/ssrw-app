@@ -3,23 +3,48 @@ import { Sheet } from "./lib/sheet";
 import { Google } from "./lib/google";
 import user from "./schema/user";
 import admissionForm from "./schema/admission-form";
+import admission from "./schema/admission";
+import { Drive } from "./lib/drive";
 
 export const instance = new Google({}).getInstance();
 
 export const db = () => ({
-    user: new Sheet<z.infer<typeof user.user>>(instance, process.env.GOOGLE_SPREADSHEET_ID!, "user", [
-        'email',
-        'password',
-        'prefix',
-        'firstName',
-        'lastName',
-        'role'
-    ]),
-    admissionForm: new Sheet<z.infer<typeof admissionForm.admissionForm>>(instance, process.env.GOOGLE_SPREADSHEET_ID!, "admissionForm", [
-        'type',
-        'class',
-        'round',
-        'openedAt',
-        'closedAt'
-    ])
+    user: new Sheet<z.infer<typeof user.user>>(
+        instance,
+        process.env.GOOGLE_SPREADSHEET_ID!,
+        "user",
+        [
+            'email',
+            'password',
+            'prefix',
+            'firstName',
+            'lastName',
+            'role'
+        ]
+    ),
+    admissionForm: new Sheet<z.infer<typeof admissionForm.admissionForm>>(instance,
+        process.env.GOOGLE_SPREADSHEET_ID!,
+        "admissionForm",
+        [
+            'type',
+            'class',
+            'round',
+            'openedAt',
+            'closedAt'
+        ]
+    ),
+    admission: new Sheet<z.infer<typeof admission.admission>>(
+        instance,
+        process.env.GOOGLE_SPREADSHEET_ID!,
+        "admission",
+        Object.keys(admission.admission).filter((key) =>
+            key !== "id" && key !== "openedAt" && key !== "closedAt"
+        ) as (keyof z.infer<typeof admission.admission>)[]
+    )
 })
+
+export const drive = new Drive(instance);
+
+export const folder = {
+    studentPhoto: "1VFLxSuPrZaE4gvXI1_pGqqat1galiXfx"
+}

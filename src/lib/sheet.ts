@@ -62,6 +62,8 @@ export class Sheet<V> {
                 // Handle date fields
                 if (value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/)) {
                     obj[key] = value ? new Date(value) : new Date();
+                } else if (!isNaN(Number(value))) {
+                    obj[key] = Number(value);
                 } else {
                     obj[key] = value;
                 }
@@ -81,6 +83,10 @@ export class Sheet<V> {
 
             return value === undefined ? '' : value;
         });
+    }
+
+    public get size() {
+        return this.map.size;
     }
 
     public async create(item: Omit<V, 'id' | 'createdAt' | 'updatedAt'>): Promise<SheetBase<V>> {

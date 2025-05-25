@@ -19,3 +19,7 @@ export function zodDefault(object: z.ZodObject<any>) {
     })
   )
 }
+
+export function getFullName(object: Partial<{ prefix: string, firstName: string, lastName: string }>) {
+  return `${object.prefix}${object.firstName} ${object.lastName}`
+}

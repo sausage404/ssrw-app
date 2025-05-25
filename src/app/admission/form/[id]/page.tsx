@@ -15,9 +15,11 @@ export default async (
 
     const exists = await db().admissionForm.get(id);
 
+    const length = db().admission.size;
+
     if (!exists) {
         return notFound();
     }
 
-    return <Client data={exists} />
+    return <Client data={exists} length={length} />
 }
