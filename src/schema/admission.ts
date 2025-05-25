@@ -8,6 +8,7 @@ const bloodType = z.enum(["A", "B", "O", "AB"], { required_error: "กรุณ�
 
 export default {
     admission: z.object({
+        no: z.number().min(1, "กรุณากรอกหมายเลข"),
         studentId: z.string().min(1, "กรุณากรอกหมายเลขนักเรียน"),
         academicYear: z.number().int().min(1, "กรุณากรอกปีการศึกษา"),
         type: admissionForm.type,

@@ -7,7 +7,6 @@ import { z } from "zod";
 
 export default async (
     data: z.infer<typeof admission.admission>,
-    length: number,
     files: {
         studentPhoto: File | null,
         houseRecord: File | null,
@@ -52,7 +51,6 @@ export default async (
         let html = template;
         Object.entries({
             ...data,
-            no: length + 1,
             round: admissionForm.roundView[data.round],
             type: admissionForm.typeView[data.type],
             studentPhoto: `https://drive.google.com/thumbnail?id=${idStudentPhoto}&sz=w1000`,
@@ -70,7 +68,7 @@ export default async (
         formData.set("mimeType", "application/pdf");
         formData.set("parentId", constant.folder.pdf);
         formData.set("file", file);
-        const { data: idPdf } = await axios.post("/api/drive", formData);
+        const { data: { id: idPdf } } = await axios.post("/api/drive", formData);
 
         const { data: { success, message } } = await axios.post("/api/data/admission", {
             ...data,

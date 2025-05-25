@@ -32,6 +32,7 @@ export default ({ data, length }: Readonly<{
         resolver: zodResolver(admission.admission),
         defaultValues: {
             ...zodDefault(admission.admission),
+            no: length + 1,
             academicYear: (() => {
                 const month = new Date().getMonth();
                 const year = new Date().getFullYear();
@@ -61,7 +62,7 @@ export default ({ data, length }: Readonly<{
 
     const onSubmit = (data: z.infer<typeof admission.admission>) => {
         startTransition(async () => {
-            const { success, message } = await service(data, length, {
+            const { success, message } = await service(data, {
                 studentPhoto,
                 houseRecord,
                 studentRecord
