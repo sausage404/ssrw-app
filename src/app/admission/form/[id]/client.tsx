@@ -17,6 +17,7 @@ import { zodDefault } from "@/lib/utils";
 import service from "./service";
 import InputImage from "@/components/input-image";
 import { toast } from "sonner";
+import ButtonLoader from "@/components/button-loader";
 
 export default ({ data, length }: Readonly<{
     data: z.infer<typeof admissionForm.admissionForm>,
@@ -118,7 +119,13 @@ export default ({ data, length }: Readonly<{
                         <InputImage disabled={isPending} value={houseRecord} onChange={(value) => setHouseRecord(value)} placeholder="รูปภาพทะเบียนบ้าน (เฉพาะสำหรับผู้ที่ไม่ได้สมัครที่โรงเรียน)" />
                         <InputImage disabled={isPending} value={studentRecord} onChange={(value) => setStudentRecord(value)} placeholder="รูปภาพปพ (เฉพาะสำหรับผู้ที่ไม่ได้สมัครที่โรงเรียน)" />
                         <div className="p-4">
-                            <Button type="submit" className="w-full" disabled={isPending}>สมัครเรียน</Button>
+                            {
+                                isPending ? (
+                                    <Button type="submit" className="w-full" disabled={isPending}>สมัครเรียน</Button>
+                                ) : (
+                                    <ButtonLoader>กําลังสมัครเรียน</ButtonLoader>
+                                )
+                            }
                         </div>
                     </div>
                 </div>
