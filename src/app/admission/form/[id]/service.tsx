@@ -60,7 +60,7 @@ export default async (
                 year: "numeric"
             })
         }).forEach(([key, value]) => html = html.replaceAll(`{${key}}`, value));
-        const { data: file } = await axios.put("http://localhost:4000/pdf", {
+        const { data: file } = await axios.put(`${process.env.NEXT_PUBLIC_SERVER_API_URL}/html/pdf`, {
             html,
             name: fullName
         }, { responseType: "blob" });
