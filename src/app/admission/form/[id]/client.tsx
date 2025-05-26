@@ -56,7 +56,7 @@ export default ({ data, length }: Readonly<{
             nationality: "ไทย",
             religion: "พุทธ",
             road: "-",
-            alley: "-",
+            alley: "-"
         },
         disabled: isPending
     })

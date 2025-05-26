@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
             mimeType,
             parentId
         );
+
         return NextResponse.json({ success: true, id: response.id, message: 'File updated successfully' });
     } catch (error) {
         console.log(error);
