@@ -1,3 +1,5 @@
+"use server";
+
 import constant from "@/constant";
 import { getFullName } from "@/lib/utils";
 import admission from "@/schema/admission";
@@ -60,7 +62,7 @@ export default async (
                 year: "numeric"
             })
         }).forEach(([key, value]) => html = html.replaceAll(`{${key}}`, value));
-        const { data: file } = await axios.put(`${process.env.NEXT_PUBLIC_SERVER_API_URL}/html/pdf`, {
+        const { data: file } = await axios.put(`${process.env.SERVER_API_URL}/html/pdf`, {
             html,
             name: fullName
         }, { responseType: "blob" });
