@@ -121,9 +121,9 @@ export default ({ data, length }: Readonly<{
                         <div className="p-4">
                             {
                                 isPending ? (
-                                    <Button type="submit" className="w-full" disabled={isPending}>สมัครเรียน</Button>
-                                ) : (
                                     <ButtonLoader>กําลังสมัครเรียน</ButtonLoader>
+                                ) : (
+                                    <Button type="submit" className="w-full" disabled={isPending}>สมัครเรียน</Button>
                                 )
                             }
                         </div>
