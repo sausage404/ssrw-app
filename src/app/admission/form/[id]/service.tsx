@@ -27,14 +27,14 @@ export default async (
         formData.append("mimeType", "image/jpeg");
         formData.append("parentId", constant.folder.studentPhoto);
         formData.append("file", files.studentPhoto);
-        const { data: { id: idStudentPhoto } } = await axios.post("/api/drive", formData);
+        const { data: { id: idStudentPhoto } } = await axios.post(`${process.env.BASE_URL}/api/drive`, formData);
 
         let idHouseRecord;
 
         if (files.houseRecord) {
             formData.set("parentId", constant.folder.houseRecord);
             formData.set("file", files.houseRecord);
-            const { data: { id } } = await axios.post("/api/drive", formData);
+            const { data: { id } } = await axios.post(`${process.env.BASE_URL}/api/drive`, formData);
             idHouseRecord = id;
         }
 
@@ -43,7 +43,7 @@ export default async (
         if (files.studentRecord) {
             formData.set("parentId", constant.folder.studentRecord);
             formData.set("file", files.studentRecord);
-            const { data: { id } } = await axios.post("/api/drive", formData);
+            const { data: { id } } = await axios.post(`${process.env.BASE_URL}/api/drive`, formData);
             idStudentRecord = id;
         }
 
@@ -70,9 +70,9 @@ export default async (
         formData.set("mimeType", "application/pdf");
         formData.set("parentId", constant.folder.pdf);
         formData.set("file", file);
-        const { data: { id: idPdf } } = await axios.post("/api/drive", formData);
+        const { data: { id: idPdf } } = await axios.post(`${process.env.BASE_URL}/api/drive`, formData);
 
-        const { data: { success, message } } = await axios.post("/api/data/admission", {
+        const { data: { success, message } } = await axios.post(`${process.env.BASE_URL}/api/data/admission`, {
             ...data,
             studentPhoto: `https://drive.google.com/file/d/${idStudentPhoto}/preview`,
             houseRecord: idHouseRecord ? `https://drive.google.com/file/d/${idHouseRecord}/preview` : undefined,
