@@ -20,10 +20,6 @@ export default ({ from }: Readonly<{ from: string | null }>) => {
 
     const form = useForm<z.infer<typeof user.credentials>>({
         resolver: zodResolver(user.credentials),
-        defaultValues: {
-            email: "11857@ssrw.ac.th",
-            password: "12345678"
-        },
         disabled: loading
     })
 

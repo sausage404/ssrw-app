@@ -5,5 +5,5 @@ export const metadata = {
 }
 
 export default async (params: { searchParams: Promise<{ from: string }> }) => {
-    return <Client from={(await params.searchParams).from} />
+    return <Client from={(await params.searchParams)?.from } />
 }
