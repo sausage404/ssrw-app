@@ -53,8 +53,10 @@ export default ({
                     name="birthDate"
                     label="วันเกิด"
                     render={(field) => (
-                        <ThaiCalendarPopover disabled={field.disabled} field={field}
-                            label="เลือก วัน/เดือน/ปี เกิด" />
+                        <ThaiCalendarPopover
+                            {...field}
+                            label="เลือก วัน/เดือน/ปี เกิด"
+                        />
                     )} />
                 <InputField
                     form={form}

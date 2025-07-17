@@ -68,7 +68,7 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
                         </h1>
                         <p className="text-muted-foreground text-sm">กรุณากรอกรหัสผ่านและยืนยันรหัสผ่าน</p>
                     </div>
-                    <div className="pb-4 px-4 flex gap-4">
+                    <div className="pb-4 px-4 flex flex-col sm:flex-row gap-4">
                         <FormField
                             control={form.control}
                             name="current"

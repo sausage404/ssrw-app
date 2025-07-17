@@ -58,12 +58,13 @@ export class Sheet<V> {
         this.columns.forEach((key, index) => {
             if (index < row.length) {
                 const value = row[index];
-
                 // Handle date fields
                 if (value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/)) {
                     obj[key] = value ? new Date(value) : new Date();
                 } else if (!isNaN(Number(value))) {
                     obj[key] = Number(value);
+                } else if (value === 'TRUE' || value === 'FALSE') {
+                    obj[key] = value === 'TRUE';
                 } else {
                     obj[key] = value;
                 }

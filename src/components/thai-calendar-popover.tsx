@@ -7,26 +7,21 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { ThaiCalendarBase } from './thai-calendar-base';
 import { ControllerRenderProps } from 'react-hook-form';
+import { Calendar } from './ui/calendar';
+import { format } from 'date-fns'
+import { th } from 'date-fns/locale'
 
 interface ThaiCalendarPopoverProps {
     value?: Date;
     onChange?: (date: Date | undefined) => void;
-    field?: ControllerRenderProps<any, any>;
     disabled?: boolean;
     className?: string;
     label: string;
 }
 
-export function ThaiCalendarPopover({ value, onChange, field, disabled = false, className, label }: ThaiCalendarPopoverProps) {
+export function ThaiCalendarPopover({ value, onChange, disabled = false, className, label }: ThaiCalendarPopoverProps) {
     const [isPopoverOpen, setIsPopoverOpen] = React.useState<boolean>(false);
-
-    const getCurrentValue = (): Date | undefined => {
-        return field ? field.value : value;
-    };
-
-    const currentValue = getCurrentValue();
 
     return (
         <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
@@ -35,13 +30,13 @@ export function ThaiCalendarPopover({ value, onChange, field, disabled = false, 
                     variant="outline"
                     className={cn(
                         "w-full justify-between text-left font-normal px-3 py-1",
-                        !currentValue && "text-muted-foreground",
+                        !value && "text-muted-foreground",
                         disabled && "opacity-50 cursor-not-allowed",
                         className
                     )}
                     disabled={disabled}
                 >
-                    {currentValue ? currentValue.toLocaleDateString("th-TH", {
+                    {value ? value.toLocaleDateString("th-TH", {
                         year: "numeric",
                         month: "long",
                         day: "numeric"
@@ -50,10 +45,13 @@ export function ThaiCalendarPopover({ value, onChange, field, disabled = false, 
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
-                <ThaiCalendarBase
-                    value={value}
-                    onChange={onChange}
-                    field={field}
+                <Calendar
+                    mode="single"
+                    selected={value}
+                    onSelect={onChange}
+                    captionLayout="dropdown"
+                    locale={th}
+                    className="rounded-lg border"
                     disabled={disabled}
                 />
             </PopoverContent>
