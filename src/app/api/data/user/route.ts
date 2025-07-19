@@ -7,8 +7,20 @@ import { SheetBase } from "@/lib/sheet";
 
 export async function GET(request: NextRequest) {
     try {
-        const users = await db().user.getAll();
-        return NextResponse.json({ success: true, data: users });
+        const params = request.nextUrl.searchParams;
+
+        const id = params.get('id');
+
+        if (id) {
+            const user = await db().user.find(item => item.id === id);
+            if (!user) {
+                return NextResponse.json({ success: false, message: 'User not found' });
+            }
+            return NextResponse.json({ success: true, data: user });
+        } else {
+            const users = await db().user.getAll();
+            return NextResponse.json({ success: true, data: users });
+        }
     } catch (error) {
         return NextResponse.json({ success: false, message: 'Failed to fetch users' }, { status: 500 });
     }

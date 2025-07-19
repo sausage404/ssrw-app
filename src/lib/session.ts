@@ -5,7 +5,6 @@ import user from '@/schema/user'
 import { JWTPayload, SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 import { SheetBase } from './sheet'
-import bcrypt from 'bcrypt'
 
 export type Auth = JWTPayload & SheetBase<z.infer<typeof user.user>>;
 

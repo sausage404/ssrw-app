@@ -67,7 +67,7 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
                                 <FormItem>
                                     <FormControl>
                                         <Select onValueChange={field.onChange} defaultValue={field.value} disabled={field.disabled}>
-                                            <SelectTrigger className="w-full">
+                                            <SelectTrigger disabled className="w-full">
                                                 <SelectValue placeholder="คํานําหน้า" />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -88,7 +88,7 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <Input {...field} />
+                                        <Input readOnly {...field} />
                                     </FormControl>
                                 </FormItem>
                             )}
@@ -99,13 +99,13 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormControl>
-                                        <Input {...field} />
+                                        <Input readOnly {...field} />
                                     </FormControl>
                                 </FormItem>
                             )}
                         />
                     </div>
-                    <div className="px-4 py-3 border-t rounded-b-lg flex items-center justify-between">
+                    <div className="px-4 py-4 border-t rounded-b-lg flex items-center justify-between">
                         {state.error ? (
                             <p className="text-destructive text-sm">{state.error}</p>
                         ) : state.success ? (
@@ -113,7 +113,7 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
                         ) : (
                             <p className="text-muted-foreground text-sm">กรุณากรอกชื่อจริงและนามสกุลของคุณ เนื่องจากจะใช้ชื่อและนามสกุลนี้</p>
                         )}
-                        {isPending ? (
+                        {/* {isPending ? (
                             <ButtonLoader size="sm">
                                 กําลังบันทึก
                             </ButtonLoader>
@@ -122,7 +122,7 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
                                 e.preventDefault();
                                 onSubmit(form.watch());
                             }}>บันทึก</Button>
-                        )}
+                        )} */}
                     </div>
                 </div>
             </form>

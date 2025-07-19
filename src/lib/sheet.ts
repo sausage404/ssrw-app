@@ -159,7 +159,7 @@ export class Sheet<V> {
     }
 
     public async delete(id: string): Promise<boolean> {
-        if (!this.map.has(id)) return false;
+        if (!this.get(id)) return false;
 
         // Find row index
         const response = await this.google.sheet.spreadsheets.values.get({
@@ -170,7 +170,7 @@ export class Sheet<V> {
         const rows = response.data.values || [];
         let rowIndex = -1;
 
-        for (let i = 1; i < rows.length; i++) {
+        for (let i = 0; i < rows.length; i++) {
             if (rows[i][0] === id) {
                 rowIndex = i + 1; // +1 because sheets are 1-indexed
                 break;

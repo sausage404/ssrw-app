@@ -6,6 +6,7 @@ import admissionForm from "./schema/admission-form";
 import admission from "./schema/admission";
 import { Drive } from "./lib/drive";
 import announcement from "./schema/announcement";
+import club from "./schema/club";
 
 export const instance = new Google({}).getInstance();
 
@@ -55,6 +56,18 @@ export const db = () => ({
             "description",
             "isSummarize",
             "occurredAt"
+        ]
+    ),
+    club: new Sheet<z.infer<typeof club.club>>(
+        instance,
+        process.env.GOOGLE_SPREADSHEET_ID!,
+        "club",
+        [
+            "userId",
+            "name",
+            "description",
+            "status",
+            "maxMember"
         ]
     )
 })

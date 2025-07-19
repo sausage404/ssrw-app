@@ -78,13 +78,13 @@ const features = {
             icon: Users2,
             title: "จัดการชุมนุม",
             desc: "ครูสามารถดูรายชื่อและจัดการชุมนุมที่ตนเองรับผิดชอบได้ที่นี่",
-            href: "/club/manage"
+            href: "/club"
         },
         {
             icon: CalendarCheck2,
             title: "ดูปฏิทินกิจกรรม",
             desc: "ครูสามารถดูปฏิทินกิจกรรมได้ที่นี่",
-            href: "/admin/calendar",
+            href: "/calendar",
         }
     ],
     student: [
@@ -116,7 +116,7 @@ const features = {
             icon: CalendarCheck2,
             title: "ดูปฏิทินกิจกรรม",
             desc: "นักเรียนสามารถดูปฏิทินกิจกรรมได้ที่นี่",
-            href: "/admin/calendar",
+            href: "/calendar",
         }
     ],
     admin: [
@@ -136,7 +136,7 @@ const features = {
             icon: CalendarCheck2,
             title: "จัดการปฏิทินกิจกรรม",
             desc: "แอดมินสามารถจัดการปฏิทินกิจกรรมได้ที่นี่",
-            href: "/admin/calendar",
+            href: "/calendar",
         }
     ]
 }
