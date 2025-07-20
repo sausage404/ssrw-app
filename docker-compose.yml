@@ -15,18 +15,18 @@ services:
       - SESSION_SECRET=secret0x239s5mmd4jdk5dnccoxn2eenvosvgvc5dbwifaoc9/s9sjfi3fsxs-ascsc+x7z*fe
       - BASE_URL=http://localhost:3000       
 
-  db:
-    image: postgres:15
-    container_name: postgres_ssrw
-    restart: always
-    environment:
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: mydatabase
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-volumes:
-  pgdata:
-    driver: local
+#   db:
+#     image: postgres:15
+#     container_name: postgres_ssrw
+#     restart: always
+#     environment:
+#       POSTGRES_USER: myuser
+#       POSTGRES_PASSWORD: mypassword
+#       POSTGRES_DB: mydatabase
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - pgdata:/var/lib/postgresql/data
+# volumes:
+#   pgdata:
+#     driver: local
