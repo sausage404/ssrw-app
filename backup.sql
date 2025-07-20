@@ -17,7 +17,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: admission_round; Type: TYPE; Schema: public; Owner: myuser
+-- Name: admission_round; Type: TYPE; Schema: public; Owner: postgres
 --
 
 CREATE TYPE public.admission_round AS ENUM (
@@ -27,10 +27,10 @@ CREATE TYPE public.admission_round AS ENUM (
 );
 
 
-ALTER TYPE public.admission_round OWNER TO myuser;
+ALTER TYPE public.admission_round OWNER TO postgres;
 
 --
--- Name: admission_status; Type: TYPE; Schema: public; Owner: myuser
+-- Name: admission_status; Type: TYPE; Schema: public; Owner: postgres
 --
 
 CREATE TYPE public.admission_status AS ENUM (
@@ -43,10 +43,10 @@ CREATE TYPE public.admission_status AS ENUM (
 );
 
 
-ALTER TYPE public.admission_status OWNER TO myuser;
+ALTER TYPE public.admission_status OWNER TO postgres;
 
 --
--- Name: admission_type; Type: TYPE; Schema: public; Owner: myuser
+-- Name: admission_type; Type: TYPE; Schema: public; Owner: postgres
 --
 
 CREATE TYPE public.admission_type AS ENUM (
@@ -55,10 +55,10 @@ CREATE TYPE public.admission_type AS ENUM (
 );
 
 
-ALTER TYPE public.admission_type OWNER TO myuser;
+ALTER TYPE public.admission_type OWNER TO postgres;
 
 --
--- Name: blood_type; Type: TYPE; Schema: public; Owner: myuser
+-- Name: blood_type; Type: TYPE; Schema: public; Owner: postgres
 --
 
 CREATE TYPE public.blood_type AS ENUM (
@@ -69,10 +69,10 @@ CREATE TYPE public.blood_type AS ENUM (
 );
 
 
-ALTER TYPE public.blood_type OWNER TO myuser;
+ALTER TYPE public.blood_type OWNER TO postgres;
 
 --
--- Name: user_role; Type: TYPE; Schema: public; Owner: myuser
+-- Name: user_role; Type: TYPE; Schema: public; Owner: postgres
 --
 
 CREATE TYPE public.user_role AS ENUM (
@@ -83,14 +83,14 @@ CREATE TYPE public.user_role AS ENUM (
 );
 
 
-ALTER TYPE public.user_role OWNER TO myuser;
+ALTER TYPE public.user_role OWNER TO postgres;
 
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
 --
--- Name: Attendance; Type: TABLE; Schema: public; Owner: myuser
+-- Name: Attendance; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public."Attendance" (
@@ -103,10 +103,10 @@ CREATE TABLE public."Attendance" (
 );
 
 
-ALTER TABLE public."Attendance" OWNER TO myuser;
+ALTER TABLE public."Attendance" OWNER TO postgres;
 
 --
--- Name: Leave; Type: TABLE; Schema: public; Owner: myuser
+-- Name: Leave; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public."Leave" (
@@ -118,10 +118,10 @@ CREATE TABLE public."Leave" (
 );
 
 
-ALTER TABLE public."Leave" OWNER TO myuser;
+ALTER TABLE public."Leave" OWNER TO postgres;
 
 --
--- Name: _ClubMembers; Type: TABLE; Schema: public; Owner: myuser
+-- Name: _ClubMembers; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public."_ClubMembers" (
@@ -130,10 +130,10 @@ CREATE TABLE public."_ClubMembers" (
 );
 
 
-ALTER TABLE public."_ClubMembers" OWNER TO myuser;
+ALTER TABLE public."_ClubMembers" OWNER TO postgres;
 
 --
--- Name: admission_forms; Type: TABLE; Schema: public; Owner: myuser
+-- Name: admission_forms; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.admission_forms (
@@ -148,10 +148,10 @@ CREATE TABLE public.admission_forms (
 );
 
 
-ALTER TABLE public.admission_forms OWNER TO myuser;
+ALTER TABLE public.admission_forms OWNER TO postgres;
 
 --
--- Name: admissions; Type: TABLE; Schema: public; Owner: myuser
+-- Name: admissions; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.admissions (
@@ -214,10 +214,10 @@ CREATE TABLE public.admissions (
 );
 
 
-ALTER TABLE public.admissions OWNER TO myuser;
+ALTER TABLE public.admissions OWNER TO postgres;
 
 --
--- Name: announcements; Type: TABLE; Schema: public; Owner: myuser
+-- Name: announcements; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.announcements (
@@ -230,10 +230,10 @@ CREATE TABLE public.announcements (
 );
 
 
-ALTER TABLE public.announcements OWNER TO myuser;
+ALTER TABLE public.announcements OWNER TO postgres;
 
 --
--- Name: clubs; Type: TABLE; Schema: public; Owner: myuser
+-- Name: clubs; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.clubs (
@@ -248,10 +248,10 @@ CREATE TABLE public.clubs (
 );
 
 
-ALTER TABLE public.clubs OWNER TO myuser;
+ALTER TABLE public.clubs OWNER TO postgres;
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: myuser
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.users (
@@ -272,91 +272,91 @@ CREATE TABLE public.users (
 );
 
 
-ALTER TABLE public.users OWNER TO myuser;
+ALTER TABLE public.users OWNER TO postgres;
 
 --
--- Data for Name: Attendance; Type: TABLE DATA; Schema: public; Owner: myuser
+-- Data for Name: Attendance; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."Attendance" (id, "userId", period, "studedAt", "createdAt", "updatedAt") FROM stdin;
-cmda4byj70003q7ukmjbzcz7g	cmd9tflq6000iq7u88ktw4yas	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.273
-cmda4byjy000pq7ukoq8wjfyn	cmd9tflq6000qq7u8oexxe3j2	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4byjt000iq7ukf6i9zpqw	cmd9tflq6000nq7u8u2hxc2qt	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
-cmda4byjv000mq7uk6bd6o18u	cmd9tflq6000oq7u8ha87t2pn	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
-cmda4byk8000xq7ukqjiek4iu	cmd9tflq7000vq7u8rxpfcrbt	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
-cmda4byjz000qq7uk5c46fl7k	cmd9tflq6000sq7u8p0y9v6n6	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
-cmda4byk8000wq7uk76vevrs7	cmd9tflq7000yq7u8spwvqb88	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
-cmda4byjt000kq7ukd2h8r8f5	cmd9tflq6000mq7u8dg625w9r	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
-cmda4byjx000oq7uktshp7n59	cmd9tflq6000pq7u8sgl35vxg	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
-cmda4byjm000cq7uksiex24qw	cmd9tflq6000kq7u8goc8z5fx	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.273
-cmda4byk7000vq7uk5wwm69af	cmd9tflq7000zq7u8dgfnj1g6	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4byka0010q7ukzb7rz26y	cmd9tflq70012q7u8j5vy8zmd	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
-cmda4byjx000nq7ukvjjfgbu4	cmd9tflq6000rq7u88kbi0txl	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
-cmda4byk5000tq7uk0zjzswun	cmd9tflq7000uq7u8j6nz0zv1	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
-cmda4byka000zq7ukfb7fgq9t	cmd9tflq70011q7u839kqybp5	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
-cmda4byk5000uq7ukmvhaey1r	cmd9tflq7000wq7u8j46ue2db	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
-cmda4byjr000gq7ukrgs9fgkj	cmd9tflq6000lq7u815b5m9qp	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
-cmda4byk3000sq7ukza824cec	cmd9tflq7000tq7u8rnhuyx2w	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4byji000aq7uk4s0h7luy	cmd9tflq6000jq7u80jchs55o	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.273
-cmda4byka0011q7ukayhx07i8	cmd9tflq70018q7u8y452p9rw	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykc0017q7ukmoo3qdlf	cmd9tflq70013q7u84yaudfbb	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
-cmda4byka0014q7uk62ufxyub	cmd9tflq70019q7u8pdun488t	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykm001jq7uk20mbvgyz	cmd9tflq7001lq7u8q63r5njm	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykp001nq7ukeapn2mr2	cmd9tflq7001qq7u88lhusnjs	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4byka0013q7uk1o1q2jjr	cmd9tflq70010q7u8t2g8wr6c	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykq001rq7ukn770jo5n	cmd9tflq7001sq7u8uzdogtmz	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.66	2025-07-19 16:00:12.274
-cmda4bykb0015q7uksvtcltx0	cmd9tflq70017q7u89sy679z7	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykm001kq7ukj7akfv4o	cmd9tflq7001kq7u8lttu5agg	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykn001lq7uk24fnwhag	cmd9tflq7001mq7u84lvixn80	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4byks001uq7ukdhwaah0b	cmd9tflq7001vq7u8pmv2itwh	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.66	2025-07-19 16:00:12.274
-cmda4bykd0018q7uk6enzuj2d	cmd9tflq70016q7u8xgwu5iga	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4byki001dq7uklxovy7mv	cmd9tflq7001eq7u8p4nd4ejz	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykk001eq7uk4xzj0g05	cmd9tflq7001fq7u84b7zzot4	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykc0016q7uk8o8ub0sj	cmd9tflq7001aq7u8whkbi8b8	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykn001mq7uk7feyhai6	cmd9tflq7001nq7u8kba2tza5	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4byku001vq7ukl0l5392v	cmd9tflq7001wq7u8piee93z1	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.66	2025-07-19 16:00:12.274
-cmda4bykf001cq7ukkl5mw5w5	cmd9tflq7001dq7u898re8ieb	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykk001fq7uk8d1snr0e	cmd9tflq7001hq7u8zs95f5lr	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykp001pq7uk62h67261	cmd9tflq7001pq7u88nsi0c5c	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykf001aq7uk8k05hqew	cmd9tflq70014q7u8raa893xu	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykq001qq7uklq531ob6	cmd9tflq7001oq7u8770le2cw	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykk001iq7ukxb4vo6k6	cmd9tflq7001jq7u8tly0td0l	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykw001wq7ukqd59nym8	cmd9tflq7001yq7u8u3za2gzw	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.66	2025-07-19 16:00:12.274
-cmda4bykk001gq7ukl7gsvmlm	cmd9tflq7001gq7u8tfb5ie1m	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykq001sq7ukvqn1mb74	cmd9tflq7001uq7u8q48u9wzk	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.66	2025-07-19 16:00:12.274
-cmda4bykf0019q7ukiywwee9l	cmd9tflq7001bq7u85qjkhle3	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykf001bq7uk0fb9ovfr	cmd9tflq7001cq7u8ylr2tzpf	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykp001oq7ukg23e52cr	cmd9tflq7001rq7u8zelza9ko	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykk001hq7ukewg1rrqk	cmd9tflq7001iq7u88a75j4p5	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+COPY public."Attendance" (id, "userId", period, "studedAt", "createdAt", "updatedAt") FROM stdin WITH (FORMAT csv, DELIMITER E'\t');
+cmda4byj70003q7ukmjbzcz7g	cmd9tflq6000iq7u88ktw4yas	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.273
+cmda4byjy000pq7ukoq8wjfyn	cmd9tflq6000qq7u8oexxe3j2	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4byjt000iq7ukf6i9zpqw	cmd9tflq6000nq7u8u2hxc2qt	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
+cmda4byjv000mq7uk6bd6o18u	cmd9tflq6000oq7u8ha87t2pn	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
+cmda4byk8000xq7ukqjiek4iu	cmd9tflq7000vq7u8rxpfcrbt	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
+cmda4byjz000qq7uk5c46fl7k	cmd9tflq6000sq7u8p0y9v6n6	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
+cmda4byk8000wq7uk76vevrs7	cmd9tflq7000yq7u8spwvqb88	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
+cmda4byjt000kq7ukd2h8r8f5	cmd9tflq6000mq7u8dg625w9r	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
+cmda4byjx000oq7uktshp7n59	cmd9tflq6000pq7u8sgl35vxg	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
+cmda4byjm000cq7uksiex24qw	cmd9tflq6000kq7u8goc8z5fx	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.273
+cmda4byk7000vq7uk5wwm69af	cmd9tflq7000zq7u8dgfnj1g6	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4byka0010q7ukzb7rz26y	cmd9tflq70012q7u8j5vy8zmd	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
+cmda4byjx000nq7ukvjjfgbu4	cmd9tflq6000rq7u88kbi0txl	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
+cmda4byk5000tq7uk0zjzswun	cmd9tflq7000uq7u8j6nz0zv1	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
+cmda4byka000zq7ukfb7fgq9t	cmd9tflq70011q7u839kqybp5	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
+cmda4byk5000uq7ukmvhaey1r	cmd9tflq7000wq7u8j46ue2db	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
+cmda4byjr000gq7ukrgs9fgkj	cmd9tflq6000lq7u815b5m9qp	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
+cmda4byk3000sq7ukza824cec	cmd9tflq7000tq7u8rnhuyx2w	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4byji000aq7uk4s0h7luy	cmd9tflq6000jq7u80jchs55o	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.273
+cmda4byka0011q7ukayhx07i8	cmd9tflq70018q7u8y452p9rw	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykc0017q7ukmoo3qdlf	cmd9tflq70013q7u84yaudfbb	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.273
+cmda4byka0014q7uk62ufxyub	cmd9tflq70019q7u8pdun488t	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykm001jq7uk20mbvgyz	cmd9tflq7001lq7u8q63r5njm	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykp001nq7ukeapn2mr2	cmd9tflq7001qq7u88lhusnjs	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4byka0013q7uk1o1q2jjr	cmd9tflq70010q7u8t2g8wr6c	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykq001rq7ukn770jo5n	cmd9tflq7001sq7u8uzdogtmz	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.66	2025-07-19 16:00:12.274
+cmda4bykb0015q7uksvtcltx0	cmd9tflq70017q7u89sy679z7	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykm001kq7ukj7akfv4o	cmd9tflq7001kq7u8lttu5agg	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykn001lq7uk24fnwhag	cmd9tflq7001mq7u84lvixn80	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4byks001uq7ukdhwaah0b	cmd9tflq7001vq7u8pmv2itwh	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.66	2025-07-19 16:00:12.274
+cmda4bykd0018q7uk6enzuj2d	cmd9tflq70016q7u8xgwu5iga	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4byki001dq7uklxovy7mv	cmd9tflq7001eq7u8p4nd4ejz	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykk001eq7uk4xzj0g05	cmd9tflq7001fq7u84b7zzot4	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykc0016q7uk8o8ub0sj	cmd9tflq7001aq7u8whkbi8b8	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykn001mq7uk7feyhai6	cmd9tflq7001nq7u8kba2tza5	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4byku001vq7ukl0l5392v	cmd9tflq7001wq7u8piee93z1	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.66	2025-07-19 16:00:12.274
+cmda4bykf001cq7ukkl5mw5w5	cmd9tflq7001dq7u898re8ieb	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykk001fq7uk8d1snr0e	cmd9tflq7001hq7u8zs95f5lr	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykp001pq7uk62h67261	cmd9tflq7001pq7u88nsi0c5c	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykf001aq7uk8k05hqew	cmd9tflq70014q7u8raa893xu	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykq001qq7uklq531ob6	cmd9tflq7001oq7u8770le2cw	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykk001iq7ukxb4vo6k6	cmd9tflq7001jq7u8tly0td0l	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykw001wq7ukqd59nym8	cmd9tflq7001yq7u8u3za2gzw	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.66	2025-07-19 16:00:12.274
+cmda4bykk001gq7ukl7gsvmlm	cmd9tflq7001gq7u8tfb5ie1m	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykq001sq7ukvqn1mb74	cmd9tflq7001uq7u8q48u9wzk	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.66	2025-07-19 16:00:12.274
+cmda4bykf0019q7ukiywwee9l	cmd9tflq7001bq7u85qjkhle3	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykf001bq7uk0fb9ovfr	cmd9tflq7001cq7u8ylr2tzpf	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykp001oq7ukg23e52cr	cmd9tflq7001rq7u8zelza9ko	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykk001hq7ukewg1rrqk	cmd9tflq7001iq7u88a75j4p5	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
 cmda4bykw001xq7ukavseeun0	cmd9rlgle0000q7u8p9l5e4n7	{"null","null","null","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.66	2025-07-19 16:23:57.551
-cmda4byj70002q7uk1vrur790	cmd9tflq60002q7u8dm7yn0ow	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
-cmda4byjt000jq7uker2434t5	cmd9tflq6000eq7u8acmb2szr	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
-cmda4byk8000yq7uk3d1uz4cx	cmd9tflq7000xq7u8ajqdwwsu	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4byjc0005q7ukvn814cpv	cmd9tflq60005q7u8vh61dr33	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
-cmda4byjq000fq7uket7cb6il	cmd9tflq60009q7u8txnn0ju2	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
-cmda4byjm000bq7uk6ugf916o	cmd9tflq60008q7u8m4ns8bkn	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
-cmda4byj70001q7ukpky95ogs	cmd9tflq60003q7u85ygfn14p	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
-cmda4byjc0007q7ukhoclro91	cmd9tflq6000cq7u889g0astg	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
-cmda4byiq0000q7ukz93jpsye	cmd9tflq60001q7u8krg5gb1t	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
-cmda4byju000lq7uki2s54pek	cmd9tflq6000hq7u83wig4dsb	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
-cmda4byjc0006q7ukerom5pwu	cmd9tflq6000gq7u88uo6c1ni	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
-cmda4byji0009q7ukrwgnh8nh	cmd9tflq60007q7u8d6nqhjxh	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
-cmda4byjo000dq7ukcinoo540	cmd9tflq60006q7u80r0gz7tw	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
-cmda4byk1000rq7ukwsurk2g0	cmd9tflq6000dq7u80h7f725c	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
-cmda4byjt000hq7ukqu87xf57	cmd9tflq6000bq7u8e1g71vpf	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
-cmda4byja0004q7uk28r4n2ze	cmd9tflq6000aq7u8ibpcyqf4	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
-cmda4byjd0008q7ukzkbc9ebf	cmd9tflq60004q7u8m7hycbyi	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
-cmda4byjp000eq7uk0fyypjmd	cmd9tflq6000fq7u8t8hcxikc	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
-cmda4byka0012q7ukr1elmcnj	cmd9tflq70015q7u8vikzriu8	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
-cmda4bykr001tq7ukj6qysb7g	cmd9tflq7001tq7u88dneripv	{"null",present,absent,leave,"null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.66	2025-07-19 16:00:12.274
+cmda4byj70002q7uk1vrur790	cmd9tflq60002q7u8dm7yn0ow	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
+cmda4byjt000jq7uker2434t5	cmd9tflq6000eq7u8acmb2szr	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
+cmda4byk8000yq7uk3d1uz4cx	cmd9tflq7000xq7u8ajqdwwsu	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4byjc0005q7ukvn814cpv	cmd9tflq60005q7u8vh61dr33	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
+cmda4byjq000fq7uket7cb6il	cmd9tflq60009q7u8txnn0ju2	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
+cmda4byjm000bq7uk6ugf916o	cmd9tflq60008q7u8m4ns8bkn	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
+cmda4byj70001q7ukpky95ogs	cmd9tflq60003q7u85ygfn14p	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
+cmda4byjc0007q7ukhoclro91	cmd9tflq6000cq7u889g0astg	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
+cmda4byiq0000q7ukz93jpsye	cmd9tflq60001q7u8krg5gb1t	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
+cmda4byju000lq7uki2s54pek	cmd9tflq6000hq7u83wig4dsb	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
+cmda4byjc0006q7ukerom5pwu	cmd9tflq6000gq7u88uo6c1ni	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
+cmda4byji0009q7ukrwgnh8nh	cmd9tflq60007q7u8d6nqhjxh	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
+cmda4byjo000dq7ukcinoo540	cmd9tflq60006q7u80r0gz7tw	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
+cmda4byk1000rq7ukwsurk2g0	cmd9tflq6000dq7u80h7f725c	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
+cmda4byjt000hq7ukqu87xf57	cmd9tflq6000bq7u8e1g71vpf	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
+cmda4byja0004q7uk28r4n2ze	cmd9tflq6000aq7u8ibpcyqf4	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
+cmda4byjd0008q7ukzkbc9ebf	cmd9tflq60004q7u8m7hycbyi	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
+cmda4byjp000eq7uk0fyypjmd	cmd9tflq6000fq7u8t8hcxikc	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.658	2025-07-19 16:00:12.274
+cmda4byka0012q7ukr1elmcnj	cmd9tflq70015q7u8vikzriu8	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.659	2025-07-19 16:00:12.274
+cmda4bykr001tq7ukj6qysb7g	cmd9tflq7001tq7u88dneripv	{"null","present","absent","leave","null","null","null","null","null","null"}	2025-07-19 10:41:47.952	2025-07-19 10:41:58.66	2025-07-19 16:00:12.274
 \.
 
 
 --
--- Data for Name: Leave; Type: TABLE DATA; Schema: public; Owner: myuser
+-- Data for Name: Leave; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."Leave" (id, "userId", reason, "createdAt", "updatedAt") FROM stdin;
+COPY public."Leave" (id, "userId", reason, "createdAt", "updatedAt") FROM stdin WITH (FORMAT csv, DELIMITER E'\t');
 cmdae8hql0000q77k2ubn2d8r	cmd9rlgle0000q7u8p9l5e4n7	Messenger กำลังอัพเกรดการรักษาความปลอดภัย ดังนั้นจึงมีเพียงแชทที่เข้ารหัสจากต้นทางถึงปลายทางของคุณกับ Phuttarawadee เท่านั้นที่จะยังคงใช้งานได้	2025-07-19 15:19:13.099	2025-07-19 15:19:13.099
 cmdaegq3a0000q7yo7fmx7xx5	cmd9rlgle0000q7u8p9l5e4n7	หลังจากเปิดตัว Ani สาวอนิเมะสไตล์กอธิกในฐานะ AI Companion ล่าสุดแอป Grok (โดย xAI) ได้สร้างกระแสฮือฮาด้วยฟีเจอร์ใหม่ NSFW Mode ที่ผู้ใช้งานสามารถปลดล็อกได้ เมื่อความสัมพันธ์กับ Ani ถึงระดับที่กำหนด โดยมีรายละเอียดที่น่าสนใจดังนี้	2025-07-19 15:25:37.175	2025-07-19 15:25:37.175
 cmdafxcj00000q7zwbjh00b7p	cmd9rlgle0000q7u8p9l5e4n7	To find your public IP address, you can scroll up to the top of this page. It will show you your IP, the location you're connecting from, your service provider	2025-07-19 16:06:32.365	2025-07-19 16:06:32.365
@@ -364,19 +364,19 @@ cmdafxcj00000q7zwbjh00b7p	cmd9rlgle0000q7u8p9l5e4n7	To find your public IP addre
 
 
 --
--- Data for Name: _ClubMembers; Type: TABLE DATA; Schema: public; Owner: myuser
+-- Data for Name: _ClubMembers; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."_ClubMembers" ("A", "B") FROM stdin;
+COPY public."_ClubMembers" ("A", "B") FROM stdin WITH (FORMAT csv, DELIMITER E'\t');
 cmd9vuefz0001q7rkr6kb4rwx	cmd9rlgle0000q7u8p9l5e4n7
 \.
 
 
 --
--- Data for Name: admission_forms; Type: TABLE DATA; Schema: public; Owner: myuser
+-- Data for Name: admission_forms; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.admission_forms (id, type, round, class, "openedAt", "closedAt", "createdAt", "updatedAt") FROM stdin;
+COPY public.admission_forms (id, type, round, class, "openedAt", "closedAt", "createdAt", "updatedAt") FROM stdin WITH (FORMAT csv, DELIMITER E'\t');
 cmd9x2whe0000q7lgwwknbh38	NEW	QOUTA	4	1970-01-01 00:00:00	1970-01-01 00:00:00	2025-07-19 07:18:58.801	2025-07-19 07:18:41.866
 cmd9x2whe0001q7lgteqabnjq	NEW	SPECIAL	1	1970-01-01 00:00:00	1970-01-01 00:00:00	2025-07-19 07:18:58.801	2025-07-19 07:18:53.69
 cmd9x33620002q7lgvicnpdd4	NEW	SPECIAL	0	1970-01-01 00:00:00	1970-01-01 00:00:00	2025-07-19 07:19:07.466	2025-07-19 07:19:00.018
@@ -392,37 +392,37 @@ cmd9x8pz3000kq7lgrgnnr55y	MOVE	NORMAL	5	1970-01-01 00:00:00	1970-01-01 00:00:00	
 
 
 --
--- Data for Name: admissions; Type: TABLE DATA; Schema: public; Owner: myuser
+-- Data for Name: admissions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.admissions (id, no, "studentId", "academicYear", type, class, round, plan, "reservePlan", "serviceZone", provenance, prefix, "firstName", "lastName", "cardId", "birthDate", ethnicity, nationality, religion, "bloodType", phone, talent, "houseNo", "villageNo", village, road, alley, "subDistrict", district, province, zipcode, "schoolName", grade, "subDistrictOld", "districtOld", "provinceOld", "zipcodeOld", "fatherName", "fatherJob", "fatherPhone", "motherName", "motherJob", "motherPhone", "guardianName", "guardianJob", "guardianPhone", "guardianRelation", "studentPhoto", "houseRecord", "studentRecord", pdf, status, "createdAt", "updatedAt", "admissionFormId", "userId") FROM stdin;
+COPY public.admissions (id, no, "studentId", "academicYear", type, class, round, plan, "reservePlan", "serviceZone", provenance, prefix, "firstName", "lastName", "cardId", "birthDate", ethnicity, nationality, religion, "bloodType", phone, talent, "houseNo", "villageNo", village, road, alley, "subDistrict", district, province, zipcode, "schoolName", grade, "subDistrictOld", "districtOld", "provinceOld", "zipcodeOld", "fatherName", "fatherJob", "fatherPhone", "motherName", "motherJob", "motherPhone", "guardianName", "guardianJob", "guardianPhone", "guardianRelation", "studentPhoto", "houseRecord", "studentRecord", pdf, status, "createdAt", "updatedAt", "admissionFormId", "userId") FROM stdin WITH (FORMAT csv, DELIMITER E'\t');
 \.
 
 
 --
--- Data for Name: announcements; Type: TABLE DATA; Schema: public; Owner: myuser
+-- Data for Name: announcements; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.announcements (id, description, "isSummarize", "occurredAt", "createdAt", "updatedAt") FROM stdin;
+COPY public.announcements (id, description, "isSummarize", "occurredAt", "createdAt", "updatedAt") FROM stdin WITH (FORMAT csv, DELIMITER E'\t');
 cmdafg4ik0001q7yowvbqogru	It's assigned by your Internet Service Provider (ISP), allowing you to connect to the Internet through a network, whether at home, work, or on the go. Your IP ...	t	2025-07-19 15:52:28.746	2025-07-19 15:53:08.826	2025-07-19 15:53:08.826
 cmdafgcwo0002q7yoe3a4fw1k	It's assigned by your Internet Service Provider (ISP), allowing you to connect to the Internet through a network, whether at home, work, or on the go. Your IP ...	f	2025-07-19 15:53:10.343	2025-07-19 15:53:19.704	2025-07-19 15:53:19.704
 \.
 
 
 --
--- Data for Name: clubs; Type: TABLE DATA; Schema: public; Owner: myuser
+-- Data for Name: clubs; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.clubs (id, name, description, status, "userId", "maxMember", "createdAt", "updatedAt") FROM stdin;
+COPY public.clubs (id, name, description, status, "userId", "maxMember", "createdAt", "updatedAt") FROM stdin WITH (FORMAT csv, DELIMITER E'\t');
 cmd9vuefz0001q7rkr6kb4rwx	ICT	ใครกำลังมองหาคอร์สสอนเขียนโปรแกรมแบบเน้นสำหรับมือใหม่ จนถึงมือโปร นี่เลย\nผมทำไว้หลายเนื้อหาเลยครับ\nwww.kobdemy.com\nมาเลือกอุดหนุนกันได้นะ นักเรียนเก่าลด 50% ทุกรายการ\nมีวีดีโอดูย้อนหลัง มีเอกสารประกอบ และมีไลนกลุ่มไว้ช่วยเหลือยามติดปัญหาด้วยจ้า	t	cmd9rlgle0000q7u8p9l5e4n7	20	2025-07-19 06:44:22.558	2025-07-19 06:44:22.558
 \.
 
 
 --
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: myuser
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (id, prefix, "firstName", "lastName", email, password, "behaviorPoint", level, room, no, role, verified, "createdAt", "updatedAt") FROM stdin;
+COPY public.users (id, prefix, "firstName", "lastName", email, password, "behaviorPoint", level, room, no, role, verified, "createdAt", "updatedAt") FROM stdin WITH (FORMAT csv, DELIMITER E'\t');
 cmd9rlgle0000q7u8p9l5e4n9	นาย	วรเมธ	เชื้อบุญมี	12356@ssrw.ac.th	$2b$10$eopHynrJ3f2ejBD70AxT6.dYiejTyz3IfbSoVoe0Hrvpq41v5jTo.	100	4	6	6	ADMIN	f	2025-07-19 04:45:26.978	2025-07-19 04:45:26.978
 cmd9tflq60008q7u8m4ns8bkn	นาย	นาย	ณรงค์	user008@example.com	$2b$10$abcdefghijklmnopqrstuvwxyza123456789012345	0	0	0	0	STUDENT	t	2025-07-19 05:36:52.926	2025-07-19 05:36:52.926
 cmd9tflq60009q7u8txnn0ju2	นาย	นางสาว	พวงทอง	user009@example.com	$2b$10$abcdefghijklmnopqrstuvwxyza123456789012345	0	0	0	0	STUDENT	t	2025-07-19 05:36:52.926	2025-07-19 05:36:52.926
@@ -499,7 +499,7 @@ cmd9tflq7001yq7u8u3za2gzw	นาย	เด็กชาย	สมศักดิ�
 
 
 --
--- Name: Attendance Attendance_pkey; Type: CONSTRAINT; Schema: public; Owner: myuser
+-- Name: Attendance Attendance_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public."Attendance"
@@ -507,7 +507,7 @@ ALTER TABLE ONLY public."Attendance"
 
 
 --
--- Name: Leave Leave_pkey; Type: CONSTRAINT; Schema: public; Owner: myuser
+-- Name: Leave Leave_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public."Leave"
@@ -515,7 +515,7 @@ ALTER TABLE ONLY public."Leave"
 
 
 --
--- Name: _ClubMembers _ClubMembers_AB_pkey; Type: CONSTRAINT; Schema: public; Owner: myuser
+-- Name: _ClubMembers _ClubMembers_AB_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public."_ClubMembers"
@@ -523,7 +523,7 @@ ALTER TABLE ONLY public."_ClubMembers"
 
 
 --
--- Name: admission_forms admission_forms_pkey; Type: CONSTRAINT; Schema: public; Owner: myuser
+-- Name: admission_forms admission_forms_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.admission_forms
@@ -531,7 +531,7 @@ ALTER TABLE ONLY public.admission_forms
 
 
 --
--- Name: admissions admissions_pkey; Type: CONSTRAINT; Schema: public; Owner: myuser
+-- Name: admissions admissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.admissions
@@ -539,7 +539,7 @@ ALTER TABLE ONLY public.admissions
 
 
 --
--- Name: announcements announcements_pkey; Type: CONSTRAINT; Schema: public; Owner: myuser
+-- Name: announcements announcements_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.announcements
@@ -547,7 +547,7 @@ ALTER TABLE ONLY public.announcements
 
 
 --
--- Name: clubs clubs_pkey; Type: CONSTRAINT; Schema: public; Owner: myuser
+-- Name: clubs clubs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.clubs
@@ -555,7 +555,7 @@ ALTER TABLE ONLY public.clubs
 
 
 --
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: myuser
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.users
@@ -563,49 +563,49 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: Attendance_userId_key; Type: INDEX; Schema: public; Owner: myuser
+-- Name: Attendance_userId_key; Type: INDEX; Schema: public; Owner: postgres
 --
 
 CREATE UNIQUE INDEX "Attendance_userId_key" ON public."Attendance" USING btree ("userId");
 
 
 --
--- Name: _ClubMembers_B_index; Type: INDEX; Schema: public; Owner: myuser
+-- Name: _ClubMembers_B_index; Type: INDEX; Schema: public; Owner: postgres
 --
 
 CREATE INDEX "_ClubMembers_B_index" ON public."_ClubMembers" USING btree ("B");
 
 
 --
--- Name: admissions_cardId_key; Type: INDEX; Schema: public; Owner: myuser
+-- Name: admissions_cardId_key; Type: INDEX; Schema: public; Owner: postgres
 --
 
 CREATE UNIQUE INDEX "admissions_cardId_key" ON public.admissions USING btree ("cardId");
 
 
 --
--- Name: admissions_studentId_key; Type: INDEX; Schema: public; Owner: myuser
+-- Name: admissions_studentId_key; Type: INDEX; Schema: public; Owner: postgres
 --
 
 CREATE UNIQUE INDEX "admissions_studentId_key" ON public.admissions USING btree ("studentId");
 
 
 --
--- Name: clubs_userId_key; Type: INDEX; Schema: public; Owner: myuser
+-- Name: clubs_userId_key; Type: INDEX; Schema: public; Owner: postgres
 --
 
 CREATE UNIQUE INDEX "clubs_userId_key" ON public.clubs USING btree ("userId");
 
 
 --
--- Name: users_email_key; Type: INDEX; Schema: public; Owner: myuser
+-- Name: users_email_key; Type: INDEX; Schema: public; Owner: postgres
 --
 
 CREATE UNIQUE INDEX users_email_key ON public.users USING btree (email);
 
 
 --
--- Name: Attendance Attendance_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: myuser
+-- Name: Attendance Attendance_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public."Attendance"
@@ -613,7 +613,7 @@ ALTER TABLE ONLY public."Attendance"
 
 
 --
--- Name: Leave Leave_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: myuser
+-- Name: Leave Leave_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public."Leave"
@@ -621,7 +621,7 @@ ALTER TABLE ONLY public."Leave"
 
 
 --
--- Name: _ClubMembers _ClubMembers_A_fkey; Type: FK CONSTRAINT; Schema: public; Owner: myuser
+-- Name: _ClubMembers _ClubMembers_A_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public."_ClubMembers"
@@ -629,7 +629,7 @@ ALTER TABLE ONLY public."_ClubMembers"
 
 
 --
--- Name: _ClubMembers _ClubMembers_B_fkey; Type: FK CONSTRAINT; Schema: public; Owner: myuser
+-- Name: _ClubMembers _ClubMembers_B_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public."_ClubMembers"
@@ -637,7 +637,7 @@ ALTER TABLE ONLY public."_ClubMembers"
 
 
 --
--- Name: admissions admissions_admissionFormId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: myuser
+-- Name: admissions admissions_admissionFormId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.admissions
@@ -645,7 +645,7 @@ ALTER TABLE ONLY public.admissions
 
 
 --
--- Name: admissions admissions_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: myuser
+-- Name: admissions admissions_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.admissions
@@ -653,7 +653,7 @@ ALTER TABLE ONLY public.admissions
 
 
 --
--- Name: clubs clubs_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: myuser
+-- Name: clubs clubs_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.clubs
