@@ -24,6 +24,7 @@ export default () => {
         defaultValues: {
             email: "",
             password: "",
+            verified: true
         },
     })
 
@@ -72,7 +73,7 @@ export default () => {
                             </FormItem>
                         )}
                     />
-                    <div className="flex justify-center">
+                    {/* <div className="flex justify-center">
                         <FormField
                             control={form.control}
                             name="verified"
@@ -85,7 +86,7 @@ export default () => {
                                 </FormItem>
                             )}
                         />
-                    </div>
+                    </div> */}
                     <Button>เข้าสู่ระบบ</Button>
                 </form>
             </Form>
