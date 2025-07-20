@@ -4,6 +4,16 @@ services:
     container_name: ssrw
     ports:
       - "3000:3000"
+    environment:
+      - DATABASE_URL=DATABASE_URL=postgres://myuser:mypassword@db:5432/mydatabase
+      - NEXT_PUBLIC_SERVER_API_URL=https://ssrw-pdf.onrender.com
+      - NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAAAAABdyRNQTgjmJS95o
+      - TURNSTILE_SECRET_KEY=0x4AAAAAABdyRJg0bnWE8oN44-jtayhhPuc
+      - GOOGLE_EMAIL=ssrwcontrols@mbext-app.iam.gserviceaccount.com
+      - GOOGLE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDL6+o/Glp7+px7\ngye97syF/LFwis3wgA6LQo+QQlYNwK42BF9fQVuIGbl/Nc+bdWS/Yz+bIl2Baw2J\n/Pcf++5tScoOV5vJPSku+nh7hkBBoIt3QjFhZ9aBvk88AUqFwJV1udXV2Ek9wqhi\npwL702DY/Iok8kAvyt1rSqEGM2MIlwhQ5fJFUnckRjbitwcllglFKNfaXH7MOF52\nMBJSA20fptJMeJ/CUa8zfjzWpBfHc9cW9w9mW2S7Ebp8LN9pF1t/p49dkupAlRU7\nL3L0NcD9ah+WU3EyjzRwRocQSDLBMjEhe7hGGXyOj/BSvPwsOHDZZoXEwvIU7KKE\njyJk5UtrAgMBAAECggEAB7vXQvRnaRtMkvya5b+oPw6h1iBVhiD9LDfmhPSXGeds\nU/0fdtfeNk+vcs0iJgWyP/XuJB6OCEn8lfajkrF1zexF/vxAmsW4iaETL7AcQMDr\neSboA4cyIfKLQ73SyzbOFExreTQ+Ntrqku89lDpkimYtgRA08fsSIa8PY1JQl7M9\nPcL3LRl2kPD8tox+hsd1MoWym2zceJNDpXrRGh2IoPsH9SZ7fcTpQ8eQPQpp/yrn\nMLk7uzpxT7ko6gKXgtiyp8ydCEob5nofaCUcx9zbgsYJJQ2XdThq4LLb0A+W9lXu\nQ/aBWWbZwPXDIB3H70vbv2ZynHe1kXPRxpN+nKilYQKBgQD+X6TRsWnpMHpmj9cp\nacBkBc6Mfz39arJbjGU1sF2NC3+p/z5MBiQvv4Z6K5sKhb7fM7ZHgjBmlKuMnnc6\njoHEswQdqS1Rsfv/fduU/WRH2/zMwYd7A8Y6sBx975by/ZS6ZQDbGPKEKc3YAS79\n+Z7wrsIoHTZkFbwmWQJjvnRJoQKBgQDNObEXgd6ZIythImSSDdJ0evKQCuMwiNgh\nA82VNbFVmOZuEE+iCeY4XXsHW0y3mx5zx8/mfEbz1UqqKpizEucCH3jfQJz9LTYq\n+x/CDe1LpMugRq//KbMUGyNW81UDNZe8rrOvtm1aXRVO3kI7rdt3SDvSg4S5ItaL\nedn5MDmxiwKBgQCf+oUNAFhMuRlx4Wr/d6vw/BnwEKJq+6yamQyaHIZpi17KCmYi\nqAYgJYMs2LnUf1MQy1QLWxyXl07gzFTN9gw1KiUfhmOjKp4DDCOKa2ajLv6pw9ky\nC6ijBlmU9pbn0YW1SIqmQOVdK3FzNSNZxaEpW69uTRkFDwpaz8YJ9yDpoQKBgQDL\nsa9sPaLLLHUp/BEGRmHU6xNGlQfabHjYjAXJS3mwFAriw53Gnzy6RU6Phrcmpfgb\nwv8/Lare6Z0qOQ1G8EQJf2Nhc6heQjm5f3eODHSy1+akNoUJJkJwel8hNnPys4bf\n6CbBCLiRMEKt/TyQL4fdZPy7fX6Go2V/GnqXMp6Q8QKBgQDONX8u/NF9pVfRMT8B\nk7kM7si9bSmD0LT7Hn1KE4ZMF9kn2VS7zN4eT1Zi1rO749YmzMQqdtJ49SP+Y8Ru\n02UdD4LYbjGm2SahHFF6OOml2y5sTDnWcEMCCPrWGlaGT6QtJbtTAM5Uivn4uDZt\nreZLkyw/5/PbhtNoLHCjBMTJnw==\n-----END PRIVATE KEY-----\n
+      - GOOGLE_SPREADSHEET_ID=1HTE7dlrdO6cBwrNpKVZ1w7j_LOD_emP6Kps6gp0ZG6s
+      - SESSION_SECRET=secret0x239s5mmd4jdk5dnccoxn2eenvosvgvc5dbwifaoc9/s9sjfi3fsxs-ascsc+x7z*fe
+      - BASE_URL=http://localhost:3000       
 
   db:
     image: postgres:15
