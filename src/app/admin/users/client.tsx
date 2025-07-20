@@ -26,20 +26,24 @@ export default ({ user }: { user: User[] }) => {
                         <TableHeader>
                             <TableRow>
                                 <TableHead>ไอดี</TableHead>
+                                <TableHead>อีเมล</TableHead>
                                 <TableHead>ชื่อ</TableHead>
                                 <TableHead>ระดับชั้น</TableHead>
                                 <TableHead>เลขที่</TableHead>
                                 <TableHead>ความประพฤติ</TableHead>
+                                <TableHead>บทบาท</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {user.length > 0 ? user.map((user, index) => (
                                 <TableRow key={index}>
                                     <TableCell>{user.id}</TableCell>
+                                    <TableCell>{user.email}</TableCell>
                                     <TableCell>{user.prefix}{user.firstName} {user.lastName}</TableCell>
                                     <TableCell>ระดับชั้นปีที่ {user.level}/{user.room}</TableCell>
                                     <TableCell>{user.no}</TableCell>
                                     <TableCell>{user.behaviorPoint}</TableCell>
+                                    <TableCell>{user.role}</TableCell>
                                 </TableRow>
                             )) : (
                                 <TableRow>
