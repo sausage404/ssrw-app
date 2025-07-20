@@ -1,6 +1,6 @@
-import { getCurrentUser } from "@/lib/session";
-import Client from "./client"
 import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/session";
+import SectionStudent from "./components/section-student"
 import SectionTeacher from "./components/section-teacher";
 
 export const metadata = {
@@ -22,7 +22,7 @@ export default async () => {
                 </h1>
             </div>
             {auth.role === "TEACHER" && <SectionTeacher />}
-            <Client auth={auth} />
+            {auth.role === "STUDENT" && <SectionStudent auth={auth} />}
         </div>
     )
 }

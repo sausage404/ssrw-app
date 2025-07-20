@@ -2,11 +2,11 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Auth } from "@/lib/session"
 import React from "react"
-import { AttendanceResponse, getAttendanceTodayWithUserId, getLeaves, recordAttendance } from "./utils"
+import { AttendanceResponse, getAttendanceTodayWithUserId, getLeaves, recordAttendance } from "../utils"
 import attendance from "@/schema/attendance"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
-import DialogLeave from "./components/dialog-leave"
+import DialogLeave from "./dialog-leave"
 import { Leave } from "@prisma/client"
 
 export default ({ auth }: Readonly<{ auth: Auth }>) => {
@@ -280,7 +280,7 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
                 </Table>
             </div>
             {leaves.length > 0 && (
-                <div className="border-b border-dashed gap-8 text-sm p-8 grid">
+                <div className="border-b border-dashed gap-8 text-sm p-8 grid sm:grid-cols-2 md:grid-cols-3">
                     {leaves.map((leave, i) => (
                         <div key={i} className="grid gap-2">
                             <p className="font-semibold">{leave.createdAt.toLocaleDateString("th-TH", {

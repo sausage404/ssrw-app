@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
             return NextResponse.json({ success: false, message: 'Invalid parameters' }, { status: 400 });
         }
 
-        const users = await prisma.user.findMany({ where: { level: numLevel, room: numRoom } });
+        const users = await prisma.user.findMany({ where: { level: numLevel, room: numRoom, role: "STUDENT" } });
 
         return NextResponse.json({ success: true, data: users });
     } catch (error) {

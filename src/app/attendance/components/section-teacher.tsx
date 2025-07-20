@@ -2,17 +2,23 @@
 
 import React from "react"
 import InputUsersWithClass from "../components/input-users-with-class"
-import { User } from "@prisma/client"
+import { Leave, Prisma, User } from "@prisma/client"
 import { ThaiCalendarPopover } from "@/components/thai-calendar-popover"
 import { Label } from "@/components/ui/label"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import SelectAllStatus from "../components/select-all-status"
 import SelectStatus from "../components/select-status"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
-import { createAttendance, getAttendance, hasAttendance, updateAttendance } from "../utils"
+import { createAttendance, getAttendance, getLeavesByClass, hasAttendance, updateAttendance } from "../utils"
 import attendance from "@/schema/attendance"
 import DialogBehavior from "../components/dialog-behavior"
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion"
 
 export default () => {
 
@@ -21,6 +27,7 @@ export default () => {
     const [checks, setChecks] = React.useState<{ id: string, status: (keyof typeof attendance.period)[] }[]>([])
     const [behaviorDialog, setBehaviorDialog] = React.useState(false);
     const [behaviorUser, setBehaviorUser] = React.useState<User | null>(null);
+    const [leaves, setLeaves] = React.useState<Prisma.LeaveGetPayload<{ include: { User: true } }>[]>([]);
 
     React.useEffect(() => {
         (async () => {
@@ -34,6 +41,9 @@ export default () => {
             } else {
                 setChecks(students.map(user => ({ id: user.id, status: Array.from({ length: 10 }).map(() => 'null') })))
             }
+            const leaves = await getLeavesByClass(students[0].level, students[0].room, date);
+            console.log(leaves);
+            setLeaves(leaves);
         })()
     }, [students, date])
 
@@ -68,6 +78,38 @@ export default () => {
                     </div>
                 </div>
             </div>
+            {leaves.length > 0 && (
+                <React.Fragment>
+                    <div className="border-b border-dashed gap-8 text-sm p-8 sm:hidden">
+                        <Accordion defaultValue={leaves[0]?.id} type="single" collapsible>
+                            {leaves.map((leave, i) => (
+                                <AccordionItem key={leave.id} value={leave.id}>
+                                    <AccordionTrigger>
+                                        <span>ลาโดย {leave.User.prefix}{leave.User.firstName} {leave.User.lastName} {leave.createdAt.toLocaleTimeString("th-TH", { hour: "2-digit", minute: "2-digit" })}</span>
+                                    </AccordionTrigger>
+                                    <AccordionContent>
+                                        {leave.reason}
+                                    </AccordionContent>
+                                </AccordionItem>
+                            ))}
+                        </Accordion>
+                    </div>
+                    <div className="border-b border-dashed gap-8 text-sm p-8 sm:grid-cols-2 md:grid-cols-3 sm:grid hidden">
+                        {leaves.map((leave, i) => (
+                            <div key={i} className="grid gap-2">
+                                <p className="font-semibold">{leave.createdAt.toLocaleDateString("th-TH", {
+                                    day: "numeric",
+                                    month: "long",
+                                    year: "numeric"
+                                })}
+                                    <Button variant="link" size="sm" asChild>ลบ</Button>
+                                </p>
+                                <p className="text-muted-foreground">{leave.reason}</p>
+                            </div>
+                        ))}
+                    </div>
+                </React.Fragment>
+            )}
             <div>
                 <Table className="**:border-dashed">
                     <TableHeader>
@@ -110,7 +152,7 @@ export default () => {
                                         }}>{user.behaviorPoint} (ดู)</Button>
                                     </div>
                                 </TableCell>
-                                <TableCell className="text-center">{attendance.period[checks[index]?.status?.[0] ?? 'null'] || 'ไม่พบ'}</TableCell>
+                                <TableCell className="text-center">{attendance.period[checks[index]?.status?.[0] ?? 'null'] || 'ยังไม่เข้า'}</TableCell>
                                 {Array.from({ length: 9 }).map((_, il) => (
                                     <TableCell key={il}>
                                         <SelectStatus checks={checks.find(c => c.id === user.id)!} setChecks={setChecks} col={il + 1} />
@@ -123,6 +165,30 @@ export default () => {
                             </TableRow>
                         )}
                     </TableBody>
+                    {students.length > 0 && checks.length > 0 && (
+                        <TableFooter>
+                            <TableRow className="divide-x">
+                                <TableHead className="text-center">รวม</TableHead>
+                                <TableHead className="text-center" colSpan={2}>แดงขาด เหลือลา เขียวมา เทายังไม่ทำการ</TableHead>
+                                {Array.from({ length: 10 }).map((_, il) => (
+                                    <TableHead key={il} className="text-center space-x-2">    
+                                        <span className="text-zinc-500">
+                                            {checks.filter(c => c.status[il] === 'null').length}
+                                        </span>
+                                        <span className="text-green-500">
+                                            {checks.filter(c => c.status[il] === 'present').length}
+                                        </span>
+                                        <span className="text-red-500">
+                                            {checks.filter(c => c.status[il] === 'absent').length}
+                                        </span>
+                                        <span className="text-yellow-500">
+                                            {checks.filter(c => c.status[il] === 'leave').length}
+                                        </span>
+                                    </TableHead>
+                                ))}
+                            </TableRow>
+                        </TableFooter>
+                    )}
                 </Table>
             </div>
         </React.Fragment>

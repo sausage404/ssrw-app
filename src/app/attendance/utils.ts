@@ -118,20 +118,27 @@ export async function updateAttendance(data: { id: string, status: string[] }[],
         endOfDay.setHours(23, 59, 59, 999);
 
         await Promise.all(
-            data.map(attendance =>
-                prisma.attendance.update({
+            data.map(async (attendance) => {
+                const existing = await prisma.attendance.findFirst({
                     where: {
                         userId: attendance.id,
                         studedAt: {
                             gte: startOfDay,
-                            lte: endOfDay
-                        }
+                            lte: endOfDay,
+                        },
                     },
-                    data: {
-                        period: { set: attendance.status }
-                    }
-                })
-            )
+                });
+                if (existing) {
+                    return prisma.attendance.update({
+                        where: {
+                            id: existing.id,
+                        },
+                        data: {
+                            period: { set: attendance.status },
+                        },
+                    });
+                }
+            })
         );
         return true;
     } catch (error) {
@@ -234,6 +241,36 @@ export async function getLeaves(userId: string, date: Date) {
                     gte: startOfDay,
                     lte: endOfDay
                 }
+            }
+        });
+        return leaveList;
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+}
+
+export async function getLeavesByClass(level: number, room: number, date: Date) {
+    try {
+        const startOfDay = new Date(date);
+        startOfDay.setHours(0, 0, 0, 0);
+
+        const endOfDay = new Date(date);
+        endOfDay.setHours(23, 59, 59, 999);
+
+        const leaveList = await prisma.leave.findMany({
+            where: {
+                User: {
+                    level,
+                    room
+                },
+                createdAt: {
+                    gte: startOfDay,
+                    lte: endOfDay
+                }
+            },
+            include: {
+                User: true
             }
         });
         return leaveList;
