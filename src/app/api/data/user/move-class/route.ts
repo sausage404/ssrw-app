@@ -1,4 +1,4 @@
-import { db } from "@/config";
+import { prisma } from "@/lib/prisma";
 import user from "@/schema/user";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -13,22 +13,27 @@ export async function PUT(request: Request) {
             return NextResponse.json({ success: false, message: validation.error.message });
         }
 
-        const userWithClasses = await db().user.filter(item => {
-            const level = item.level === data.beforeLevel;
-            const room = item.room === data.beforeRoom;
-            return level && room;
+        const userWithClasses = await prisma.user.findMany({
+            where: {
+                level: data.beforeLevel,
+                room: data.beforeRoom
+            }
         });
 
         if (userWithClasses.length === 0) {
             return NextResponse.json({ success: false, message: 'No user found with the specified class' });
         }
 
-        for (const user of userWithClasses) {
-            await db().user.update(user.id, {
+        await prisma.user.updateMany({
+            where: {
+                level: data.beforeLevel,
+                room: data.beforeRoom
+            },
+            data: {
                 level: data.afterLevel,
                 room: data.afterRoom
-            });
-        }
+            }
+        })
 
         return NextResponse.json({ success: true, message: 'Class moved successfully' });
     } catch (error) {

@@ -79,21 +79,9 @@ const features = {
             title: "จัดการชุมนุม",
             desc: "ครูสามารถดูรายชื่อและจัดการชุมนุมที่ตนเองรับผิดชอบได้ที่นี่",
             href: "/club"
-        },
-        {
-            icon: CalendarCheck2,
-            title: "ดูปฏิทินกิจกรรม",
-            desc: "ครูสามารถดูปฏิทินกิจกรรมได้ที่นี่",
-            href: "/calendar",
         }
     ],
     student: [
-        {
-            icon: BookOpen,
-            title: "ข้อมูลทั่วไป",
-            desc: "นักเรียนสามารถดูรายละเอียดข้อมูลทั่วไปได้ที่นี่",
-            href: "/overview"
-        },
         {
             icon: Megaphone,
             title: "ประชาสัมพันธ์",
@@ -104,19 +92,13 @@ const features = {
             icon: LogIn,
             title: "เช็คอินเข้าเรียน",
             desc: "นักเรียนสามารถเช็คอินเข้าโรงเรียนและลาเรียนผ่านระบบได้ที่นี่",
-            href: "/check-in"
+            href: "/attendance"
         },
         {
             icon: Users2,
             title: "เลือกชุมนุม",
             desc: "นักเรียนสามารถเลือกชุมนุมหรือกิจกรรมที่สนใจได้ที่นี่",
             href: "/club"
-        },
-        {
-            icon: CalendarCheck2,
-            title: "ดูปฏิทินกิจกรรม",
-            desc: "นักเรียนสามารถดูปฏิทินกิจกรรมได้ที่นี่",
-            href: "/calendar",
         }
     ],
     admin: [

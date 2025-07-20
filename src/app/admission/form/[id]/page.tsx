@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
 import Client from "./client"
-import { db } from "@/config";
 import admissionForm from "@/schema/admission-form";
+import { prisma } from "@/lib/prisma";
 
 export const generateMetadata = async ({ params }: { params: Promise<{ id: string }> }) => {
     const id = (await params).id;
-    const exists = await db().admissionForm.get(id);
+    const exists = await prisma.admissionForm.findUnique({ where: { id } });
 
     if (!exists) {
         return notFound();
@@ -21,9 +21,9 @@ export default async (
 ) => {
     const id = (await params).id;
 
-    const exists = await db().admissionForm.get(id);
+    const exists = await prisma.admissionForm.findUnique({ where: { id } });
 
-    const length = db().admission.size;
+    const length = await prisma.admission.count();
 
     if (!exists) {
         return notFound();

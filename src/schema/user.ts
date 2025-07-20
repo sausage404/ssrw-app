@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const prefix = z.enum(['นาย', 'นาง', 'นางสาว', 'เด็กชาย', 'เด็กหญิง', 'Mr.', 'Mrs.', 'Ms.'], { required_error: 'กรุณาเลือกคํานําหน้า' });
 
-const role = z.enum(['admin', 'teacher', 'student', 'supervisor']);
+const role = z.enum(['ADMIN', 'TEACHER', 'STUDENT', 'SUPERVISOR'], { required_error: 'กรุณาเลือกบทบาท' });
 
 export default {
     credentials: z.object({
@@ -11,7 +11,6 @@ export default {
         verified: z.literal(true, { invalid_type_error: 'ผู้ใช้ยังไม่ได้รับการยืนยัน' })
     }),
     user: z.object({
-        id: z.string(),
         prefix,
         firstName: z.string().min(2).max(50),
         lastName: z.string().min(2).max(50),
@@ -35,6 +34,10 @@ export default {
         beforeRoom: z.number().min(0),
         afterLevel: z.number().min(0),
         afterRoom: z.number().min(0),
+    }),
+    withClass: z.object({
+        level: z.number().min(0),
+        room: z.number().min(0)
     }),
     prefix,
     role

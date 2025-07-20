@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { db } from "@/config"
+import { prisma } from "@/lib/prisma";
 import admissionForm from "@/schema/admission-form";
 import { UserPlus2 } from "lucide-react";
 import Link from "next/link";
@@ -9,7 +9,7 @@ export const metadata = () => {
 }
 
 export default async () => {
-    const data = await db().admissionForm.getAll();
+    const data = await prisma.admissionForm.findMany({})
 
     const Card = ({ form }: { form: typeof data[number] }) => {
         const openedAt = form.openedAt.toLocaleDateString("th-TH", {
@@ -54,20 +54,20 @@ export default async () => {
             </div>
             <div className="border-t border-dashed p-8 flex flex-col gap-8">
                 <p className="text-muted-foreground flex gap-2 items-center">
-                    <UserPlus2 className="w-4 h-4" /> {admissionForm.typeView.new}
+                    <UserPlus2 className="w-4 h-4" /> {admissionForm.typeView.NEW}
                 </p>
                 <div className="grid lg:grid-cols-3 md:grid-cols-2 w-full gap-8">
-                    {data.filter((form) => form.type === "new").map((form, index) => (
+                    {data.filter((form) => form.type === "NEW").map((form, index) => (
                         <Card key={index} form={form} />
                     ))}
                 </div>
             </div>
             <div className="border-t border-dashed p-8 flex flex-col gap-8">
                 <p className="text-muted-foreground flex gap-2 items-center">
-                    <UserPlus2 className="w-4 h-4" /> {admissionForm.typeView.move}
+                    <UserPlus2 className="w-4 h-4" /> {admissionForm.typeView.MOVE}
                 </p>
                 <div className="grid lg:grid-cols-3 md:grid-cols-2 w-full gap-8">
-                    {data.filter((form) => form.type === "move").map((form, index) => (
+                    {data.filter((form) => form.type === "MOVE").map((form, index) => (
                         <Card key={index} form={form} />
                     ))}
                 </div>

@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/config";
 import user from "@/schema/user";
 import bcrypt from 'bcrypt'
 import { z } from "zod";
-import { SheetBase } from "@/lib/sheet";
+import { prisma } from "@/lib/prisma";
+import { User } from "@prisma/client";
 
 export async function GET(request: NextRequest) {
     try {
@@ -12,13 +12,13 @@ export async function GET(request: NextRequest) {
         const id = params.get('id');
 
         if (id) {
-            const user = await db().user.find(item => item.id === id);
+            const user = await prisma.user.findUnique({ where: { id } });
             if (!user) {
                 return NextResponse.json({ success: false, message: 'User not found' });
             }
             return NextResponse.json({ success: true, data: user });
         } else {
-            const users = await db().user.getAll();
+            const users = await prisma.user.findMany();
             return NextResponse.json({ success: true, data: users });
         }
     } catch (error) {
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ success: false, message: validation.error.message });
         }
 
-        const exitingUser = await db().user.find(item => item.email === data.email);
+        const exitingUser = await prisma.user.findUnique({ where: { email: data.email } });
 
         if (exitingUser) {
             return NextResponse.json({ success: false, message: 'User already exists' });
@@ -44,9 +44,11 @@ export async function POST(request: NextRequest) {
 
         const hashedPassword = await bcrypt.hash(data.password, 10)
 
-        await db().user.create({
-            ...validation.data,
-            password: hashedPassword
+        await prisma.user.create({
+            data: {
+                ...validation.data,
+                password: hashedPassword
+            }
         })
 
         return NextResponse.json({ success: true, message: 'User created successfully' });
@@ -59,7 +61,7 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
     try {
-        const data = await request.json() as SheetBase<z.infer<typeof user.user>>;
+        const data = await request.json() as User;
 
         const validation = user.user.safeParse(data);
 
@@ -67,13 +69,13 @@ export async function PUT(request: NextRequest) {
             return NextResponse.json({ success: false, message: validation.error.message });
         }
 
-        const exitingUser = await db().user.get(data.id);
+        const exitingUser = await prisma.user.findUnique({ where: { id: data.id } });
 
         if (!exitingUser) {
             return NextResponse.json({ success: false, message: 'User not found' });
         }
 
-        await db().user.update(data.id, data);
+        await prisma.user.update({ where: { id: data.id }, data: validation.data });
 
         return NextResponse.json({ success: true, message: 'User updated successfully' });
     } catch (error) {

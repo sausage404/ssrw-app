@@ -1,18 +1,16 @@
 "use server"
 
-import { z } from 'zod'
-import user from '@/schema/user'
 import { JWTPayload, SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
-import { SheetBase } from './sheet'
+import { User } from '@prisma/client'
 
-export type Auth = JWTPayload & SheetBase<z.infer<typeof user.user>>;
+export type Auth = JWTPayload & User;
 
 const secretKey = process.env.SESSION_SECRET
 const cookieName = 'session'
 const encodedKey = new TextEncoder().encode(secretKey)
 
-export async function encrypt(payload: z.infer<typeof user.user>) {
+export async function encrypt(payload: User) {
     return new SignJWT(payload)
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
@@ -22,7 +20,7 @@ export async function encrypt(payload: z.infer<typeof user.user>) {
 
 export async function decrypt(session: string | undefined = '') {
     try {
-        const { payload } = await jwtVerify<SheetBase<z.infer<typeof user.user>>>(session, encodedKey, {
+        const { payload } = await jwtVerify<User>(session, encodedKey, {
             algorithms: ['HS256'],
         })
         return payload
@@ -32,7 +30,7 @@ export async function decrypt(session: string | undefined = '') {
     }
 }
 
-export async function createSession(payload: SheetBase<z.infer<typeof user.user>>) {
+export async function createSession(payload: User) {
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     const session = await encrypt(payload);
 
@@ -73,7 +71,7 @@ export async function deleteSession() {
     (await cookies()).delete(cookieName)
 }
 
-export async function updateSession(payload: SheetBase<z.infer<typeof user.user>>) {
+export async function updateSession(payload: User) {
 
     const session = await encrypt(payload);
 

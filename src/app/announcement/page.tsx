@@ -1,16 +1,14 @@
-import { db } from "@/config"
 import Client from "./client";
+import { prisma } from "@/lib/prisma";
 
 export default async () => {
-    const data = await db().announcement.filter(item => {
-        const thisMonth = new Date().getMonth() === new Date(item.occurredAt).getMonth();
-        const thisYear = new Date().getFullYear() === new Date(item.occurredAt).getFullYear();
-        return thisMonth && thisYear
+    const data = await prisma.announcement.findMany({
+        where: {
+            occurredAt: {
+                gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+                lte: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1)
+            }
+        }
     })
-
-    const sorting = data
-        .sort((a, b) => new Date(b.occurredAt).getTime() - new Date(a.occurredAt).getTime())
-        .slice(0, 5);
-
-    return <Client data={sorting} />
+    return <Client data={data} />
 }

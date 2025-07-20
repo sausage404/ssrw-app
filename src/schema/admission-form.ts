@@ -1,18 +1,18 @@
 import { z } from "zod";
 
-const type = z.enum(["new", "move"], { message: "กรุณาเลือกประเภทการสมัคร" });
+const type = z.enum(["NEW", "MOVE"], { message: "กรุณาเลือกประเภทการสมัคร" });
 
-const round = z.enum(["qouta", "special", "normal"], { message: "กรุณาเลือกรอบการสมัคร" });
+const round = z.enum(["QOUTA", "SPECIAL", "NORMAL"], { message: "กรุณาเลือกรอบการสมัคร" });
 
 const typeView: Record<typeof type.Enum[keyof typeof type.Enum], string> = {
-    new: "รับสมัครนักเรียนใหม่",
-    move: "รับย้ายนักเรียน"
+    NEW: "รับสมัครนักเรียนใหม่",
+    MOVE: "รับย้ายนักเรียน"
 }
 
 const roundView: Record<typeof round.Enum[keyof typeof round.Enum], string> = {
-    qouta: "รอบโควตาห้องปกติ",
-    special: "รอบห้องพิเศษ",
-    normal: "รอบห้องปกติ"
+    QOUTA: "รอบโควตาห้องปกติ",
+    SPECIAL: "รอบห้องพิเศษ",
+    NORMAL: "รอบห้องปกติ"
 }
 
 export default {

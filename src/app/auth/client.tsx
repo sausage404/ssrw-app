@@ -13,19 +13,23 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-export default ({ from }: Readonly<{ from: string | null }>) => {
+export default () => {
     const { signIn, error, auth, loading } = useAuth();
 
     const router = useRouter();
 
     const form = useForm<z.infer<typeof user.credentials>>({
         resolver: zodResolver(user.credentials),
-        disabled: loading
+        disabled: loading,
+        defaultValues: {
+            email: "",
+            password: "",
+        },
     })
 
     useEffect(() => {
         if (auth) {
-            router.push(from ? from : "/");
+            router.push("/");
         }
     }, [auth]);
 

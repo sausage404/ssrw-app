@@ -1,4 +1,4 @@
-import { db } from "@/config";
+import { prisma } from "@/lib/prisma";
 import admissionForm from "@/schema/admission-form";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ success: false, message: validation.error.message });
         }
 
-        await db().admissionForm.create(validation.data);
+        await prisma.admissionForm.create({ data: validation.data });
         return NextResponse.json({ success: true, message: 'Admission form created successfully' });
     } catch (error) {
         return NextResponse.json({ success: false, message: 'Failed to create admission form' }, { status: 500 });

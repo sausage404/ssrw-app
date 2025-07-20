@@ -83,7 +83,7 @@ export default ({
                             </SelectContent>
                         </Select>
                     )} />
-                {data.class >= 4 && data.type === admissionForm.type.enum.new && data.round !== admissionForm.round.enum.special && (
+                {data.class >= 4 && data.type === admissionForm.type.enum.NEW && data.round !== admissionForm.round.enum.SPECIAL && (
                     <InputField
                         form={form}
                         name="reservePlan"

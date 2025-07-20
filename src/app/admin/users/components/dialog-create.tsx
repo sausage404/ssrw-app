@@ -27,12 +27,11 @@ export default () => {
     const form = useForm<z.infer<typeof user.user>>({
         resolver: zodResolver(user.user),
         defaultValues: {
-            id: "",
             firstName: "",
             lastName: "",
             email: "",
             password: "",
-            role: "student",
+            role: "STUDENT",
             behaviorPoint: 100,
             level: 0,
             room: 0,
@@ -155,11 +154,11 @@ export default () => {
                             <FormField
                                 control={form.control}
                                 name="level"
-                                render={({ field }) => (
+                                render={({ field: { value, onChange, ...field } }) => (
                                     <FormItem>
                                         <FormLabel>ระดับชั้น</FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <Input value={isNaN(value) ? 0 : value} onChange={(e) => onChange(parseInt(e.target.value))} {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -168,11 +167,11 @@ export default () => {
                             <FormField
                                 control={form.control}
                                 name="room"
-                                render={({ field }) => (
+                                render={({ field: { value, onChange, ...field } }) => (
                                     <FormItem>
                                         <FormLabel>ห้อง</FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <Input value={isNaN(value) ? 0 : value} onChange={(e) => onChange(parseInt(e.target.value))} {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -181,11 +180,11 @@ export default () => {
                             <FormField
                                 control={form.control}
                                 name="no"
-                                render={({ field: { value, ...field } }) => (
+                                render={({ field: { value, onChange, ...field } }) => (
                                     <FormItem>
                                         <FormLabel>เลขที่</FormLabel>
                                         <FormControl>
-                                            <Input type="number" value={value} {...field} />
+                                            <Input value={isNaN(value) ? 0 : value} onChange={(e) => onChange(parseInt(e.target.value))} {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>

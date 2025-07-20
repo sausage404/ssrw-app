@@ -37,13 +37,13 @@ export default ({ data, length }: Readonly<{
             academicYear: (() => {
                 const month = new Date().getMonth();
                 const year = new Date().getFullYear();
-                return month > 3 && data.type === admissionForm.type.enum.move ? year - 1 : year
+                return month > 3 && data.type === admissionForm.type.enum.MOVE ? year - 1 : year
             })(),
             ...(
                 (data.class < 4 ||
                     (
-                        data.type === admissionForm.type.enum.move ||
-                        data.round === admissionForm.round.enum.special
+                        data.type === admissionForm.type.enum.MOVE ||
+                        data.round === admissionForm.round.enum.SPECIAL
                     )
                 ) && {
                     reservePlan: "-"

@@ -1,4 +1,4 @@
-import { db } from "@/config";
+import { prisma } from "@/lib/prisma";
 import announcement from "@/schema/announcement";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ success: false, message: validation.error.message });
         }
 
-        await db().announcement.create(validation.data);
+        await prisma.announcement.create({ data: validation.data });
         return NextResponse.json({ success: true, message: 'Announcement created successfully' });
     } catch (error) {
         return NextResponse.json({ success: false, message: 'Failed to create announcement' }, { status: 500 });

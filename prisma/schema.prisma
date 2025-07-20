@@ -1,0 +1,227 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model
+model User {
+  id            String   @id @default(cuid())
+  prefix        String
+  firstName     String
+  lastName      String
+  email         String   @unique
+  password      String
+  behaviorPoint Int      @default(0)
+  level         Int      @default(0)
+  room          Int      @default(0)
+  no            Int      @default(0)
+  role          UserRole
+  verified      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  admissions Admission[]
+  ownedClub  Club?        @relation("ClubOwner")
+  clubs      Club[]       @relation("ClubMembers")
+  Attendance Attendance[]
+  Leave      Leave[]
+
+  @@map("users")
+}
+
+// Admission Form model
+model AdmissionForm {
+  id        String         @id @default(cuid())
+  type      AdmissionType
+  round     AdmissionRound
+  class     Int
+  openedAt  DateTime
+  closedAt  DateTime
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  // Relations
+  admissions Admission[]
+
+  @@map("admission_forms")
+}
+
+// Admission model
+model Admission {
+  id           String         @id @default(cuid())
+  no           Int
+  studentId    String         @unique
+  academicYear Int
+  type         AdmissionType
+  class        Int
+  round        AdmissionRound
+  plan         String
+  reservePlan  String
+  serviceZone  String
+  provenance   String
+
+  // Personal Information
+  prefix      String
+  firstName   String
+  lastName    String
+  cardId      String    @unique
+  birthDate   DateTime
+  ethnicity   String
+  nationality String
+  religion    String
+  bloodType   BloodType
+  phone       String
+  talent      String
+
+  // Address Information
+  houseNo     Int
+  villageNo   Int
+  village     String
+  road        String
+  alley       String
+  subDistrict String
+  district    String
+  province    String
+  zipcode     String
+
+  // School Information
+  schoolName     String
+  grade          String
+  subDistrictOld String
+  districtOld    String
+  provinceOld    String
+  zipcodeOld     String
+
+  // Guardian Information
+  fatherName       String
+  fatherJob        String
+  fatherPhone      String
+  motherName       String
+  motherJob        String
+  motherPhone      String
+  guardianName     String
+  guardianJob      String
+  guardianPhone    String
+  guardianRelation String
+
+  // File uploads (optional)
+  studentPhoto  String?
+  houseRecord   String?
+  studentRecord String?
+  pdf           String?
+
+  // Status
+  status AdmissionStatus @default(PENDING)
+
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  User            User?          @relation(fields: [userId], references: [id])
+  userId          String?
+  AdmissionForm   AdmissionForm? @relation(fields: [admissionFormId], references: [id])
+  admissionFormId String?
+
+  @@map("admissions")
+}
+
+// Club model
+model Club {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  status      Boolean  @default(true)
+  userId      String   @unique
+  maxMember   Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  owner   User   @relation("ClubOwner", fields: [userId], references: [id])
+  members User[] @relation("ClubMembers")
+
+  @@map("clubs")
+}
+
+// Announcement model
+model Announcement {
+  id          String   @id @default(cuid())
+  description String
+  isSummarize Boolean  @default(false)
+  occurredAt  DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("announcements")
+}
+
+model Attendance {
+  id     String   @id @default(cuid())
+  userId String   @unique
+  period String[]
+
+  User User @relation(fields: [userId], references: [id])
+
+  studedAt  DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Leave {
+  id     String @id @default(cuid())
+  userId String
+  reason String
+
+  User User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum UserRole {
+  ADMIN
+  TEACHER
+  STUDENT
+  SUPERVISOR
+
+  @@map("user_role")
+}
+
+enum AdmissionType {
+  NEW
+  MOVE
+
+  @@map("admission_type")
+}
+
+enum AdmissionRound {
+  QOUTA
+  SPECIAL
+  NORMAL
+
+  @@map("admission_round")
+}
+
+enum AdmissionStatus {
+  PENDING
+  TEST
+  PASS
+  CONFIRM
+  WAIVED
+  REJECT
+
+  @@map("admission_status")
+}
+
+enum BloodType {
+  A
+  B
+  O
+  AB
+
+  @@map("blood_type")
+}

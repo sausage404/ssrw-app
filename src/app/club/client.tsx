@@ -1,20 +1,10 @@
 "use client"
 
-import { Auth } from "@/lib/session"
-import club from "@/schema/club"
-import { zodResolver } from "@hookform/resolvers/zod"
-import axios from "axios"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import { z } from "zod"
 import SectionTeacher from "./components/section-teacher"
 import SectionStudent from "./components/section-student"
+import { User } from "@prisma/client"
 
-export default ({ auth }: Readonly<{ auth: Auth }>) => {
-
-    
-
+export default ({ user }: Readonly<{ user: User }>) => {
     return (
         <div className="container-fluid mx-auto w-full border-x border-dashed min-h-[83.9dvh]">
             <div className="border-b border-dashed p-8 space-y-4">
@@ -22,8 +12,8 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
                     ชุมชน
                 </h1>
             </div>
-            {/* <SectionTeacher auth={auth} /> */}
-            <SectionStudent auth={auth} />
+            {user.role === "TEACHER" && <SectionTeacher auth={user} />}
+            {user.role === "STUDENT" && <SectionStudent auth={user} />}
         </div>
     )
 }

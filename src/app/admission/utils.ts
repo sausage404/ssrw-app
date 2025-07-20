@@ -10,17 +10,17 @@ export const getPlans = (
 
     const plan = constant.admissionPlan;
 
-    if (round === admissionForm.round.enum.special) {
+    if (round === admissionForm.round.enum.SPECIAL) {
         if (_class === 4) {
             availablePlans = [...plan.gifted, ...plan.sports]
         } else if (_class === 1) {
             availablePlans = [...plan.gifted, ...plan.mep, ...plan.sports]
         }
-    } else if (_class < 4 || type === admissionForm.type.enum.move) {
-        if (round === admissionForm.round.enum.normal) {
+    } else if (_class < 4 || type === admissionForm.type.enum.MOVE) {
+        if (round === admissionForm.round.enum.NORMAL) {
             availablePlans = plan.normal
         }
-    } else if (round === admissionForm.round.enum.normal || round === admissionForm.round.enum.qouta) {
+    } else if (round === admissionForm.round.enum.NORMAL || round === admissionForm.round.enum.QOUTA) {
         availablePlans = plan.highSchool
     }
 

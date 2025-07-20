@@ -1,17 +1,16 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import Link from "next/link";
 import constant from "@/constant";
 import { cn } from "@/lib/utils";
-import SectionStudent from "./components/section-student";
-import SectionTeacher from "./components/section-teacher";
+import { getCurrentUser } from "@/lib/session";
 
-export default () => {
+export default async () => {
+
+  const auth = await getCurrentUser();
 
   const colors = [
     "bg-gradient-to-bl from-yellow-100 via-yellow-400/70 to-yellow-200 dark:from-yellow-700 dark:via-yellow-900 dark:to-yellow-600",
-    "bg-gradient-to-bl from-zinc-100 via-zinc-400/70 to-zinc-200 dark:from-zinc-700 dark:via-zinc-900 dark:to-zinc-600",
     "bg-gradient-to-bl from-cyan-100 via-cyan-400/70 to-cyan-200 dark:from-cyan-700 dark:via-cyan-900 dark:to-cyan-600",
     "bg-gradient-to-bl from-blue-100 via-blue-400/70 to-blue-200 dark:from-blue-700 dark:via-blue-900 dark:to-blue-600",
     "bg-gradient-to-bl from-pink-100 via-pink-400/70 to-pink-200 dark:from-pink-700 dark:via-pink-900 dark:to-pink-600",
@@ -73,27 +72,24 @@ export default () => {
       </div>
       <div className="container-fluid mx-auto w-full border-x border-t border-dashed p-4 sm:p-8 space-y-8">
         <div className="grid lg:grid-cols-4 md:grid-cols-2 w-full gap-4 sm:gap-8">
-          {[
-            ...constant.features.default,
-            ...constant.features.teacher
+          {!auth && [
+            ...constant.features.default
           ].map((data, i) => (
             <CardMenu key={i} index={i} data={data} />
           ))}
-        </div>
-      </div>
-      <div className="container-fluid mx-auto w-full border-x border-t border-dashed p-4 sm:p-8 space-y-8">
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 w-full gap-4 sm:gap-8">
-          {[
+          {auth?.role === "STUDENT" && [
             ...constant.features.default,
             ...constant.features.student
           ].map((data, i) => (
             <CardMenu key={i} index={i} data={data} />
           ))}
-        </div>
-      </div>
-      <div className="container-fluid mx-auto w-full border-x border-t border-dashed p-4 sm:p-8 space-y-8">
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 w-full gap-4 sm:gap-8">
-          {[
+          {auth?.role === "TEACHER" && [
+            ...constant.features.default,
+            ...constant.features.teacher
+          ].map((data, i) => (
+            <CardMenu key={i} index={i} data={data} />
+          ))}
+          {auth?.role === "ADMIN" && [
             ...constant.features.default,
             ...constant.features.admin
           ].map((data, i) => (

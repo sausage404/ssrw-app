@@ -1,4 +1,4 @@
-import { db } from "@/config";
+import { prisma } from "@/lib/prisma";
 import admission from "@/schema/admission";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ success: false, message: validation.error.message });
         }
 
-        await db().admission.create(validation.data);
+        await prisma.admission.create({ data: validation.data });
         return NextResponse.json({ success: true, message: 'Admission form created successfully' });
     } catch (error) {
         console.log(error);

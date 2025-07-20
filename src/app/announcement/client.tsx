@@ -29,8 +29,9 @@ import axios from "axios"
 import React from "react"
 import { toast } from "sonner"
 import Link from "next/link"
+import { Announcement } from "@prisma/client"
 
-export default ({ data }: { data: z.infer<typeof announcement.announcement>[] }) => {
+export default ({ data }: { data: Announcement[] }) => {
 
     const { auth } = useAuth();
 
@@ -39,7 +40,6 @@ export default ({ data }: { data: z.infer<typeof announcement.announcement>[] })
     const form = useForm<z.infer<typeof announcement.announcement>>({
         resolver: zodResolver(announcement.announcement),
         defaultValues: {
-            id: "",
             description: "",
             isSummarize: false,
             occurredAt: new Date()
@@ -78,7 +78,7 @@ export default ({ data }: { data: z.infer<typeof announcement.announcement>[] })
                 </h1>
                 <div className="flex gap-4">
                     <Dialog open={open} onOpenChange={setOpen}>
-                        {auth?.role === "admin" && (
+                        {auth?.role === "ADMIN" && (
                             <DialogTrigger asChild>
                                 <Button size="sm">เพิ่มประชาสัมพันธ์</Button>
                             </DialogTrigger>
@@ -154,11 +154,6 @@ export default ({ data }: { data: z.infer<typeof announcement.announcement>[] })
                             </Form>
                         </DialogContent>
                     </Dialog>
-                    <Button asChild size="sm" variant="outline">
-                        <Link target="_blank" href="https://docs.google.com/spreadsheets/d/1HTE7dlrdO6cBwrNpKVZ1w7j_LOD_emP6Kps6gp0ZG6s/edit?gid=1534318496#gid=1534318496">
-                            แก้ไขเพิ่มเติม
-                        </Link>
-                    </Button>
                 </div>
             </div>
             <div className="w-full p-6 md:grid-cols-2 grid gap-4 sm:gap-8">

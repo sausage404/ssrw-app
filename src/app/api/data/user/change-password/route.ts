@@ -2,7 +2,7 @@ import user from "@/schema/user";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import bcrypt from 'bcrypt'
-import { db } from "@/config";
+import { prisma } from "@/lib/prisma";
 
 export async function PATCH(request: Request) {
     try {
@@ -17,7 +17,7 @@ export async function PATCH(request: Request) {
 
         const { id, current, new: newPassword } = data;
 
-        const existingUser = await db().user.find(item => item.id === id);
+        const existingUser = await prisma.user.findUnique({ where: { id } });
 
         if (!existingUser) {
             return NextResponse.json({ success: false, message: 'User not found' });
@@ -29,9 +29,7 @@ export async function PATCH(request: Request) {
 
         const hashedPassword = await bcrypt.hash(newPassword, 10)
 
-        await db().user.update(id, {
-            password: hashedPassword
-        });
+        await prisma.user.update({ where: { id }, data: { password: hashedPassword } });
 
         return NextResponse.json({ success: true, message: 'Password changed successfully' });
     } catch (error) {

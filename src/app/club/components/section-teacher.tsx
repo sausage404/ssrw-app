@@ -10,22 +10,21 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { Auth } from "@/lib/session"
 import club from "@/schema/club"
-import user from "@/schema/user"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
 import React, { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
+import { ClubPayload } from "./section-student"
 
 export default ({ auth }: Readonly<{ auth: Auth }>) => {
 
-    const [members, setMembers] = React.useState<z.infer<typeof user.user>[]>([]);
+    const [thisClub, setThisClub] = React.useState<ClubPayload | null>(null);
 
     const form = useForm<z.infer<typeof club.club>>({
         resolver: zodResolver(club.club),
         defaultValues: {
-            id: "",
             name: "",
             userId: auth.id,
             description: "",
@@ -34,10 +33,10 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
     })
 
     const onSubmit = (value: z.infer<typeof club.club>) => {
-        if (value.id.length > 0) {
+        if (thisClub) {
             toast.promise(
                 async () => {
-                    const { data } = await axios.put("/api/data/club", value);
+                    const { data } = await axios.put("/api/data/club", { data: value, id: thisClub.id });
                     if (data.success) {
                         window.location.reload();
                     } else {
@@ -73,7 +72,7 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
         e.preventDefault()
         toast.promise(
             async () => {
-                const { data } = await axios.delete("/api/data/club", { params: { id: form.getValues("id") } });
+                const { data } = await axios.delete("/api/data/club", { params: { id: thisClub?.id } });
                 if (data.success) {
                     window.location.reload();
                 } else {
@@ -92,16 +91,11 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
         (async () => {
             const { data } = await axios.get("/api/data/club", { params: { id: auth.id } });
             if (data.success) {
-                form.setValue("id", data.data.id);
+                setThisClub(data.data);
                 form.setValue("name", data.data.name);
-                form.setValue("status", data.data.status);
                 form.setValue("description", data.data.description);
+                form.setValue("status", data.data.status);
                 form.setValue("maxMember", data.data.maxMember);
-
-                const { data: members } = await axios.get("/api/data/club/members", { params: { id: data.data.id } });
-                if (members.success) {
-                    setMembers(members.data);
-                }
             }
         })()
     }, [])
@@ -179,7 +173,11 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
                             )}
                         />
                         <div className="flex justify-end gap-4">
-                            <Button type="submit" size="sm">บันทึก</Button>
+                            {thisClub ? (
+                                <Button type="submit" disabled={form.formState.isSubmitting}>บันทึก</Button>
+                            ) : (
+                                <Button type="submit" disabled={form.formState.isSubmitting}>สร้าง</Button>
+                            )}
                             <Dialog>
                                 <DialogTrigger asChild>
                                     <Button type="button" variant="destructive" size="sm">ลบ</Button>
@@ -205,31 +203,34 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
                     </form>
                 </Form>
             </div>
+
             <div className="col-span-2">
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>ลำดับ</TableHead>
-                            <TableHead>ชื่อสมาชิก</TableHead>
-                            <TableHead>ระดับชั้น</TableHead>
-                            <TableHead>เลขที่</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {members.length > 0 ? members.map((member, index) => (
-                            <TableRow key={member.id}>
-                                <TableCell>{index + 1}</TableCell>
-                                <TableCell>{member.prefix}{member.firstName} {member.lastName}</TableCell>
-                                <TableCell>ระดับชั้นปีที่ {member.level}/{member.room}</TableCell>
-                                <TableCell>{member.no}</TableCell>
-                            </TableRow>
-                        )) : (
+                {thisClub && (
+                    <Table>
+                        <TableHeader>
                             <TableRow>
-                                <TableCell colSpan={4} className="text-center">ไม่มีสมาชิก</TableCell>
+                                <TableHead>ลำดับ</TableHead>
+                                <TableHead>ชื่อสมาชิก</TableHead>
+                                <TableHead>ระดับชั้น</TableHead>
+                                <TableHead>เลขที่</TableHead>
                             </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
+                        </TableHeader>
+                        <TableBody>
+                            {thisClub.members.length > 0 ? thisClub.members.map((member, index) => (
+                                <TableRow key={index}>
+                                    <TableCell>{index + 1}</TableCell>
+                                    <TableCell>{member.prefix}{member.firstName} {member.lastName}</TableCell>
+                                    <TableCell>ระดับชั้นปีที่ {member.level}/{member.room}</TableCell>
+                                    <TableCell>{member.no}</TableCell>
+                                </TableRow>
+                            )) : (
+                                <TableRow>
+                                    <TableCell colSpan={4} className="text-center">ไม่มีสมาชิก</TableCell>
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                )}
             </div>
         </div>
     )
