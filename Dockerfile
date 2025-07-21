@@ -44,4 +44,4 @@ COPY --from=builder /app/.env ./.env
 ENV DATABASE_URL=$DATABASE_URL
 
 # รัน prisma migrate แล้วเริ่มแอป
-CMD npx prisma migrate deploy && npm start
+CMD npm start
