@@ -1,15 +1,14 @@
 #!/bin/sh
 
-echo "Starting restore..."
+CONTAINER=ssrw-app-db-1
+DB=mydatabase
+USER=myuser
+FILE=./backups/backup.sql
 
-docker run --rm \
-  -v pgdata:/data \
-  -v $PWD/backup:/backup \
-  alpine \
-  tar xzf /backup/pgdata.tar.gz -C /data
+echo "Copying backup file..."
+docker cp $FILE $CONTAINER:/tmp/restore.sql
 
-if [ $? -eq 0 ]; then
-  echo "Restore completed successfully!"
-else
-  echo "Restore failed!"
-fi
+echo "Restoring..."
+docker exec -i $CONTAINER psql -U $USER -d $DB -f /tmp/restore.sql
+
+echo "Done."

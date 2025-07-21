@@ -27,7 +27,6 @@ model User {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  admissions Admission[]
   ownedClub  Club?        @relation("ClubOwner")
   clubs      Club[]       @relation("ClubMembers")
   Attendance Attendance[]
@@ -46,9 +45,6 @@ model AdmissionForm {
   closedAt  DateTime
   createdAt DateTime       @default(now())
   updatedAt DateTime       @updatedAt
-
-  // Relations
-  admissions Admission[]
 
   @@map("admission_forms")
 }
@@ -122,10 +118,6 @@ model Admission {
 
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
-  User            User?          @relation(fields: [userId], references: [id])
-  userId          String?
-  AdmissionForm   AdmissionForm? @relation(fields: [admissionFormId], references: [id])
-  admissionFormId String?
 
   @@map("admissions")
 }
