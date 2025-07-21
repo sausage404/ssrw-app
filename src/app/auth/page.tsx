@@ -1,9 +1,9 @@
 import Client from "./client";
 
 export const metadata = {
-    title: 'Auth'
-}
+    title: 'Auth',
+};
 
-export default async () => {
-    return <Client />
+export default function Page() {
+    return <Client />;
 }

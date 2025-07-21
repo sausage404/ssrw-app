@@ -25,6 +25,11 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
 
     const form = useForm<z.infer<typeof user.user>>({
         resolver: zodResolver(user.user),
+        defaultValues: {
+            prefix: auth.prefix as z.infer<typeof user.prefix>,
+            firstName: auth.firstName,
+            lastName: auth.lastName
+        },
         disabled: isPending
     })
 
