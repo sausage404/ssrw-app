@@ -3,8 +3,7 @@ FROM node:22-slim AS builder
 WORKDIR /app
 
 # ติดตั้ง dependencies ก่อน
-COPY package.json package-lock.json* ./
-RUN npm ci
+COPY package.json ./
 
 # คัดลอก source code ทีหลัง (ให้ใช้ cache ได้)
 COPY . .
