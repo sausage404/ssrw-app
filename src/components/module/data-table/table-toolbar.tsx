@@ -11,6 +11,7 @@ interface TableToolbarProps<V extends Record<string, unknown>> {
     searchValue: string
     onSearch: (value: string) => void
     children?: React.ReactNode
+    isSearchVisible?: boolean
 }
 
 export function DataTableToolbar<V extends Record<string, unknown>>({
@@ -18,22 +19,25 @@ export function DataTableToolbar<V extends Record<string, unknown>>({
     visibleColumns,
     onVisibleColumnsChange,
     searchValue,
+    isSearchVisible,
     onSearch,
     children,
 }: TableToolbarProps<V>) {
     return (
         <div className="flex items-center justify-between">
             <div className="max-w-lg w-full">
-                <Input
-                    placeholder="ค้นหา..."
-                    defaultValue={searchValue}
-                    className="w-full"
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                            onSearch(e.currentTarget.value)
-                        }
-                    }}
-                />
+                {!isSearchVisible && (
+                    <Input
+                        placeholder="ค้นหา..."
+                        defaultValue={searchValue}
+                        className="w-full"
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                onSearch(e.currentTarget.value)
+                            }
+                        }}
+                    />
+                )}
             </div>
             <div className="flex items-center space-x-2">
                 {children}

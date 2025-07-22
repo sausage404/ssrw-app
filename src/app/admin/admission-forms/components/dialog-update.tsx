@@ -5,54 +5,38 @@ import {
     DialogContent,
     DialogDescription,
     DialogHeader,
-    DialogTitle
+    DialogTitle,
 } from "@/components/ui/dialog"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import user from "@/schema/user"
 import { zodResolver } from "@hookform/resolvers/zod"
 import React from "react"
 import { toast } from "sonner"
 import DialogForm from "./dialog-form"
 import { DialogData } from "@/hooks/use-dialog-data"
-import { updateUser } from "@/data/user"
-import { User } from "@prisma/client"
+import { AdmissionForm } from "@prisma/client"
 import { useRouter } from "next/navigation"
+import { updateAdmissionForm } from "@/data/admission-form"
+import admissionForm from "@/schema/admission-form"
 
-export default (dialog: DialogData<User>) => {
+export default (dialog: DialogData<AdmissionForm>) => {
 
     const router = useRouter();
 
-    const form = useForm<z.infer<typeof user.user>>({
-        resolver: zodResolver(user.user),
-        defaultValues: {
-            ...dialog.data,
-            password: ""
-        }
+    const form = useForm<z.infer<typeof admissionForm.admissionForm>>({
+        resolver: zodResolver(admissionForm.admissionForm),
+        defaultValues: dialog.data
     })
 
-    const onSubmit = (value: z.infer<typeof user.user>) => {
+    const onSubmit = (value: z.infer<typeof admissionForm.admissionForm>) => {
         toast.promise(
             async () => {
-                let password;
-                if (value.password.length > 0) {
-                    if (value.password.length > 8) {
-                        password = value.password;
-                    } else {
-                        throw new Error("รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร");
-                    }
-                } else {
-                    password = undefined;
-                }
-                await updateUser(dialog.data.id, {
-                    ...value,
-                    password
-                });
+                await updateAdmissionForm(dialog.data.id, value);
             },
             {
-                loading: "กําลังแก้ไขผู้ใช้งาน",
-                success: "แก้ไขผู้ใช้งานเรียบร้อย",
-                error: "เกิดข้อผิดพลาดในการแก้ไขผู้ใช้งาน"
+                loading: "กําลังแก้ไขแบบรับสมัคร",
+                success: "แก้ไขแบบรับสมัครเรียบร้อย",
+                error: "เกิดข้อผิดพลาดในการแก้ไขแบบรับสมัคร"
             }
         ).unwrap()
             .then(() => {
@@ -76,7 +60,7 @@ export default (dialog: DialogData<User>) => {
         >
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>แก้ไขผู้ใช้งาน</DialogTitle>
+                    <DialogTitle>แก้ไขแบบรับสมัคร</DialogTitle>
                     <DialogDescription>กรุณาตรวจสอบและกรอกข้อมูลให้ครบถ้วน</DialogDescription>
                 </DialogHeader>
                 <DialogForm form={form} onSubmit={onSubmit} />

@@ -8,28 +8,28 @@ import {
     DialogHeader,
     DialogTitle
 } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
 import React from "react"
 import { toast } from "sonner"
 import { DialogData } from "@/hooks/use-dialog-data"
-import { deleteUser } from "@/data/user"
-import { User } from "@prisma/client"
+import { AdmissionForm } from "@prisma/client"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { deleteAdmissionForm } from "@/data/admission-form"
 
-export default (dialog: DialogData<User>) => {
+export default (dialog: DialogData<AdmissionForm>) => {
 
     const router = useRouter();
 
     const onSubmit = () => {
         toast.promise(
             async () => {
-                await deleteUser(dialog.data.id);
+                await deleteAdmissionForm(dialog.data.id);
             },
             {
-                loading: "กําลังลบผู้ใช้งาน",
-                success: "ลบผู้ใช้งานเรียบร้อย",
-                error: "เกิดข้อผิดพลาดในการลบผู้ใช้งาน"
+                loading: "กําลังลบแบบรับสมัคร",
+                success: "ลบแบบรับสมัครเรียบร้อย",
+                error: "เกิดข้อผิดพลาดในการลบแบบรับสมัคร"
             }
         ).unwrap().then(() => {
             dialog.setData(undefined);
@@ -49,7 +49,7 @@ export default (dialog: DialogData<User>) => {
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>คุณแน่ใจหรือไม่</DialogTitle>
-                    <DialogDescription>ไม่สามารถย้อนกลับการดำเนินการนี้ได้ การดำเนินการนี้จะลบข้อมูลออกอย่างถาวร</DialogDescription>
+                    <DialogDescription>ไม่สามารถย้อนกลับการดำเนินการนี้ได้ การดำเนินการนี้จะลบข้อมูลพาร์ทเนอร์ออกอย่างถาวร</DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
                     <Button variant={"outline"} onClick={onSubmit}>ยืนยัน</Button>

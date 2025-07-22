@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import InputCommand from "@/components/input-command";
-import InputField from "@/components/input-field";
+import InputCommand from "@/components/module/input-command";
+import InputField from "@/components/module/input-field";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Input } from "@/components/ui/input";
 import { getDistricts, getProvinces, getSubDistricts, getZipCode, ThaiAddressDistrict, ThaiAddressProvince, ThaiAddressSubDistrict } from "@/lib/thai-address";

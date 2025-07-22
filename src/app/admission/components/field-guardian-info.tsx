@@ -1,6 +1,6 @@
 "use client";
 
-import InputField from "@/components/input-field";
+import InputField from "@/components/module/input-field";
 import { Input } from "@/components/ui/input";
 import admission from "@/schema/admission";
 import { UseFormReturn } from "react-hook-form";

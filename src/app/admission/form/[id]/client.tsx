@@ -15,9 +15,9 @@ import FieldGuardianInfo from "../../components/field-guardian-info";
 import { Button } from "@/components/ui/button";
 import { zodDefault } from "@/lib/utils";
 import service from "./service";
-import InputImage from "@/components/input-image";
+import InputImage from "@/components/module/input-image";
 import { toast } from "sonner";
-import ButtonLoader from "@/components/button-loader";
+import ButtonLoader from "@/components/module/button-loader";
 
 export default ({ data, length }: Readonly<{
     data: z.infer<typeof admissionForm.admissionForm>,

@@ -4,7 +4,7 @@ import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 import admission from "@/schema/admission";
 import user from "@/schema/user";
-import InputField from "@/components/input-field";
+import InputField from "@/components/module/input-field";
 import { ThaiCalendarPopover } from "@/components/module/thai-calendar-popover";
 
 export default ({

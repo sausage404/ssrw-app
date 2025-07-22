@@ -44,5 +44,6 @@ export interface DataTableProps<V extends Record<string, unknown>> {
     isLoading?: boolean
     isSearchParams?: boolean
     isHeader?: boolean
+    isSearchVisible?: boolean
     serverSide?: boolean
 }

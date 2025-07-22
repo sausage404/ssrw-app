@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Button } from "./ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Button } from "../ui/button";
 import { ControllerRenderProps } from "react-hook-form";
 import { z } from "zod";
 import admission from "@/schema/admission";

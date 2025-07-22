@@ -1,4 +1,4 @@
-import InputField from "@/components/input-field";
+import InputField from "@/components/module/input-field";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { UseFormReturn } from "react-hook-form";

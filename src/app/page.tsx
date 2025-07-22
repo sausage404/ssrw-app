@@ -44,6 +44,9 @@ export default async () => {
 
   return (
     <React.Fragment>
+      <div className="container-fluid mx-auto w-full relative md:h-auto h-50">
+        <img src="/hero.png" className="w-full object-cover object-right h-full" alt="" />
+      </div>
       <div className="container-fluid mx-auto w-full p-4 sm:p-8 border-x border-dashed">
         <div className="flex flex-col items-start gap-1">
           <h1 className="text-2xl font-bold leading-tight tracking-tighter sm:text-3xl md:text-4xl lg:leading-[1.5]">

@@ -52,7 +52,7 @@ export default () => {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline" size="sm">ย้ายระดับผู้ใช้งาน</Button>
+                <Button variant="outline">ย้ายระดับผู้ใช้งาน</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

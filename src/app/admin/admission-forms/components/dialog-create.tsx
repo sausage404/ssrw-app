@@ -11,13 +11,13 @@ import {
 import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import user from "@/schema/user"
 import { zodResolver } from "@hookform/resolvers/zod"
 import React from "react"
 import { toast } from "sonner"
 import DialogForm from "./dialog-form"
-import { createUser } from "@/data/user"
 import { useRouter } from "next/navigation"
+import admissionForm from "@/schema/admission-form"
+import { createAdmissionForm } from "@/data/admission-form"
 
 export default () => {
 
@@ -25,30 +25,23 @@ export default () => {
 
     const [open, setOpen] = React.useState(false)
 
-    const form = useForm<z.infer<typeof user.user>>({
-        resolver: zodResolver(user.user),
+    const form = useForm<z.infer<typeof admissionForm.admissionForm>>({
+        resolver: zodResolver(admissionForm.admissionForm),
         defaultValues: {
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            role: "STUDENT",
-            behaviorPoint: 100,
-            level: 0,
-            room: 0,
-            no: 0
+            openedAt: new Date(),
+            closedAt: new Date()
         }
     })
 
-    const handleSubmit = (value: z.infer<typeof user.user>) => {
+    const handleSubmit = (value: z.infer<typeof admissionForm.admissionForm>) => {
         toast.promise(
             async () => {
-                await createUser(value);
+                await createAdmissionForm(value);
             },
             {
-                loading: "กําลังเพิ่มผู้ใช้งาน",
-                success: "เพิ่มผู้ใช้งานเรียบร้อย",
-                error: "เกิดข้อผิดพลาดในการเพิ่มผู้ใช้งาน"
+                loading: "กําลังเพิ่มแบบรับสมัคร",
+                success: "เพิ่มแบบรับสมัครเรียบร้อย",
+                error: "เกิดข้อผิดพลาดในการเพิ่มแบบรับสมัคร"
             }
         ).unwrap().then(() => {
             setOpen(false);
@@ -60,11 +53,11 @@ export default () => {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button>เพิ่มผู้ใช้งาน</Button>
+                <Button>เพิ่มแบบรับสมัคร</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>เพิ่มผู้ใช้งาน</DialogTitle>
+                    <DialogTitle>เพิ่มแบบรับสมัคร</DialogTitle>
                     <DialogDescription>กรุณาตรวจสอบและกรอกข้อมูลให้ครบถ้วน</DialogDescription>
                 </DialogHeader>
                 <DialogForm form={form} onSubmit={handleSubmit} />

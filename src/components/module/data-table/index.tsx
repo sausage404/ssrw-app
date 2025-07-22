@@ -20,6 +20,7 @@ export function DataTable<V extends Record<string, unknown>>({
     isSearchParams = false,
     onSearch,
     serverSide,
+    isSearchVisible = false,
     isHeader = true,
 }: DataTableProps<V>) {
     const [sort, setSort] = React.useState<{ key: ColumnKey<V>; order: "asc" | "desc" } | null>(null)
@@ -72,6 +73,7 @@ export function DataTable<V extends Record<string, unknown>>({
                     onVisibleColumnsChange={setVisibleColumns}
                     searchValue={pagination.search || ""}
                     onSearch={handleSearch}
+                    isSearchVisible={isSearchVisible}
                 >
                     {children}
                 </DataTableToolbar>
