@@ -1,15 +1,14 @@
 "use client";
 
-import ButtonLoader from "@/components/button-loader";
 import { useAuth } from "@/components/context/use-auth";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { updateUser } from "@/data/user";
 import { Auth } from "@/lib/session";
 import user from "@/schema/user";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -34,9 +33,8 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
     })
 
     const onSubmit = async (value: z.infer<typeof user.user>) => start(async () => {
-        const { data } = await axios.put("/api/data/user", value);
-
-        if (data.success) {
+        try {
+            await updateUser(auth.id, value);
             await refresh({
                 ...auth,
                 prefix: value.prefix,
@@ -44,13 +42,12 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
                 lastName: value.lastName
             });
             setState({ error: null, success: "บันทึกสําเร็จข้อมูลสำเร็จ" });
-        } else {
-            setState({ error: data.message, success: null });
+            setTimeout(() => {
+                setState({ error: null, success: null });
+            }, 3000);
+        } catch (error) {
+            setState({ error: "เกิดข้อผิดพลาดในการเพิ่มผู้ใช้งาน", success: null });
         }
-
-        setTimeout(() => {
-            setState({ error: null, success: null });
-        }, 3000);
     })
 
     return (
@@ -117,16 +114,10 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
                         ) : (
                             <p className="text-muted-foreground text-sm">กรุณากรอกชื่อจริงและนามสกุลของคุณ เนื่องจากจะใช้ชื่อและนามสกุลนี้</p>
                         )}
-                        {/* {isPending ? (
-                            <ButtonLoader size="sm">
-                                กําลังบันทึก
-                            </ButtonLoader>
-                        ) : (
-                            <Button size="sm" onClick={(e) => {
-                                e.preventDefault();
-                                onSubmit(form.watch());
-                            }}>บันทึก</Button>
-                        )} */}
+                        <Button size="sm" onClick={(e) => {
+                            e.preventDefault();
+                            onSubmit(form.watch());
+                        }}>บันทึก</Button>
                     </div>
                 </div>
             </form>

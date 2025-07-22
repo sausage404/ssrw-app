@@ -4,13 +4,13 @@ import { JWTPayload, SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 import { User } from '@prisma/client'
 
-export type Auth = JWTPayload & User;
+export type Auth = JWTPayload & Omit<User, 'password'>;
 
 const secretKey = process.env.SESSION_SECRET
 const cookieName = 'session'
 const encodedKey = new TextEncoder().encode(secretKey)
 
-export async function encrypt(payload: User) {
+export async function encrypt(payload: Omit<User, 'password'>) {
     return new SignJWT(payload)
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
@@ -20,7 +20,7 @@ export async function encrypt(payload: User) {
 
 export async function decrypt(session: string | undefined = '') {
     try {
-        const { payload } = await jwtVerify<User>(session, encodedKey, {
+        const { payload } = await jwtVerify<Omit<User, 'password'>>(session, encodedKey, {
             algorithms: ['HS256'],
         })
         return payload
@@ -30,7 +30,7 @@ export async function decrypt(session: string | undefined = '') {
     }
 }
 
-export async function createSession(payload: User) {
+export async function createSession(payload: Omit<User, 'password'>) {
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     const session = await encrypt(payload);
 
@@ -71,7 +71,7 @@ export async function deleteSession() {
     (await cookies()).delete(cookieName)
 }
 
-export async function updateSession(payload: User) {
+export async function updateSession(payload: Omit<User, 'password'>) {
 
     const session = await encrypt(payload);
 

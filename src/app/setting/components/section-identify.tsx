@@ -1,6 +1,6 @@
 "use client";
 
-import InputCopy from "@/components/input-copy";
+import InputCopy from "@/components/module/input-copy";
 import { Auth } from "@/lib/session";
 
 export default ({ auth }: Readonly<{ auth: Auth }>) => {

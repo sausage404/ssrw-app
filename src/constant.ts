@@ -1,4 +1,4 @@
-import { BookOpen, CalendarCheck2, CalendarX2, ClipboardList, Gavel, LogIn, Megaphone, UserRoundPlus, Users, Users2 } from "lucide-react";
+import { BookOpen, CalendarCheck2, CalendarX2, ClipboardList, Database, Gavel, LogIn, Megaphone, UserRoundPlus, Users, Users2 } from "lucide-react";
 
 const folder = {
     studentPhoto: "1VFLxSuPrZaE4gvXI1_pGqqat1galiXfx",
@@ -57,12 +57,6 @@ const features = {
     ],
     teacher: [
         {
-            icon: BookOpen,
-            title: "ข้อมูลทั่วไป",
-            desc: "ครูสามารถดูรายละเอียดข้อมูลทั่วไปได้ที่นี่",
-            href: "/overview"
-        },
-        {
             icon: Megaphone,
             title: "ประชาสัมพันธ์",
             desc: "ครูสามารถดูประชาสัมพันธ์รายวันได้ที่นี่",
@@ -103,9 +97,15 @@ const features = {
     ],
     admin: [
         {
-            icon: Users,
+            icon: Database,
             title: "จัดการผู้ใช้งาน",
-            desc: "แอดมินสามารถจัดการบัญชีครู นักเรียนได้ที่นี่",
+            desc: "แอดมินสามารถจัดการบัญชีทั้งหมด ได้ที่นี่",
+            href: "/admin/users",
+        },
+        {
+            icon: Database,
+            title: "จัดการห้องรับสมัคร",
+            desc: "แอดมินสามารถจัดการห้องรับสมัคร นักเรียนได้ที่นี่",
             href: "/admin/users",
         },
         {
@@ -113,12 +113,6 @@ const features = {
             title: "จัดการประชาสัมพันธ์",
             desc: "แอดมินสามารถประกาศข่าวสารให้กับนักเรียนได้ที่นี่",
             href: "/announcement"
-        },
-        {
-            icon: CalendarCheck2,
-            title: "จัดการปฏิทินกิจกรรม",
-            desc: "แอดมินสามารถจัดการปฏิทินกิจกรรมได้ที่นี่",
-            href: "/calendar",
         }
     ]
 }

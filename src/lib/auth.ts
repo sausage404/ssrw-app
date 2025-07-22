@@ -18,10 +18,10 @@ export const signIn = async (credentials: z.infer<typeof user.credentials>) => {
     const existingUser = await prisma.user.findFirst({
         where: {
             email: credentials.email,
-        },
+        }
     })
 
-    if(!existingUser) {
+    if (!existingUser) {
         throw new Error('User not found');
     }
 
@@ -31,7 +31,20 @@ export const signIn = async (credentials: z.infer<typeof user.credentials>) => {
         throw new Error('Invalid email or password');
     }
 
-    const sessionToken = await encrypt(existingUser);
+    const omitUser = await prisma.user.findFirst({
+        where: {
+            id: existingUser.id,
+        },
+        omit: {
+            password: true,
+        }
+    })
+
+    if (!omitUser) {
+        throw new Error('User not found');
+    }
+
+    const sessionToken = await encrypt(omitUser);
 
     (await cookies()).set('session', sessionToken, {
         httpOnly: true,

@@ -1,7 +1,7 @@
 "use client"
 
 import { useAuth } from "@/components/context/use-auth";
-import InputPassword from "@/components/input-password";
+import InputPassword from "@/components/module/input-password";
 import Turnstile from "@/components/turnstile";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";

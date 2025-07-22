@@ -5,7 +5,7 @@ import { z } from "zod";
 import admission from "@/schema/admission";
 import user from "@/schema/user";
 import InputField from "@/components/input-field";
-import { ThaiCalendarPopover } from "@/components/thai-calendar-popover";
+import { ThaiCalendarPopover } from "@/components/module/thai-calendar-popover";
 
 export default ({
     form,

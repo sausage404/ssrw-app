@@ -3,7 +3,7 @@
 import React from "react"
 import InputUsersWithClass from "../components/input-users-with-class"
 import { Leave, Prisma, User } from "@prisma/client"
-import { ThaiCalendarPopover } from "@/components/thai-calendar-popover"
+import { ThaiCalendarPopover } from "@/components/module/thai-calendar-popover"
 import { Label } from "@/components/ui/label"
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import SelectAllStatus from "../components/select-all-status"
@@ -169,23 +169,47 @@ export default () => {
                         <TableFooter>
                             <TableRow className="divide-x">
                                 <TableHead className="text-center">รวม</TableHead>
-                                <TableHead className="text-center" colSpan={2}>แดงขาด เหลือลา เขียวมา เทายังไม่ทำการ</TableHead>
-                                {Array.from({ length: 10 }).map((_, il) => (
-                                    <TableHead key={il} className="text-center space-x-2">    
-                                        <span className="text-zinc-500">
-                                            {checks.filter(c => c.status[il] === 'null').length}
-                                        </span>
-                                        <span className="text-green-500">
-                                            {checks.filter(c => c.status[il] === 'present').length}
-                                        </span>
-                                        <span className="text-red-500">
-                                            {checks.filter(c => c.status[il] === 'absent').length}
-                                        </span>
-                                        <span className="text-yellow-500">
-                                            {checks.filter(c => c.status[il] === 'leave').length}
-                                        </span>
-                                    </TableHead>
-                                ))}
+                                <TableHead className="text-center space-x-2" colSpan={2}>
+                                    <span className="text-zinc-500">
+                                        ไม่พบ
+                                    </span>
+                                    <span className="text-green-500">
+                                        มา
+                                    </span>
+                                    <span className="text-red-500">
+                                        ขาด
+                                    </span>
+                                    <span className="text-yellow-500">
+                                        ลา
+                                    </span>
+                                </TableHead>
+                                <TableHead className="text-center space-x-2">
+                                    <span className="text-zinc-500">
+                                        {checks.filter(c => c.status[0] === 'null').length}
+                                    </span>
+                                    <span className="text-red-500">
+                                        {checks.filter(c => c.status[0] === 'absent').length}
+                                    </span>
+                                </TableHead>
+                                {Array.from({ length: 9 }).map((_, il) => {
+                                    const index = il + 1
+                                    return (
+                                        <TableHead key={index} className="text-center space-x-2">
+                                            <span className="text-zinc-500">
+                                                {checks.filter(c => c.status[index] === 'null').length}
+                                            </span>
+                                            <span className="text-green-500">
+                                                {checks.filter(c => c.status[index] === 'present').length}
+                                            </span>
+                                            <span className="text-red-500">
+                                                {checks.filter(c => c.status[index] === 'absent').length}
+                                            </span>
+                                            <span className="text-yellow-500">
+                                                {checks.filter(c => c.status[index] === 'leave').length}
+                                            </span>
+                                        </TableHead>
+                                    )
+                                })}
                             </TableRow>
                         </TableFooter>
                     )}

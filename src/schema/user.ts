@@ -11,7 +11,7 @@ export default {
         verified: z.literal(true, { invalid_type_error: 'ผู้ใช้ยังไม่ได้รับการยืนยัน' })
     }),
     user: z.object({
-        prefix,
+        prefix: z.string().min(1),
         firstName: z.string().min(2).max(50),
         lastName: z.string().min(2).max(50),
         email: z.string().email(),

@@ -38,9 +38,11 @@ export default async () => {
                 </p >
                 <div className="pt-3">
                     <Button variant="outline" size="sm" disabled={!isOpen} asChild>
-                        <Link href={`admission/form/${form.id}`}>
-                            {isOpen ? "สมัครเลย" : "ปิดรับสมัคร"}
-                        </Link>
+                        {isOpen ? (
+                            <Link href={`/admission/form/${form.id}`}>เปิดรับสมัคร</Link>
+                        ) : (
+                            <span>ปิดรับสมัคร</span>
+                        )}
                     </Button>
                 </div>
             </div>

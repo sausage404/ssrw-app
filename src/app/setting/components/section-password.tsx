@@ -1,10 +1,11 @@
 "use client";
 
-import ButtonLoader from "@/components/button-loader";
+import ButtonLoader from "@/components/module/button-loader";
 import { useAuth } from "@/components/context/use-auth";
-import InputPassword from "@/components/input-password";
+import InputPassword from "@/components/module/input-password";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { updateUser } from "@/data/user";
 import { Auth } from "@/lib/session";
 import user from "@/schema/user";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -34,28 +35,23 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
     })
 
     const onSubmit = async (value: z.infer<typeof user.changePassword>) => start(async () => {
+        try {
 
-        if (value.new !== value.confirm) {
-            setState({ error: "รหัสผ่านใหม่ไม่ตรงกัน", success: null });
-            return;
-        }
+            if (value.new !== value.confirm) {
+                setState({ error: "รหัสผ่านใหม่ไม่ตรงกัน", success: null });
+                return;
+            }
 
-        const { data } = await axios.patch("/api/data/user/change-password", value);
-
-        if (data.success) {
-            await refresh({
-                ...auth,
-                password: data.value
-            });
+            await updateUser(auth.id, value);
+            await refresh(auth);
             form.reset();
             setState({ error: null, success: "บันทึกสําเร็จข้อมูลสำเร็จ" });
-        } else {
-            setState({ error: data.message, success: null });
+            setTimeout(() => {
+                setState({ error: null, success: null });
+            }, 3000);
+        } catch (error) {
+            setState({ error: "เกิดข้อผิดพลาดในการเพิ่มผู้ใช้งาน", success: null });
         }
-
-        setTimeout(() => {
-            setState({ error: null, success: null });
-        }, 3000);
     })
 
     return (

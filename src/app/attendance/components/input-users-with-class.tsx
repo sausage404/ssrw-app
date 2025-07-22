@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { getUsers } from "@/data/user"
 import user from "@/schema/user"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { User } from "@prisma/client"
-import axios from "axios"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
@@ -24,14 +24,13 @@ export default ({
 
     const handleSubmit = (value: z.infer<typeof user.withClass>) => {
         toast.promise(async () => {
-            const { data } = await axios.get("/api/data/user/with-class", { params: value });
-            if (data.success) {
-                setStudents(data.data);
-            }
+            return await getUsers({ where: { level: value.level, room: value.room } })
         }, {
             loading: "กําลังค้นหาผู้ใช้งาน",
             success: "ค้นหาผู้ใช้งานเรียบร้อย",
             error: "เกิดข้อผิดพลาดในการค้นหาผู้ใช้งาน"
+        }).unwrap().then((users) => {
+            setStudents(users);
         })
     }
 

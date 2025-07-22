@@ -7,9 +7,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { ControllerRenderProps } from 'react-hook-form';
-import { Calendar } from './ui/calendar';
-import { format } from 'date-fns'
+import { Calendar } from '../ui/calendar';
 import { th } from 'date-fns/locale'
 
 interface ThaiCalendarPopoverProps {

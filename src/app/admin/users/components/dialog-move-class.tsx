@@ -7,10 +7,10 @@ import { z } from "zod"
 import user from "@/schema/user"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import React from "react"
 import { toast } from "sonner"
-import axios from "axios"
+import { updateClassInUser } from "@/data/user"
+import { Input } from "@/components/ui/input"
 
 export default () => {
 
@@ -26,24 +26,27 @@ export default () => {
         }
     })
 
-    const handleSubmit = (value: z.infer<typeof user.moveClass>) => {
+    const onSubmit = (value: z.infer<typeof user.moveClass>) => {
         toast.promise(
             async () => {
-                const { data } = await axios.put("/api/data/user/move-class", value);
-                if (data.success) {
-                    setOpen(false);
-                    form.reset();
-                } else {
-                    console.log(data.message);
-                    throw new Error(data.message);
-                }
+                await updateClassInUser({
+                    level: value.beforeLevel,
+                    room: value.beforeRoom
+                }, {
+                    level: value.afterLevel,
+                    room: value.afterRoom
+                })
             },
             {
                 loading: "กําลังย้ายระดับผู้ใช้งาน",
                 success: "ย้ายระดับผู้ใช้งานเรียบร้อย",
                 error: "เกิดข้อผิดพลาดในการย้ายระดับผู้ใช้งาน"
             }
-        )
+        ).unwrap().then(() => {
+            setOpen(false);
+            form.reset();
+            location.reload();
+        })
     }
 
     return (
@@ -57,12 +60,12 @@ export default () => {
                     <DialogDescription>กรุณาตรวจสอบและกรอกข้อมูลให้ครบถ้วน</DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-4">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
                         <div className="grid grid-cols-2 gap-4">
                             <FormField
                                 control={form.control}
                                 name="beforeLevel"
-                                render={({ field: { value, onChange, ...field} }) => (
+                                render={({ field: { value, onChange, ...field } }) => (
                                     <FormItem>
                                         <FormLabel>ชั้นเดิม</FormLabel>
                                         <FormControl>
@@ -75,7 +78,7 @@ export default () => {
                             <FormField
                                 control={form.control}
                                 name="beforeRoom"
-                                render={({ field: { value, onChange, ...field} }) => (
+                                render={({ field: { value, onChange, ...field } }) => (
                                     <FormItem>
                                         <FormLabel>ห้องเดิม</FormLabel>
                                         <FormControl>
@@ -88,7 +91,7 @@ export default () => {
                             <FormField
                                 control={form.control}
                                 name="afterLevel"
-                                render={({ field: { value, onChange, ...field} }) => (
+                                render={({ field: { value, onChange, ...field } }) => (
                                     <FormItem>
                                         <FormLabel>ชั้นใหม่</FormLabel>
                                         <FormControl>
@@ -101,7 +104,7 @@ export default () => {
                             <FormField
                                 control={form.control}
                                 name="afterRoom"
-                                render={({ field: { value, onChange, ...field} }) => (
+                                render={({ field: { value, onChange, ...field } }) => (
                                     <FormItem>
                                         <FormLabel>ห้องใหม่</FormLabel>
                                         <FormControl>
