@@ -202,13 +202,13 @@ CREATE TABLE public.admissions (
     "guardianJob" text NOT NULL,
     "guardianPhone" text NOT NULL,
     "guardianRelation" text NOT NULL,
-    "studentPhoto" text,
-    "houseRecord" text,
-    "studentRecord" text,
-    pdf text,
     status public.admission_status DEFAULT 'PENDING'::public.admission_status NOT NULL,
     "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    "updatedAt" timestamp(3) without time zone NOT NULL
+    "updatedAt" timestamp(3) without time zone NOT NULL,
+    "pdfId" text NOT NULL,
+    "houseRecord" text,
+    "studentPhoto" text NOT NULL,
+    "studentRecord" text
 );
 
 
@@ -387,7 +387,6 @@ cmd9vuefz0001q7rkr6kb4rwx	cmd9rlgle0000q7u8p9l5e4n7
 --
 
 COPY public.admission_forms (id, type, round, class, "openedAt", "closedAt", "createdAt", "updatedAt") FROM stdin;
-cmd9x2whe0000q7lgwwknbh38	NEW	QOUTA	4	1970-01-01 00:00:00	1970-01-01 00:00:00	2025-07-19 07:18:58.801	2025-07-19 07:18:41.866
 cmd9x2whe0001q7lgteqabnjq	NEW	SPECIAL	1	1970-01-01 00:00:00	1970-01-01 00:00:00	2025-07-19 07:18:58.801	2025-07-19 07:18:53.69
 cmd9x33620002q7lgvicnpdd4	NEW	SPECIAL	0	1970-01-01 00:00:00	1970-01-01 00:00:00	2025-07-19 07:19:07.466	2025-07-19 07:19:00.018
 cmd9x5anh0005q7lguz9fehj1	NEW	NORMAL	1	1970-01-01 00:00:00	1970-01-01 00:00:00	2025-07-19 07:20:50.477	2025-07-19 07:20:41.15
@@ -398,6 +397,7 @@ cmd9x7r3b000hq7lguzizag16	MOVE	NORMAL	3	1970-01-01 00:00:00	1970-01-01 00:00:00	
 cmd9x86zl000iq7lgfqhvyaan	MOVE	NORMAL	4	1970-01-01 00:00:00	1970-01-01 00:00:00	2025-07-19 07:23:05.698	2025-07-19 07:23:11.032
 cmd9x8gqp000jq7lg61bxauew	MOVE	NORMAL	6	1970-01-01 00:00:00	1970-01-01 00:00:00	2025-07-19 07:23:18.337	2025-07-19 07:23:22.352
 cmd9x8pz3000kq7lgrgnnr55y	MOVE	NORMAL	5	1970-01-01 00:00:00	1970-01-01 00:00:00	2025-07-19 07:23:30.304	2025-07-19 07:23:39.384
+cmd9x2whe0000q7lgwwknbh38	NEW	QOUTA	4	2025-07-21 17:00:00	2025-07-25 17:00:00	2025-07-19 07:18:58.801	2025-07-22 15:38:25.968
 \.
 
 
@@ -405,7 +405,7 @@ cmd9x8pz3000kq7lgrgnnr55y	MOVE	NORMAL	5	1970-01-01 00:00:00	1970-01-01 00:00:00	
 -- Data for Name: admissions; Type: TABLE DATA; Schema: public; Owner: myuser
 --
 
-COPY public.admissions (id, no, "studentId", "academicYear", type, class, round, plan, "reservePlan", "serviceZone", provenance, prefix, "firstName", "lastName", "cardId", "birthDate", ethnicity, nationality, religion, "bloodType", phone, talent, "houseNo", "villageNo", village, road, alley, "subDistrict", district, province, zipcode, "schoolName", grade, "subDistrictOld", "districtOld", "provinceOld", "zipcodeOld", "fatherName", "fatherJob", "fatherPhone", "motherName", "motherJob", "motherPhone", "guardianName", "guardianJob", "guardianPhone", "guardianRelation", "studentPhoto", "houseRecord", "studentRecord", pdf, status, "createdAt", "updatedAt") FROM stdin;
+COPY public.admissions (id, no, "studentId", "academicYear", type, class, round, plan, "reservePlan", "serviceZone", provenance, prefix, "firstName", "lastName", "cardId", "birthDate", ethnicity, nationality, religion, "bloodType", phone, talent, "houseNo", "villageNo", village, road, alley, "subDistrict", district, province, zipcode, "schoolName", grade, "subDistrictOld", "districtOld", "provinceOld", "zipcodeOld", "fatherName", "fatherJob", "fatherPhone", "motherName", "motherJob", "motherPhone", "guardianName", "guardianJob", "guardianPhone", "guardianRelation", status, "createdAt", "updatedAt", "pdfId", "houseRecord", "studentPhoto", "studentRecord") FROM stdin;
 \.
 
 
@@ -415,7 +415,6 @@ COPY public.admissions (id, no, "studentId", "academicYear", type, class, round,
 
 COPY public.announcements (id, description, "isSummarize", "occurredAt", "createdAt", "updatedAt") FROM stdin;
 cmdafg4ik0001q7yowvbqogru	It's assigned by your Internet Service Provider (ISP), allowing you to connect to the Internet through a network, whether at home, work, or on the go. Your IP ...	t	2025-07-19 15:52:28.746	2025-07-19 15:53:08.826	2025-07-19 15:53:08.826
-cmdafgcwo0002q7yoe3a4fw1k	It's assigned by your Internet Service Provider (ISP), allowing you to connect to the Internet through a network, whether at home, work, or on the go. Your IP ...	f	2025-07-19 15:53:10.343	2025-07-19 15:53:19.704	2025-07-19 15:53:19.704
 \.
 
 
@@ -435,7 +434,6 @@ cmd9vuefz0001q7rkr6kb4rwx	ICT	ใครกำลังมองหาคอร�
 COPY public.users (id, prefix, "firstName", "lastName", email, password, "behaviorPoint", level, room, no, role, verified, "createdAt", "updatedAt") FROM stdin;
 cmd9rlgle0000q7u8p9l5e4n9	นาย	วรเมธ	เชื้อบุญมี	12356@ssrw.ac.th	$2b$10$eopHynrJ3f2ejBD70AxT6.dYiejTyz3IfbSoVoe0Hrvpq41v5jTo.	100	6	6	6	ADMIN	f	2025-07-19 04:45:26.978	2025-07-20 13:15:51.962
 cmd9tflq60003q7u85ygfn14p	นาย	นาง	มาลี	user003@example.com	$2b$10$abcdefghijklmnopqrstuvwxyza123456789012345	0	5	0	0	STUDENT	t	2025-07-19 05:36:52.926	2025-07-20 13:15:51.966
-cmd9rlgle0000q7u8p9l5e4n7	นาย	ปริญญา	พันติมิตร	11857@ssrw.ac.th	$2b$10$rBHOyQ8zMmupEllZOH7WT.nskxBgFmrhrdn5B7Z8djYSH6mPn.IUy	100	1	0	11	TEACHER	f	2025-07-19 04:43:45.791	2025-07-20 13:15:51.969
 cmd9tflq60005q7u8vh61dr33	นาย	นางสาว	ดวงใจ	user005@example.com	$2b$10$abcdefghijklmnopqrstuvwxyza123456789012345	0	5	0	0	STUDENT	t	2025-07-19 05:36:52.926	2025-07-20 13:15:51.972
 cmd9tflq60002q7u8dm7yn0ow	นาย	นางสาว	สมหญิง	00000@ssrw.ac.th	$2b$10$abcdefghijklmnopqrstuvwxyza123456789012345	0	3	0	0	STUDENT	t	2025-07-19 05:36:52.926	2025-07-20 13:15:51.976
 cmd9tflq60007q7u8d6nqhjxh	นาย	นาง	อรุณี	user007@example.com	$2b$10$abcdefghijklmnopqrstuvwxyza123456789012345	40	1	0	0	STUDENT	t	2025-07-19 05:36:52.926	2025-07-20 13:15:51.979
@@ -468,6 +466,7 @@ cmd9tflq7000wq7u8j46ue2db	นาย	นาย	คณิน	user032@example.com	$
 cmd9tflq7000xq7u8ajqdwwsu	นาย	นางสาว	นันทพร	user033@example.com	$2b$10$abcdefghijklmnopqrstuvwxyza123456789012345	0	1	0	0	STUDENT	t	2025-07-19 05:36:52.926	2025-07-20 13:15:52.075
 cmd9tflq60001q7u8krg5gb1t	นาย	นาย	สมชาย	user001@example.com	$2b$10$abcdefghijklmnopqrstuvwxyza123456789012345	0	3	0	0	STUDENT	t	2025-07-19 05:36:52.926	2025-07-20 13:15:52.079
 cmd9tflq60006q7u80r0gz7tw	นาย	นาย	วีระ	user006@example.com	$2b$10$abcdefghijklmnopqrstuvwxyza123456789012345	100	5	0	0	STUDENT	t	2025-07-19 05:36:52.926	2025-07-20 13:15:52.083
+cmd9rlgle0000q7u8p9l5e4n7	นาย	ปริญญา	พันติมิตร	11857@ssrw.ac.th	$2b$10$rBHOyQ8zMmupEllZOH7WT.nskxBgFmrhrdn5B7Z8djYSH6mPn.IUy	100	1	0	11	ADMIN	f	2025-07-19 04:43:45.791	2025-07-22 09:59:03.223
 cmd9tflq70010q7u8t2g8wr6c	นาย	นาย	ธนวัฒน์	user036@example.com	$2b$10$abcdefghijklmnopqrstuvwxyza123456789012345	0	2	0	0	STUDENT	t	2025-07-19 05:36:52.926	2025-07-20 13:15:52.09
 cmd9tflq70011q7u839kqybp5	นาย	นางสาว	ศิริพร	user037@example.com	$2b$10$abcdefghijklmnopqrstuvwxyza123456789012345	0	4	0	0	STUDENT	t	2025-07-19 05:36:52.926	2025-07-20 13:15:52.093
 cmd9tflq70012q7u8j5vy8zmd	นาย	นาย	สุรศักดิ์	user038@example.com	$2b$10$abcdefghijklmnopqrstuvwxyza123456789012345	0	3	0	0	STUDENT	t	2025-07-19 05:36:52.926	2025-07-20 13:15:52.096
