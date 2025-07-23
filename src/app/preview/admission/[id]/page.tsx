@@ -1,5 +1,4 @@
 import { getAdmission } from "@/data/admission"
-import { Admission } from "@prisma/client"
 import { notFound } from "next/navigation"
 
 export default async ({ params }: { params: Promise<{ id: string }> }) => {
@@ -17,6 +16,6 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
     }
 
     return (
-        <iframe src={data.pdf!} className="w-full h-screen" />
+        <iframe src={data.pdf} className="w-full h-screen" />
     )
 }

@@ -110,7 +110,7 @@ model Admission {
   studentPhoto  String
   houseRecord   String?
   studentRecord String?
-  pdfId           String
+  pdf           String
 
   status AdmissionStatus @default(PENDING)
 
