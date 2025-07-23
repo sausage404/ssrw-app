@@ -1,5 +1,5 @@
 import Client from "./client";
 
-export default async () => {
+export default () => {
     return <Client />
 }

@@ -179,25 +179,6 @@ export class Drive {
         }
     }
 
-    public async createSpreadsheet(name: string, parentId?: string) {
-        const fileMetadata = {
-            name: name,
-            mimeType: 'application/vnd.google-apps.spreadsheet',
-            parents: parentId ? [parentId] : undefined
-        };
-
-        const response = await this.google.drive.files.create({
-            requestBody: fileMetadata,
-            fields: 'id, name, webViewLink'
-        });
-
-        if (!response.data.id) {
-            throw new Error('Failed to create spreadsheet');
-        }
-
-        return response.data;
-    }
-
     public async searchFiles(query: string): Promise<drive_v3.Schema$File[]> {
         const response = await this.google.drive.files.list({
             q: `name contains '${query}'`,

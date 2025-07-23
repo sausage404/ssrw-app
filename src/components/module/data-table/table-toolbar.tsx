@@ -24,7 +24,7 @@ export function DataTableToolbar<V extends Record<string, unknown>>({
     children,
 }: TableToolbarProps<V>) {
     return (
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-4">
             <div className="max-w-lg w-full">
                 {!isSearchVisible && (
                     <Input

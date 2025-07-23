@@ -49,7 +49,6 @@ model AdmissionForm {
   @@map("admission_forms")
 }
 
-// Admission model
 model Admission {
   id           String         @id @default(cuid())
   no           Int
@@ -108,16 +107,15 @@ model Admission {
   guardianRelation String
 
   // File uploads (optional)
-  studentPhoto  String?
+  studentPhoto  String
   houseRecord   String?
   studentRecord String?
-  pdf           String?
+  pdfId           String
 
-  // Status
   status AdmissionStatus @default(PENDING)
 
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("admissions")
 }
@@ -153,7 +151,7 @@ model Announcement {
 
 model Attendance {
   id     String   @id @default(cuid())
-  userId String 
+  userId String
   period String[]
 
   User User @relation(fields: [userId], references: [id])

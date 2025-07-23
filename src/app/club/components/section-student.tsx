@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import axios from "axios";
 import { Auth } from "@/lib/session";
 import CardClub from "./card-club";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Prisma } from "@prisma/client";
+import { getClubs } from "@/data/club";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 export type ClubPayload = Prisma.ClubGetPayload<{ include: { members: true, owner: true } }>
 
@@ -14,10 +14,11 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
 
     React.useEffect(() => {
         (async () => {
-            const { data } = await axios.get<{ success: boolean, data: ClubPayload[] }>("/api/data/club");
-            if (data.success) {
-                setClubs(data.data);
-            }
+            setClubs(
+                await getClubs({
+                    include: { members: true, owner: true }
+                }) as ClubPayload[]
+            );
         })()
     }, []);
 

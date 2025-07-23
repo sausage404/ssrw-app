@@ -19,6 +19,7 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
+import { getFullName } from "@/lib/utils"
 
 export default () => {
 
@@ -143,7 +144,7 @@ export default () => {
                         {students.length > 0 && checks.length > 0 ? students.map((user, index) => (
                             <TableRow className="divide-x" key={index}>
                                 <TableCell className="text-center">{user.no}</TableCell>
-                                <TableCell>{user.prefix}{user.firstName} {user.lastName}</TableCell>
+                                <TableCell>{getFullName(user)}</TableCell>
                                 <TableCell>
                                     <div className="w-full flex items-center justify-center">
                                         <Button type="button" variant="outline" size="sm" onClick={() => {

@@ -1,10 +1,10 @@
 import { BookOpen, CalendarCheck2, CalendarX2, ClipboardList, Database, Gavel, LogIn, Megaphone, UserRoundPlus, Users, Users2 } from "lucide-react";
 
 const folder = {
-    studentPhoto: "1VFLxSuPrZaE4gvXI1_pGqqat1galiXfx",
-    pdf: "1sGFOnO_zf9NDQ3cHZcAWbhpLG6XvmbIx",
-    studentRecord: "1pvf08CsiZzW0Z3e6n7nNdnjQzH3wn3UP",
-    houseRecord: "1ftHJXrbDIolFrH_19xPhlao-Cm4k0WT6",
+    studentPhoto: "1bjqlwpYxkNodkRn3TEVHwPm6R7zXuIDn",
+    pdf: "1A_Qb_yWdGMfmh7ANgovJMa3Z6jz8uowK",
+    studentRecord: "1bwcOmCUR1a1KBehWOYC8a2SIuwhwBc6R",
+    houseRecord: "1-ak1hr1kABUeJfgjGCY1hATc6jj-oJy3",
 }
 
 // const features = [
@@ -104,9 +104,15 @@ const features = {
         },
         {
             icon: Database,
-            title: "จัดการห้องรับสมัคร",
-            desc: "แอดมินสามารถจัดการห้องรับสมัคร นักเรียนได้ที่นี่",
-            href: "/admin/users",
+            title: "จัดการแบบรับสมัคร",
+            desc: "แอดมินสามารถจัดการแบบรับสมัคร นักเรียนได้ที่นี่",
+            href: "/admin/admission-forms",
+        },
+        {
+            icon: Database,
+            title: "จัดการบันทึกรับสมัคร",
+            desc: "แอดมินสามารถจัดการบันทึกรับสมัคร นักเรียนได้ที่นี่",
+            href: "/admin/admissions",
         },
         {
             icon: Megaphone,

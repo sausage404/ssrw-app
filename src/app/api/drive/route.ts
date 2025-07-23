@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
         const name = data.get("name") as string;
         const file = data.get("file") as Blob;
         const mimeType = data.get("mimeType") as string;
-        // const parentId = data.get("parentId") as string;
+        const parentId = data.get("parentId") as string;
 
 
         if (!name || !file) {
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
             name,
             Buffer.from(await file.arrayBuffer()),
             mimeType,
-            "1UpBgKC8NKN_MCm8mfs2V-uUiY3k5Bk2f"
+            parentId
         );
 
         return NextResponse.json({ success: true, id: response.id, message: 'File updated successfully' });

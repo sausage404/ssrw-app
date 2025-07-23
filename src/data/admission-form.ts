@@ -3,7 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import admissionForm from "@/schema/admission-form";
 import { z } from "zod";
-import { Prisma, AdmissionForm } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 export const getAdmissionForms = async (option: Prisma.AdmissionFormFindManyArgs) => {
     try {

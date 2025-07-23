@@ -1,16 +1,14 @@
 "use client";
 
-import user from "@/schema/user";
-import axios from "axios";
 import React from "react";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Club, User } from "@prisma/client";
 import { toast } from "sonner";
 import { ClubPayload } from "./section-student";
+import { updateClub } from "@/data/club";
+import { Auth } from "@/lib/session";
 
-export default ({ auth, value }: Readonly<{ value: ClubPayload, auth: User }>) => {
+export default ({ auth, value }: Readonly<{ value: ClubPayload, auth: Auth }>) => {
     const join = async () => {
 
         if (value.maxMember <= value.members.length) {
@@ -24,16 +22,13 @@ export default ({ auth, value }: Readonly<{ value: ClubPayload, auth: User }>) =
         }
 
         toast.promise(async () => {
-            const { data } = await axios.post("/api/data/club/join", { id: auth.id, clubId: value.id });
-            if (data.success) {
-                window.location.reload();
-            } else {
-                throw new Error(data.message);
-            }
+            await updateClub(value.id, { members: { connect: { id: auth.id } } });
         }, {
             loading: "กําลังเข้าร่วมชุมนุม",
             success: "เข้าร่วมชุมนุมเรียบร้อย",
             error: "เกิดข้อผิดพลาดในการเข้าร่วมชุมนุม"
+        }).unwrap().then(() => {
+            window.location.reload();
         })
     }
 

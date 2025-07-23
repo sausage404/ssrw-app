@@ -11,12 +11,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { Auth } from "@/lib/session"
 import club from "@/schema/club"
 import { zodResolver } from "@hookform/resolvers/zod"
-import axios from "axios"
 import React, { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 import { ClubPayload } from "./section-student"
+import { createClub, deleteClub, getClub, updateClub } from "@/data/club"
 
 export default ({ auth }: Readonly<{ auth: Auth }>) => {
 
@@ -36,28 +36,27 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
         if (thisClub) {
             toast.promise(
                 async () => {
-                    const { data } = await axios.put("/api/data/club", { data: value, id: thisClub.id });
-                    if (data.success) {
-                        window.location.reload();
-                    } else {
-                        throw new Error(data.message);
-                    }
+                    await updateClub(thisClub.id, value);
                 },
                 {
                     loading: "กําลังแก้ไขชุมนุม",
                     success: "แก้ไขชุมนุมเรียบร้อย",
                     error: "เกิดข้อผิดพลาดในการแก้ไขชุมนุม"
                 }
-            )
+            ).unwrap().then(() => {
+                window.location.reload();
+            })
         } else {
             toast.promise(
                 async () => {
-                    const { data } = await axios.post("/api/data/club", value);
-                    if (data.success) {
-                        window.location.reload();
-                    } else {
-                        throw new Error(data.message);
-                    }
+                    await createClub({
+                        ...value,
+                        owner: {
+                            connect: {
+                                id: auth.id
+                            }
+                        }
+                    });
                 },
                 {
                     loading: "กําลังเพิ่มชุมนุม",
@@ -72,30 +71,30 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
         e.preventDefault()
         toast.promise(
             async () => {
-                const { data } = await axios.delete("/api/data/club", { params: { id: thisClub?.id } });
-                if (data.success) {
-                    window.location.reload();
-                } else {
-                    throw new Error(data.message);
-                }
+                await deleteClub(thisClub!.id);
             },
             {
                 loading: "กําลังลบชุมนุม",
                 success: "ลบชุมนุมเรียบร้อย",
                 error: "เกิดข้อผิดพลาดในการลบชุมนุม"
             }
-        )
+        ).unwrap().then(() => {
+            window.location.reload();
+        })
     }
 
     useEffect(() => {
         (async () => {
-            const { data } = await axios.get("/api/data/club", { params: { id: auth.id } });
-            if (data.success) {
-                setThisClub(data.data);
-                form.setValue("name", data.data.name);
-                form.setValue("description", data.data.description);
-                form.setValue("status", data.data.status);
-                form.setValue("maxMember", data.data.maxMember);
+            const data = await getClub({
+                where: { userId: auth.id },
+                include: { members: true, owner: true }
+            }) as ClubPayload;
+            if (data) {
+                setThisClub(data);
+                form.setValue("name", data.name);
+                form.setValue("description", data.description);
+                form.setValue("status", data.status);
+                form.setValue("maxMember", data.maxMember);
             }
         })()
     }, [])

@@ -2,9 +2,8 @@
 
 import React from "react"
 import { EllipsisVertical } from "lucide-react"
-import { User } from "@prisma/client"
+import { Admission } from "@prisma/client"
 import { useDialogData } from "@/hooks/use-dialog-data"
-import { getUserCount, getUsers } from "@/data/user"
 import { DataTableColumn } from "@/components/module/data-table/table-types"
 import { Button } from "@/components/ui/button"
 import {
@@ -13,39 +12,38 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
-import DialogCreate from "./components/dialog-create"
-import DialogUpdate from "./components/dialog-update"
 import DialogDelete from "./components/dialog-delete"
-import DialogMoveClass from "./components/dialog-move-class"
 import { DataTable } from "@/components/module/data-table"
 import { usePagination } from "@/hooks/use-pagination"
+import { getAdmissionCount, getAdmissions } from "@/data/admission"
+import Link from "next/link"
+import admissionForm from "@/schema/admission-form"
 import { getFullName } from "@/lib/utils"
 
 export default () => {
 
     const { pagination, setPagination, params } = usePagination();
-    const [data, setData] = React.useState<User[]>([]);
+    const [data, setData] = React.useState<Admission[]>([]);
     const [isPending, startTransition] = React.useTransition();
 
-    const updateDialog = useDialogData<User>();
-    const deleteDialog = useDialogData<User>();
+    const deleteDialog = useDialogData<Admission>();
 
     React.useEffect(() => {
-        setPagination(params); // อัปเดต state เพื่อ sync กับ UI
+        setPagination(params);
 
         startTransition(async () => {
             const skip = (params.page - 1) * params.pageSize;
             const take = params.pageSize;
 
             if (params.search.length > 0) {
-                const data = await getUsers({
+                const data = await getAdmissions({
                     skip,
                     take,
                     where: {
                         OR: [
                             { firstName: { contains: params.search, mode: "insensitive" } },
                             { lastName: { contains: params.search, mode: "insensitive" } },
-                            { email: { contains: params.search, mode: "insensitive" } },
+                            { cardId: { contains: params.search, mode: "insensitive" } },
                         ]
                     }
                 });
@@ -56,8 +54,11 @@ export default () => {
                 });
                 setData(data);
             } else {
-                const data = await getUsers({ skip, take });
-                const total = await getUserCount();
+                const skip = (params.page - 1) * params.pageSize;
+                const take = params.pageSize;
+
+                const data = await getAdmissions({ skip, take });
+                const total = await getAdmissionCount();
 
                 setPagination({
                     ...params,
@@ -68,14 +69,32 @@ export default () => {
         });
     }, [params]);
 
-    const columns: DataTableColumn<User>[] = [
+    const columns: DataTableColumn<Admission>[] = [
         {
             key: "id",
             header: "ไอดี"
         },
         {
-            key: "email",
-            header: "อีเมล"
+            key: "academicYear",
+            header: "ปีการศึกษา"
+        },
+        {
+            key: "no",
+            header: "ลำดับที่"
+        },
+        {
+            key: "type",
+            header: "ประเภท",
+            render: (v) => admissionForm.typeView[v.type]
+        },
+        {
+            key: "round",
+            header: "รอบ",
+            render: (v) => admissionForm.roundView[v.round]
+        },
+        {
+            key: "class",
+            header: "ระดับชั้น"
         },
         {
             key: "name",
@@ -83,21 +102,8 @@ export default () => {
             render: (user) => getFullName(user)
         },
         {
-            key: "class",
-            header: "ระดับชั้น",
-            render: (user) => user.role === "STUDENT" ? `มัธยมศึกษาปี ${user.level}/${user.room}` : "-",
-        },
-        {
-            key: "no",
-            header: "เลขที่"
-        },
-        {
-            key: "behaviorPoint",
-            header: "ความประพฤติ"
-        },
-        {
-            key: "role",
-            header: "บทบาท"
+            key: "cardId",
+            header: "เลขบัตรประชาชน"
         },
         {
             isVisible: true,
@@ -110,13 +116,10 @@ export default () => {
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuItem onClick={() => {
-                            setTimeout(() => {
-                                updateDialog.setData(v)
-                                updateDialog.onOpenChange(true)
-                            }, 1)
-                        }}>
-                            แก้ไข
+                        <DropdownMenuItem asChild>
+                            <Link target="_blank" href={`/preview/admission/${v.id}`}>
+                                ดูข้อมูล
+                            </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => {
                             setTimeout(() => {
@@ -140,7 +143,6 @@ export default () => {
                 </h1>
             </div>
             <div className="w-full p-6">
-                {updateDialog.data && <DialogUpdate {...{ ...updateDialog, data: updateDialog.data }} />}
                 {deleteDialog.data && <DialogDelete {...{ ...deleteDialog, data: deleteDialog.data }} />}
                 <div>
                     <DataTable
@@ -150,10 +152,7 @@ export default () => {
                         isLoading={isPending}
                         isSearchParams
                         serverSide
-                    >
-                        <DialogCreate />
-                        <DialogMoveClass />
-                    </DataTable>
+                    />
                 </div>
             </div>
         </div>
