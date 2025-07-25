@@ -56,10 +56,10 @@ export default {
         guardianJob: z.string().min(1, "กรุณากรอกอาชีพผู้ปกครอง"),
         guardianPhone: z.string().min(10, "กรุณากรอกหมายเลขโทรศัพท์ผู้ปกครอง"),
         guardianRelation: z.string().min(1, "กรุณากรอกความสัมพันธ์กับผู้ปกครอง"),
-        studentPhoto: z.string().optional(),
+        studentPhoto: z.string(), 
         houseRecord: z.string().optional(),
         studentRecord: z.string().optional(),
-        pdf: z.string().optional(),
+        pdf: z.string(),
     }),
     status,
     bloodType
