@@ -1,5 +1,10 @@
 import Client from "./client";
+import { Suspense } from 'react';
 
 export default () => {
-    return <Client />
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Client />
+    </Suspense>
+  );
 }
