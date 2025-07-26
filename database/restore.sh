@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CONTAINER=ssrw-app-db-1
+CONTAINER=ssrw-app_db_1
 DB=mydatabase
 USER=myuser
 FILE=./backups/backup.sql

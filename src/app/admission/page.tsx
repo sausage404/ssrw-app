@@ -8,8 +8,6 @@ export const metadata = () => {
     title: 'Admission'
 }
 
-export const dynamic = 'force-dynamic';
-
 export default async () => {
     const data = await prisma.admissionForm.findMany({})
 

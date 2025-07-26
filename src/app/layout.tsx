@@ -7,6 +7,8 @@ import Footer from "@/components/layout/footer";
 import { AuthProvider } from "@/components/context/use-auth";
 import { Toaster } from "@/components/ui/sonner";
 
+export const dynamic = 'force-dynamic';
+
 const mitr = Sarabun({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
