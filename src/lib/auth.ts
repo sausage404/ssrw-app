@@ -62,8 +62,10 @@ export const config: NextAuthConfig = {
             return token
         },
         async session({ session, token }) {
-            session.user.id = token.id as string
-            session.user.role = token.role as UserRole
+            if (session.user) {
+                session.user.id = token.id as string
+                session.user.role = token.role as UserRole
+            }
             return session
         },
         async redirect({ baseUrl }) {
