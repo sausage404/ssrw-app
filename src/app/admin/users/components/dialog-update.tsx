@@ -27,7 +27,7 @@ export default (dialog: DialogData<User>) => {
         resolver: zodResolver(user.user),
         defaultValues: {
             ...dialog.data,
-            password: ""
+            password: "not changed"
         }
     })
 
@@ -35,7 +35,7 @@ export default (dialog: DialogData<User>) => {
         toast.promise(
             async () => {
                 let password;
-                if (value.password.length > 0) {
+                if (value.password !== "not changed") {
                     if (value.password.length > 8) {
                         password = value.password;
                     } else {
