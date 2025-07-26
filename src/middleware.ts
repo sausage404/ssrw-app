@@ -1,21 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUser } from './lib/session';
 
-const protectedRoutes = ['/dashboard', '/setting'];
+const routes = ["/setting", "/announcement", "/attendance", "/club"];
 
 export async function middleware(request: NextRequest) {
     const isAuthenticated = await getCurrentUser();
 
-    const isProtectedRoute = protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route));
-
-    if (isProtectedRoute && !isAuthenticated) {
-        const url = new URL('/auth', request.url);
-        url.searchParams.set('from', request.nextUrl.pathname);
-        return NextResponse.redirect(url);
+    if (!isAuthenticated && routes.some((route) => request.nextUrl.pathname.startsWith(route))) {
+        return NextResponse.redirect("/auth");
     }
 
-    if (request.nextUrl.pathname === '/auth' && isAuthenticated) {
-        return NextResponse.redirect(new URL('/', request.url));
+    if (isAuthenticated && request.nextUrl.pathname.startsWith("/auth")) {
+        return NextResponse.redirect("/");
+    }
+
+    if (isAuthenticated?.role !== "ADMIN" && request.nextUrl.pathname.startsWith("/admin")) {
+        return NextResponse.rewrite(new URL("/not-found", request.url));
     }
 
     return NextResponse.next();

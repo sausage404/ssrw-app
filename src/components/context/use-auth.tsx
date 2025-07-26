@@ -15,8 +15,9 @@ export interface AuthState {
 
 export interface AuthContextType extends AuthState {
     refresh: (data: Auth) => Promise<void>;
-    signIn: (credentials: z.infer<typeof user.credentials>) => Promise<void>;
+    signIn: (credentials: z.infer<typeof user.credentials>) => Promise<{ success: boolean; error?: string }>;
     signOut: () => Promise<void>;
+    clearError: () => void;
 }
 
 const initialState: AuthState = {
@@ -29,32 +30,23 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [state, setState] = useState<AuthState>(initialState);
-
     const router = useRouter();
 
     useEffect(() => {
         const checkAuth = async () => {
             try {
                 const data = await getCurrentUser();
-
-                if (data) {
-                    setState({
-                        auth: data,
-                        loading: false,
-                        error: null
-                    });
-                } else {
-                    setState({
-                        auth: null,
-                        loading: false,
-                        error: null
-                    });
-                }
+                setState({
+                    auth: data,
+                    loading: false,
+                    error: null
+                });
             } catch (error) {
+                console.error('Auth check failed:', error);
                 setState({
                     auth: null,
                     loading: false,
-                    error: null
+                    error: 'Failed to verify authentication'
                 });
             }
         };
@@ -63,13 +55,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }, []);
 
     const login = async (credentials: z.infer<typeof user.credentials>) => {
-        setState({ ...state, loading: true, error: null });
+        setState(prev => ({ ...prev, loading: true, error: null }));
 
         try {
             const data = await signIn(credentials);
 
-            if (!data)
-                return;
+            if (!data) {
+                setState(prev => ({
+                    ...prev,
+                    loading: false,
+                    error: 'Authentication failed'
+                }));
+                return { success: false, error: 'Authentication failed' };
+            }
 
             setState({
                 auth: data,
@@ -77,68 +75,73 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 error: null
             });
 
+            return { success: true };
+
         } catch (error) {
-            setState({
+            const errorMessage = error instanceof Error ? error.message : 'Login failed';
+            setState(prev => ({
+                ...prev,
                 auth: null,
                 loading: false,
-                error: error instanceof Error ? error.message : 'Login failed'
-            });
+                error: errorMessage
+            }));
+            return { success: false, error: errorMessage };
         }
     };
 
     const logout = async () => {
-        setState({ ...state, loading: true });
+        setState(prev => ({ ...prev, loading: true }));
 
         try {
             await deleteSession();
-
             setState({
                 auth: null,
                 loading: false,
                 error: null
             });
-
             router.push("/auth");
-
         } catch (error) {
-            setState({
-                ...state,
+            console.error('Logout failed:', error);
+            setState(prev => ({
+                ...prev,
                 loading: false,
                 error: 'Logout failed'
-            });
+            }));
         }
     };
 
     const refresh = async (data: Auth) => {
-        setState({ ...state, loading: true });
+        setState(prev => ({ ...prev, loading: true }));
 
         try {
             await updateSession(data);
-
-            if (data) {
-                setState({
-                    auth: data,
-                    loading: false,
-                    error: null
-                });
-            } else {
-                setState({
-                    auth: null,
-                    loading: false,
-                    error: null
-                });
-            }
+            setState({
+                auth: data,
+                loading: false,
+                error: null
+            });
         } catch (error) {
+            console.error('Session refresh failed:', error);
             setState({
                 auth: null,
                 loading: false,
-                error: null
+                error: 'Session refresh failed'
             });
         }
     };
 
+    const clearError = () => {
+        setState(prev => ({ ...prev, error: null }));
+    };
+
     return (
-        <AuthContext.Provider value={{ ...state, signIn: login, refresh, signOut: logout }}>
+        <AuthContext.Provider value={{ 
+            ...state, 
+            signIn: login, 
+            refresh, 
+            signOut: logout,
+            clearError 
+        }}>
             {children}
         </AuthContext.Provider>
     );
