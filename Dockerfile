@@ -1,42 +1,55 @@
-FROM node:22-alpine AS builder
+# Use the official Node.js 22 Alpine image
+FROM node:22-alpine AS base
 
-# Set the working directory inside the container
+# Install dependencies only when needed
+FROM base AS deps
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Copy package.json and package-lock.json to leverage Docker caching
-COPY package.json package-lock.json ./
+# Install dependencies based on the preferred package manager
+COPY package.json package-lock.json* ./
+RUN npm ci --only=production
 
-RUN npm install -g npm@latest
-
-# Install project dependencies
-RUN npm install
-
-# Copy the rest of the application code
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Copy Prisma schema and generate Prisma client
+# Generate Prisma Client
 RUN npx prisma generate
 
-# Build the Next.js application for production
+# Build Next.js application
+# Disable telemetry during build
+ENV NEXT_TELEMETRY_DISABLED="1"
 RUN npm run build
 
-FROM node:22-alpine AS runner
-
-# Set the working directory
+# Production image, copy all the files and run next
+FROM base AS runner
 WORKDIR /app
 
-# Add a non-root user for security
+ENV NODE_ENV="production"
+ENV NEXT_TELEMETRY_DISABLED="1"
+
+# Create a non-root user
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
-USER nextjs
 
-# Copy the build output from the builder stage
+# Copy necessary files
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./package.json
+
+# Copy built application
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
-# Expose the port Next.js will run on
-EXPOSE 3000
+# Copy Prisma schema and generate client in production
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
-# Start the Next.js application
+USER nextjs
+
+# Run the application
 CMD ["node", "server.js"]
