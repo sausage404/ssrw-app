@@ -61,7 +61,7 @@ export default ({ form, onSubmit }: {
                             <FormLabel>รอบรับสมัคร</FormLabel>
                             <FormControl>
                                 <Select onValueChange={field.onChange} defaultValue={field.value} disabled={field.disabled}>
-                                    <SelectTrigger className="w-full">
+                                    <SelectTrigger className="w-full max-w-full">
                                         <SelectValue placeholder="กรุณาเลือกรอบรับสมัคร" />
                                     </SelectTrigger>
                                     <SelectContent>

@@ -5,6 +5,10 @@ import constant from "@/constant";
 import { cn } from "@/lib/utils";
 import { getCurrentUser } from "@/lib/session";
 
+export const metadata = {
+  title: "Home",
+};
+
 export default async () => {
 
   const auth = await getCurrentUser();

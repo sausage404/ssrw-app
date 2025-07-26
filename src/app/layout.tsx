@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Mitr, Sarabun } from "next/font/google";
+import { Sarabun } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import Header from "@/components/layout/header";
@@ -8,6 +8,7 @@ import { AuthProvider } from "@/components/context/use-auth";
 import { Toaster } from "@/components/ui/sonner";
 
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store'
 
 const mitr = Sarabun({
   subsets: ["latin"],
@@ -15,6 +16,11 @@ const mitr = Sarabun({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NODE_ENV === "production"
+      ? "https://ssrw.ac.th"
+      : "http://localhost:3000"
+  ),
   title: {
     default: "Srisongrak Wittaya School",
     template: "%s - Srisongrak Wittaya",
