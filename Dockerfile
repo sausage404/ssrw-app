@@ -6,6 +6,8 @@ WORKDIR /app
 # Copy package.json and package-lock.json to leverage Docker caching
 COPY package.json package-lock.json ./
 
+RUN npm install -g npm@latest
+
 # Install project dependencies
 RUN npm install
 
