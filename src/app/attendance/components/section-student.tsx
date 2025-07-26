@@ -1,15 +1,14 @@
 "use client"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Auth } from "@/lib/session"
 import React from "react"
+import { toast } from "sonner"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { AttendanceResponse, getAttendanceTodayWithUserId, getLeaves, recordAttendance } from "../utils"
+import { Leave, User } from "@prisma/client"
 import attendance from "@/schema/attendance"
 import { Button } from "@/components/ui/button"
-import { toast } from "sonner"
 import DialogLeave from "./dialog-leave"
-import { Leave } from "@prisma/client"
 
-export default ({ auth }: Readonly<{ auth: Auth }>) => {
+export default ({ user }: Readonly<{ user: User }>) => {
 
     const [today, setToday] = React.useState<AttendanceResponse | null>(null);
     const [isChecking, setIsChecking] = React.useState(false);
@@ -17,9 +16,9 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
 
     React.useEffect(() => {
         (async () => {
-            const attendance = await getAttendanceTodayWithUserId(auth.id)
+            const attendance = await getAttendanceTodayWithUserId(user?.id)
             setToday(attendance)
-            const leaves = await getLeaves(auth.id, new Date());
+            const leaves = await getLeaves(user.id, new Date());
             setLeaves(leaves);
         })()
     }, []);
@@ -187,7 +186,7 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
                         today?.id,
                         today ? today.period.map((p, i) => i === 0 ? "present" : p) :
                             ["present", "null", "null", "null", "null", "null", "null", "null", "null", "null"],
-                        auth.id
+                        user.id
                     );
                     setToday(pre => {
                         if (!pre) return null;
@@ -240,13 +239,13 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
             <div className="border-b border-dashed">
                 <div className="flex sm:flex-row sm:justify-between justify-center px-2 py-2 gap-4">
                     <div className="flex items-center gap-2 sm:text-start">
-                        คะแนนความประพฤติ {auth.behaviorPoint}
+                        คะแนนความประพฤติ {user.behaviorPoint}
                     </div>
                     <div className="grid sm:grid-cols-2 gap-2">
                         <Button onClick={checkIn} disabled={isChecking || isCheckIn} variant="outline" size="sm" className="w-full sm:w-auto">
                             {!isCheckIn ? isChecking ? "กำลังตรวจสอบ..." : "เช็คชื่อเข้าโรงเรียน" : "เช็คชื่อเรียบร้อย"}
                         </Button>
-                        <DialogLeave auth={auth} />
+                        <DialogLeave user={user} />
                     </div>
                 </div>
             </div>

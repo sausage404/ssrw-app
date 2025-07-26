@@ -8,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Textarea } from "@/components/ui/textarea"
-import { Auth } from "@/lib/session"
 import club from "@/schema/club"
 import { zodResolver } from "@hookform/resolvers/zod"
 import React, { useEffect } from "react"
@@ -17,8 +16,9 @@ import { toast } from "sonner"
 import { z } from "zod"
 import { ClubPayload } from "./section-student"
 import { createClub, deleteClub, getClub, updateClub } from "@/data/club"
+import { User } from "@prisma/client"
 
-export default ({ auth }: Readonly<{ auth: Auth }>) => {
+export default ({ user }: Readonly<{ user: User }>) => {
 
     const [thisClub, setThisClub] = React.useState<ClubPayload | null>(null);
 
@@ -26,7 +26,7 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
         resolver: zodResolver(club.club),
         defaultValues: {
             name: "",
-            userId: auth.id,
+            userId: user.id,
             description: "",
             maxMember: 1
         }
@@ -53,7 +53,7 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
                         ...value,
                         owner: {
                             connect: {
-                                id: auth.id
+                                id: user.id
                             }
                         }
                     });
@@ -86,7 +86,7 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
     useEffect(() => {
         (async () => {
             const data = await getClub({
-                where: { userId: auth.id },
+                where: { userId: user.id },
                 include: { members: true, owner: true }
             }) as ClubPayload;
             if (data) {

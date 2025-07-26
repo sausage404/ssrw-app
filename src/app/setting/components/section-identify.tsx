@@ -1,9 +1,9 @@
 "use client";
 
+import { User } from "@prisma/client";
 import InputCopy from "@/components/module/input-copy";
-import { Auth } from "@/lib/session";
 
-export default ({ auth }: Readonly<{ auth: Auth }>) => {
+export default ({ user }: Readonly<{ user: User }>) => {
     return (
         <div id="section-identify" className="rounded-lg border-accent border">
             <div className="p-4 rounded-t-lg">
@@ -14,7 +14,7 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
             </div>
             <div className="pb-4 px-4">
                 <div className="flex gap-4">
-                    <InputCopy defaultValue={auth.id} />
+                    <InputCopy defaultValue={user.id} />
                 </div>
             </div>
             <div className="p-4 border-t rounded-b-lg">

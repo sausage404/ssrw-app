@@ -4,8 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import { AuthProvider } from "@/components/context/use-auth";
 import { Toaster } from "@/components/ui/sonner";
+import { SessionProvider } from 'next-auth/react'
 
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'force-no-store'
@@ -59,7 +59,7 @@ export default function RootLayout({
         style={mitr.style}
         className="antialiased"
       >
-        <AuthProvider>
+        <SessionProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -71,7 +71,7 @@ export default function RootLayout({
             <Footer />
             <Toaster />
           </ThemeProvider>
-        </AuthProvider>
+        </SessionProvider>
       </body>
     </html>
   );

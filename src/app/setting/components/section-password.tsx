@@ -1,32 +1,29 @@
 "use client";
 
 import ButtonLoader from "@/components/module/button-loader";
-import { useAuth } from "@/components/context/use-auth";
 import InputPassword from "@/components/module/input-password";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { updateUser } from "@/data/user";
-import { Auth } from "@/lib/session";
-import user from "@/schema/user";
+import userSchema from "@/schema/user";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
+import { User } from "next-auth";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-export default ({ auth }: Readonly<{ auth: Auth }>) => {
+export default ({ user }: Readonly<{ user: User }>) => {
 
-    const { refresh } = useAuth();
     const [isPending, start] = useTransition();
     const [state, setState] = useState<{ error: string | null, success: string | null }>({
         error: null,
         success: null
     });
 
-    const form = useForm<z.infer<typeof user.changePassword>>({
-        resolver: zodResolver(user.changePassword),
+    const form = useForm<z.infer<typeof userSchema.changePassword>>({
+        resolver: zodResolver(userSchema.changePassword),
         defaultValues: {
-            id: auth.id,
+            id: user.id,
             current: "",
             new: "",
             confirm: ""
@@ -34,7 +31,7 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
         disabled: isPending
     })
 
-    const onSubmit = async (value: z.infer<typeof user.changePassword>) => start(async () => {
+    const onSubmit = async (value: z.infer<typeof userSchema.changePassword>) => start(async () => {
         try {
 
             if (value.new !== value.confirm) {
@@ -42,8 +39,7 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
                 return;
             }
 
-            await updateUser(auth.id, value);
-            await refresh(auth);
+            await updateUser(user.id, value);
             form.reset();
             setState({ error: null, success: "บันทึกสําเร็จข้อมูลสำเร็จ" });
             setTimeout(() => {

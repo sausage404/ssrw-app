@@ -5,14 +5,14 @@ import { DialogTrigger } from "@radix-ui/react-dialog"
 import React from "react"
 import { toast } from "sonner"
 import { createLeave } from "../utils"
-import { Auth } from "@/lib/session"
+import { User } from "@prisma/client"
 
-export default ({ auth }: Readonly<{ auth: Auth }>) => {
+export default ({ user }: Readonly<{ user: User }>) => {
     const [reason, setReason] = React.useState("");
 
     const onSubmit = async () => {
         toast.promise(async () => {
-           const result = await createLeave({ reason, id: auth.id });
+           const result = await createLeave({ reason, id: user.id });
            if (result) {
                window.location.reload();
            }

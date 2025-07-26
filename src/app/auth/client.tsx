@@ -1,6 +1,5 @@
 "use client"
 
-import { useAuth } from "@/components/context/use-auth";
 import InputPassword from "@/components/module/input-password";
 import Turnstile from "@/components/turnstile";
 import { Button } from "@/components/ui/button";
@@ -8,19 +7,20 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import user from "@/schema/user";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import { AuthError } from "next-auth";
+import { signIn } from "next-auth/react";
+import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
-export default () => {
-    const { signIn, error, auth, loading } = useAuth();
+export default ({ error }: Readonly<{ error: string | null }>) => {
 
-    const router = useRouter();
+    const [isPending, startTransition] = React.useTransition();
 
     const form = useForm<z.infer<typeof user.credentials>>({
         resolver: zodResolver(user.credentials),
-        disabled: loading,
+        disabled: isPending,
         defaultValues: {
             email: "",
             password: "",
@@ -28,15 +28,18 @@ export default () => {
         },
     })
 
-    useEffect(() => {
-        if (auth) {
-            router.push("/");
-        }
-    }, [auth]);
-
     const onSubmit = async (data: z.infer<typeof user.credentials>) => {
-        await signIn(data);
-    }
+        startTransition(async () => {
+            if (data.verified) {
+                await signIn("credentials", {
+                    email: data.email,
+                    password: data.password
+                });
+            } else {
+                toast.error("กรุณายืนยันการเข้าใช้งาน");
+            }
+        })
+    };
 
     return (
         <div className="container-fluid mx-auto w-full px-2 sm:px-3 border-x border-dashed h-[83.7dvh] flex items-center">
@@ -46,7 +49,7 @@ export default () => {
                         <h1 className="text-2xl font-bold">เข้าสู่ระบบ</h1>
                         <p className="text-muted-foreground">ป้อนอีเมลของคุณด้านล่างเพื่อเข้าสู่ระบบบัญชีของคุณ</p>
                     </div>
-                    {error && <p className="text-red-500 text-center">{error}</p>}
+                    {error && <p className="text-red-500 text-center">{new AuthError(error).message}</p>}
                     <FormField
                         control={form.control}
                         name="email"

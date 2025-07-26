@@ -7,18 +7,19 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
-import { useAuth } from "@/components/context/use-auth"
 import React from "react"
 import { Announcement } from "@prisma/client"
 import { useDialogData } from "@/hooks/use-dialog-data"
 import DialogDelete from "./components/dialog-delete"
 import DialogCreate from "./components/dialog-create"
+import { useSession } from "next-auth/react"
 
-export default ({ data }: { data: Announcement[] }) => {
-    const { auth } = useAuth();
+export default ({ announcements }: { announcements: Announcement[] }) => {
+    const { data } = useSession();
+
     const deleteDialog = useDialogData<Announcement>();
-    const dataIsSummarize = data.filter((item) => item.isSummarize);
-    const dataIsNotSummarize = data.filter((item) => !item.isSummarize);
+    const dataIsSummarize = announcements.filter((item) => item.isSummarize);
+    const dataIsNotSummarize = announcements.filter((item) => !item.isSummarize);
 
     return (
         <div className="container-fluid mx-auto w-full border-x border-dashed min-h-[83.9dvh]">
@@ -27,7 +28,7 @@ export default ({ data }: { data: Announcement[] }) => {
                     ประชาสัมพันธ์
                 </h1>
                 <div className="flex gap-4">
-                    {auth?.role !== "STUDENT" && <DialogCreate />}
+                    {data?.user?.role !== "STUDENT" && <DialogCreate />}
                     {deleteDialog.data && <DialogDelete {...{ ...deleteDialog, data: deleteDialog.data }} />}
                 </div>
             </div>
@@ -64,7 +65,20 @@ export default ({ data }: { data: Announcement[] }) => {
                         {dataIsSummarize.filter(item => item.isSummarize).map(item => (
                             <AccordionItem key={item.id} value={item.id}>
                                 <AccordionTrigger>{item.occurredAt.toLocaleDateString("th-TH", { day: "numeric", month: "long", year: "numeric" })}</AccordionTrigger>
-                                <AccordionContent>{item.description}</AccordionContent>
+                                <AccordionContent>
+                                    {item.description}
+                                    <Button
+                                        variant="link"
+                                        size="sm"
+                                        className="float-end text-red-500 "
+                                        onClick={() => {
+                                            deleteDialog.setData(item);
+                                            deleteDialog.onOpenChange(true);
+                                        }}
+                                    >
+                                        ลบ
+                                    </Button>
+                                </AccordionContent>
                             </AccordionItem>
                         ))}
                     </Accordion>

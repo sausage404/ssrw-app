@@ -1,10 +1,19 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import user from "@/schema/user";
 import { z } from "zod";
-import { Prisma, User } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+
+export const getUserById = async (id: string) => {
+    try {
+        return await prisma.user.findUnique({ where: { id } });
+    } catch (error) {
+        console.error(error);
+        return null
+    }
+}
 
 export const getUsers = async (option: Prisma.UserFindManyArgs) => {
     try {

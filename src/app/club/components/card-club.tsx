@@ -6,9 +6,9 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { toast } from "sonner";
 import { ClubPayload } from "./section-student";
 import { updateClub } from "@/data/club";
-import { Auth } from "@/lib/session";
+import { User } from "@prisma/client";
 
-export default ({ auth, value }: Readonly<{ value: ClubPayload, auth: Auth }>) => {
+export default ({ user, value }: Readonly<{ value: ClubPayload, user: User }>) => {
     const join = async () => {
 
         if (value.maxMember <= value.members.length) {
@@ -22,7 +22,7 @@ export default ({ auth, value }: Readonly<{ value: ClubPayload, auth: Auth }>) =
         }
 
         toast.promise(async () => {
-            await updateClub(value.id, { members: { connect: { id: auth.id } } });
+            await updateClub(value.id, { members: { connect: { id: user.id } } });
         }, {
             loading: "กําลังเข้าร่วมชุมนุม",
             success: "เข้าร่วมชุมนุมเรียบร้อย",

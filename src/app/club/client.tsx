@@ -12,8 +12,8 @@ export default ({ user }: Readonly<{ user: User }>) => {
                     ชุมชน
                 </h1>
             </div>
-            {user.role === "TEACHER" && <SectionTeacher auth={user} />}
-            {user.role === "STUDENT" && <SectionStudent auth={user} />}
+            {user.role === "TEACHER" && <SectionTeacher user={user} />}
+            {user.role === "STUDENT" && <SectionStudent user={user} />}
         </div>
     )
 }

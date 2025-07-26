@@ -1,15 +1,14 @@
 "use client";
 
 import React from "react";
-import { Auth } from "@/lib/session";
 import CardClub from "./card-club";
-import { Prisma } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 import { getClubs } from "@/data/club";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 export type ClubPayload = Prisma.ClubGetPayload<{ include: { members: true, owner: true } }>
 
-export default ({ auth }: Readonly<{ auth: Auth }>) => {
+export default ({ user }: Readonly<{ user: User }>) => {
     const [clubs, setClubs] = React.useState<ClubPayload[]>([]);
 
     React.useEffect(() => {
@@ -22,12 +21,12 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
         })()
     }, []);
 
-    const join = clubs.find((item) => item.members.some((member) => member.id === auth.id));
+    const join = clubs.find((item) => item.members.some((member) => member.id === user.id));
 
     return !join ? (
         <div className="w-full p-6 grid grid-cols-3 gap-6">
             {clubs.map((item, index) => (
-                <CardClub key={index} value={item} auth={auth} />
+                <CardClub key={index} value={item} user={user} />
             ))}
         </div>
     ) : (

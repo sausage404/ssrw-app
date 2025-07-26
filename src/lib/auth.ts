@@ -1,119 +1,78 @@
-"use server";
+import NextAuth, { NextAuthConfig } from "next-auth"
+import CredentialsProvider from 'next-auth/providers/credentials'
+import { prisma } from './prisma'
+import bcrypt from 'bcryptjs'
+import { UserRole } from "@prisma/client"
 
-import user from '@/schema/user';
-import { z } from 'zod';
-import { deleteSession, encrypt, getCurrentUser } from './session';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import bcrypt from 'bcrypt';
-import { prisma } from './prisma';
-
-// Rate limiting map (in production, use Redis or similar)
-const loginAttempts = new Map<string, { count: number; lastAttempt: number }>();
-
-const MAX_LOGIN_ATTEMPTS = 5;
-const LOCKOUT_DURATION = 15 * 60 * 1000; // 15 minutes
-
-export const signIn = async (credentials: z.infer<typeof user.credentials>) => {
-    const validation = user.credentials.safeParse(credentials);
-
-    if (!validation.success) {
-        throw new Error('Invalid credentials format');
-    }
-
-    // Basic rate limiting
-    const clientId = credentials.email; // In production, use IP + email
-    const now = Date.now();
-    const attempts = loginAttempts.get(clientId);
-
-    if (attempts && attempts.count >= MAX_LOGIN_ATTEMPTS) {
-        if (now - attempts.lastAttempt < LOCKOUT_DURATION) {
-            throw new Error('Too many login attempts. Please try again later.');
-        } else {
-            // Reset attempts after lockout period
-            loginAttempts.delete(clientId);
-        }
-    }
-
-    try {
-        const existingUser = await prisma.user.findFirst({
-            where: {
-                email: credentials.email.toLowerCase().trim(),
-            }
-        });
-
-        if (!existingUser) {
-            // Record failed attempt
-            const currentAttempts = loginAttempts.get(clientId) || { count: 0, lastAttempt: 0 };
-            loginAttempts.set(clientId, {
-                count: currentAttempts.count + 1,
-                lastAttempt: now
-            });
-            throw new Error('Invalid email or password');
-        }
-
-        const passwordMatch = await bcrypt.compare(credentials.password, existingUser.password);
-
-        if (!passwordMatch) {
-            // Record failed attempt
-            const currentAttempts = loginAttempts.get(clientId) || { count: 0, lastAttempt: 0 };
-            loginAttempts.set(clientId, {
-                count: currentAttempts.count + 1,
-                lastAttempt: now
-            });
-            throw new Error('Invalid email or password');
-        }
-
-        // Successful login - clear attempts
-        loginAttempts.delete(clientId);
-
-        const userWithoutPassword = await prisma.user.findFirst({
-            where: {
-                id: existingUser.id,
+export const config: NextAuthConfig = {
+    providers: [
+        CredentialsProvider({
+            name: 'credentials',
+            credentials: {
+                email: { label: 'Email', type: 'email' },
+                password: { label: 'Password', type: 'password' }
             },
-            omit: {
-                password: true,
+            async authorize(credentials) {
+                try {
+                    if (!credentials?.email || !credentials?.password) {
+                        return null
+                    }
+
+                    const user = await prisma.user.findUnique({
+                        where: {
+                            email: credentials.email as string
+                        }
+                    })
+
+                    if (!user) {
+                        return null
+                    }
+
+                    const isPasswordValid = await bcrypt.compare(
+                        credentials.password as string,
+                        user.password
+                    )
+
+                    if (!isPasswordValid) {
+                        return null
+                    }
+
+                    // ไม่ส่ง password กลับไป
+                    const { password, ...userWithoutPassword } = user
+                    return userWithoutPassword
+
+                } catch (error) {
+                    console.error('Authentication error:', error)
+                    return null
+                }
             }
-        });
-
-        if (!userWithoutPassword) {
-            throw new Error('User data not found');
-        }
-
-        const sessionToken = await encrypt(userWithoutPassword);
-
-        const cookieStore = await cookies();
-        cookieStore.set('session', sessionToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-            sameSite: 'lax',
-            path: '/',
-        });
-
-        return userWithoutPassword;
-
-    } catch (error) {
-        console.error('Sign in error:', error);
-        throw error;
+        })
+    ],
+    secret: process.env.NEXTAUTH_SECRET,
+    session: {
+        strategy: 'jwt'
+    },
+    debug: process.env.NODE_ENV !== "production",
+    callbacks: {
+        async jwt({ token, user }) {
+            if (user) {
+                token.id = user.id
+                token.role = user.role
+            }
+            return token
+        },
+        async session({ session, token }) {
+            session.user.id = token.id as string
+            session.user.role = token.role as UserRole
+            return session
+        },
+        async redirect({ baseUrl }) {
+            return baseUrl
+        },
+    },
+    pages: {
+        signIn: '/auth'
     }
-};
+}
 
-export const signOut = async () => {
-    try {
-        await deleteSession();
-    } catch (error) {
-        console.error('Sign out error:', error);
-        // Continue with redirect even if session deletion fails
-    }
-    redirect("/auth");
-};
-
-// Additional helper function for checking if user is authenticated
-export const requireAuth = async () => {
-    const user = await getCurrentUser();
-    if (!user) {
-        redirect("/auth");
-    }
-    return user;
-};
+export const { handlers, auth, signIn, signOut } = NextAuth(config);

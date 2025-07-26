@@ -1,15 +1,15 @@
 import { prisma } from "@/lib/prisma";
 import Client from "./client";
-import { getCurrentUser } from "@/lib/session";
+import { auth } from "@/lib/auth";
 
 export default async () => {
-    const auth = await getCurrentUser();
+    const session = await auth();
 
-    if (!auth) {
+    if (!session?.user) {
         return null;
     }
 
-    const user = await prisma.user.findUnique({ where: { id: auth.id } });
+    const user = await prisma.user.findUnique({ where: { id: session.user.id } });
 
     if (!user) {
         return null;

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import constant from "@/constant";
 import { cn } from "@/lib/utils";
-import { getCurrentUser } from "@/lib/session";
+import { auth } from "@/lib/auth";
 
 export const metadata = {
   title: "Home",
@@ -11,7 +11,7 @@ export const metadata = {
 
 export default async () => {
 
-  const auth = await getCurrentUser();
+  const session = await auth();
 
   const colors = [
     "bg-gradient-to-bl from-yellow-100 via-yellow-400/70 to-yellow-200 dark:from-yellow-700 dark:via-yellow-900 dark:to-yellow-600",
@@ -79,24 +79,24 @@ export default async () => {
       </div>
       <div className="container-fluid mx-auto w-full border-x border-t border-dashed p-4 sm:p-8 space-y-8">
         <div className="grid lg:grid-cols-4 md:grid-cols-2 w-full gap-4 sm:gap-8">
-          {!auth && [
+          {!session?.user && [
             ...constant.features.default
           ].map((data, i) => (
             <CardMenu key={i} index={i} data={data} />
           ))}
-          {auth?.role === "STUDENT" && [
+          {session?.user.role === "STUDENT" && [
             ...constant.features.default,
             ...constant.features.student
           ].map((data, i) => (
             <CardMenu key={i} index={i} data={data} />
           ))}
-          {auth?.role === "TEACHER" && [
+          {session?.user.role === "TEACHER" && [
             ...constant.features.default,
             ...constant.features.teacher
           ].map((data, i) => (
             <CardMenu key={i} index={i} data={data} />
           ))}
-          {auth?.role === "ADMIN" && [
+          {session?.user.role === "ADMIN" && [
             ...constant.features.default,
             ...constant.features.admin
           ].map((data, i) => (

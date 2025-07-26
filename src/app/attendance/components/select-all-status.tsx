@@ -1,7 +1,6 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import attendance from "@/schema/attendance"
 import React from "react"
-import { z } from "zod"
+import attendance from "@/schema/attendance"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default ({
     checks,

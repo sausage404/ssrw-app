@@ -1,17 +1,24 @@
 import { redirect } from "next/navigation";
-import { getCurrentUser } from "@/lib/session";
 import SectionStudent from "./components/section-student"
 import SectionTeacher from "./components/section-teacher";
+import { auth } from "@/lib/auth";
+import { getUserById } from "@/data/user";
 
 export const metadata = {
     title: 'Attendance'
 }
 
 export default async () => {
-    const auth = await getCurrentUser();
+    const session = await auth();
 
-    if (!auth) {
-        return redirect("/auth")
+    if (!session?.user) {
+        return null
+    }
+
+    const user = await getUserById(session.user.id);
+
+    if (!user) {
+        return null;
     }
 
     return (
@@ -21,8 +28,8 @@ export default async () => {
                     เช็คชื่อและการเข้าเรียน
                 </h1>
             </div>
-            {auth.role === "TEACHER" && <SectionTeacher />}
-            {auth.role === "STUDENT" && <SectionStudent auth={auth} />}
+            {session?.user.role === "TEACHER" && <SectionTeacher />}
+            {session?.user.role === "STUDENT" && <SectionStudent user={user} />}
         </div>
     )
 }

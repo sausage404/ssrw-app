@@ -1,46 +1,38 @@
 "use client";
 
-import { useAuth } from "@/components/context/use-auth";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { updateUser } from "@/data/user";
-import { Auth } from "@/lib/session";
-import user from "@/schema/user";
+import userSchema from "@/schema/user";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { User } from "@prisma/client";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-export default ({ auth }: Readonly<{ auth: Auth }>) => {
+export default ({ user }: Readonly<{ user: User }>) => {
 
-    const { refresh } = useAuth();
     const [isPending, start] = useTransition();
     const [state, setState] = useState<{ error: string | null, success: string | null }>({
         error: null,
         success: null
     });
 
-    const form = useForm<z.infer<typeof user.user>>({
-        resolver: zodResolver(user.user),
+    const form = useForm<z.infer<typeof userSchema.user>>({
+        resolver: zodResolver(userSchema.user),
         defaultValues: {
-            prefix: auth.prefix as z.infer<typeof user.prefix>,
-            firstName: auth.firstName,
-            lastName: auth.lastName
+            prefix: user.prefix as z.infer<typeof userSchema.prefix>,
+            firstName: user.firstName,
+            lastName: user.lastName
         },
         disabled: isPending
     })
 
-    const onSubmit = async (value: z.infer<typeof user.user>) => start(async () => {
+    const onSubmit = async (value: z.infer<typeof userSchema.user>) => start(async () => {
         try {
-            await updateUser(auth.id, value);
-            await refresh({
-                ...auth,
-                prefix: value.prefix,
-                firstName: value.firstName,
-                lastName: value.lastName
-            });
+            await updateUser(user.id, value);
             setState({ error: null, success: "บันทึกสําเร็จข้อมูลสำเร็จ" });
             setTimeout(() => {
                 setState({ error: null, success: null });
@@ -72,7 +64,7 @@ export default ({ auth }: Readonly<{ auth: Auth }>) => {
                                                 <SelectValue placeholder="คํานําหน้า" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                {user.prefix.options.map((prefix, index) => (
+                                                {userSchema.prefix.options.map((prefix, index) => (
                                                     <SelectItem key={index} value={prefix}>
                                                         {prefix}
                                                     </SelectItem>

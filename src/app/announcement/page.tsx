@@ -10,5 +10,5 @@ export default async () => {
             }
         }
     })
-    return <Client data={data} />
+    return <Client announcements={data} />
 }

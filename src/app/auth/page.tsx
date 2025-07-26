@@ -1,9 +1,14 @@
-import Client from "./client";
+import Client from "./client"
 
 export const metadata = {
-    title: 'Auth',
-};
+    title: "Auth"
+}
 
-export default function Page() {
-    return <Client />;
+export default async ({
+    searchParams
+}: {
+    searchParams: Promise<{ error: string | null }>
+}) => {
+    const { error } = await searchParams
+    return <Client error={error} />
 }
