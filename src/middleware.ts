@@ -6,6 +6,8 @@ const routes = ["/setting", "/announcement", "/attendance", "/club"];
 export async function middleware(request: NextRequest) {
     const isAuthenticated = await getCurrentUser();
 
+    console.log(isAuthenticated);
+
     if (!isAuthenticated && routes.some((route) => request.nextUrl.pathname.startsWith(route))) {
         return NextResponse.redirect("/auth");
     }
