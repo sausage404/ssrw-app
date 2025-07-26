@@ -18,7 +18,7 @@ const mitr = Sarabun({
 export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NODE_ENV === "production"
-      ? "https://ssrw.ac.th"
+      ? "http://210.246.215.108:3000"
       : "http://localhost:3000"
   ),
   title: {
