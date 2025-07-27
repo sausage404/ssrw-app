@@ -205,10 +205,10 @@ CREATE TABLE public.admissions (
     status public.admission_status DEFAULT 'PENDING'::public.admission_status NOT NULL,
     "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "updatedAt" timestamp(3) without time zone NOT NULL,
-    "pdfId" text NOT NULL,
     "houseRecord" text,
     "studentPhoto" text NOT NULL,
-    "studentRecord" text
+    "studentRecord" text,
+    pdf text NOT NULL
 );
 
 
@@ -397,7 +397,7 @@ cmd9x7r3b000hq7lguzizag16	MOVE	NORMAL	3	1970-01-01 00:00:00	1970-01-01 00:00:00	
 cmd9x86zl000iq7lgfqhvyaan	MOVE	NORMAL	4	1970-01-01 00:00:00	1970-01-01 00:00:00	2025-07-19 07:23:05.698	2025-07-19 07:23:11.032
 cmd9x8gqp000jq7lg61bxauew	MOVE	NORMAL	6	1970-01-01 00:00:00	1970-01-01 00:00:00	2025-07-19 07:23:18.337	2025-07-19 07:23:22.352
 cmd9x8pz3000kq7lgrgnnr55y	MOVE	NORMAL	5	1970-01-01 00:00:00	1970-01-01 00:00:00	2025-07-19 07:23:30.304	2025-07-19 07:23:39.384
-cmd9x2whe0000q7lgwwknbh38	NEW	QOUTA	4	2025-07-21 17:00:00	2025-07-25 17:00:00	2025-07-19 07:18:58.801	2025-07-22 15:38:25.968
+cmd9x2whe0000q7lgwwknbh38	NEW	QOUTA	4	2025-07-21 17:00:00	2025-07-30 17:00:00	2025-07-19 07:18:58.801	2025-07-27 09:00:33.232
 \.
 
 
@@ -405,7 +405,7 @@ cmd9x2whe0000q7lgwwknbh38	NEW	QOUTA	4	2025-07-21 17:00:00	2025-07-25 17:00:00	20
 -- Data for Name: admissions; Type: TABLE DATA; Schema: public; Owner: myuser
 --
 
-COPY public.admissions (id, no, "studentId", "academicYear", type, class, round, plan, "reservePlan", "serviceZone", provenance, prefix, "firstName", "lastName", "cardId", "birthDate", ethnicity, nationality, religion, "bloodType", phone, talent, "houseNo", "villageNo", village, road, alley, "subDistrict", district, province, zipcode, "schoolName", grade, "subDistrictOld", "districtOld", "provinceOld", "zipcodeOld", "fatherName", "fatherJob", "fatherPhone", "motherName", "motherJob", "motherPhone", "guardianName", "guardianJob", "guardianPhone", "guardianRelation", status, "createdAt", "updatedAt", "pdfId", "houseRecord", "studentPhoto", "studentRecord") FROM stdin;
+COPY public.admissions (id, no, "studentId", "academicYear", type, class, round, plan, "reservePlan", "serviceZone", provenance, prefix, "firstName", "lastName", "cardId", "birthDate", ethnicity, nationality, religion, "bloodType", phone, talent, "houseNo", "villageNo", village, road, alley, "subDistrict", district, province, zipcode, "schoolName", grade, "subDistrictOld", "districtOld", "provinceOld", "zipcodeOld", "fatherName", "fatherJob", "fatherPhone", "motherName", "motherJob", "motherPhone", "guardianName", "guardianJob", "guardianPhone", "guardianRelation", status, "createdAt", "updatedAt", "houseRecord", "studentPhoto", "studentRecord", pdf) FROM stdin;
 \.
 
 
@@ -415,6 +415,7 @@ COPY public.admissions (id, no, "studentId", "academicYear", type, class, round,
 
 COPY public.announcements (id, description, "isSummarize", "occurredAt", "createdAt", "updatedAt") FROM stdin;
 cmdafg4ik0001q7yowvbqogru	It's assigned by your Internet Service Provider (ISP), allowing you to connect to the Internet through a network, whether at home, work, or on the go. Your IP ...	t	2025-07-19 15:52:28.746	2025-07-19 15:53:08.826	2025-07-19 15:53:08.826
+cmdkf3dre0000q73kghkzvukm	ข้อผิดพลาด CredentialsSignin จาก NextAuth หมายความว่า การเข้าสู่ระบบด้วย Credentials Provider ล้มเหลว — โดยไม่มีการบอกสาเหตุชัดเจนเพื่อความปลอดภัย (เช่น ไม่ระบุว่า "email ไม่ถูก" หรือ "รหัสผ่านผิด")	f	2025-07-26 15:40:31.87	2025-07-26 15:40:56.041	2025-07-26 15:40:56.041
 \.
 
 
