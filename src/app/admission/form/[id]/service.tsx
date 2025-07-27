@@ -6,13 +6,6 @@ import admissionForm from "@/schema/admission-form";
 import axios from "axios";
 import { z } from "zod";
 
-const toBase64 = (file: File) => new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload = () => res(r.result);
-    r.onerror = rej;
-    r.readAsDataURL(file);
-});
-
 export default async (
     data: z.infer<typeof admission.admission>,
     files: {
@@ -61,7 +54,7 @@ export default async (
             ...data,
             round: admissionForm.roundView[data.round],
             type: admissionForm.typeView[data.type],
-            studentPhoto: toBase64(files.studentPhoto),
+            studentPhoto: `https://drive.google.com/thumbnail?id=${idStudentPhoto}&sz=w1000`,
             birthDate: data.birthDate.toLocaleDateString("th-TH", {
                 day: "numeric",
                 month: "long",
