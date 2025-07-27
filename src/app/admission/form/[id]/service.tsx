@@ -1,9 +1,17 @@
 import constant from "@/constant";
+import { createAdmission } from "@/data/admission";
 import { getFullName } from "@/lib/utils";
 import admission from "@/schema/admission";
 import admissionForm from "@/schema/admission-form";
 import axios from "axios";
 import { z } from "zod";
+
+const toBase64 = (file: File) => new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+});
 
 export default async (
     data: z.infer<typeof admission.admission>,
@@ -44,7 +52,7 @@ export default async (
             const { data: { id } } = await axios.post("/api/drive", formData);
             idStudentRecord = id;
         }
-        
+
         const { data: template } = await axios.get("/html/admission.html", {
             responseType: "text"
         });
@@ -53,7 +61,7 @@ export default async (
             ...data,
             round: admissionForm.roundView[data.round],
             type: admissionForm.typeView[data.type],
-            studentPhoto: `https://drive.google.com/thumbnail?id=${idStudentPhoto}&sz=w1000`,
+            studentPhoto: toBase64(files.studentPhoto),
             birthDate: data.birthDate.toLocaleDateString("th-TH", {
                 day: "numeric",
                 month: "long",
@@ -70,17 +78,13 @@ export default async (
         formData.set("file", file);
         const { data: { id: idPdf } } = await axios.post("/api/drive", formData);
 
-        const { data: { success, message } } = await axios.post("/api/data/admission", {
+        await createAdmission({
             ...data,
             studentPhoto: `https://drive.google.com/file/d/${idStudentPhoto}/preview`,
             houseRecord: idHouseRecord ? `https://drive.google.com/file/d/${idHouseRecord}/preview` : undefined,
             studentRecord: idStudentRecord ? `https://drive.google.com/file/d/${idStudentRecord}/preview` : undefined,
             pdf: `https://drive.google.com/file/d/${idPdf}/preview`
-        });
-
-        if (!success) {
-            return { success, message };
-        }
+        })
 
         return { success: true, message: "ส่งแบบฟอร์มสําเร็จ" };
     } catch (error) {
