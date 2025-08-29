@@ -1,9 +1,9 @@
 #!/bin/sh
 
-CONTAINER=ssrw-app_db_1
+CONTAINER=ssrw-app-db-1
 DB=mydatabase
 USER=myuser
-FILE=./backups/backup.sql
+FILE=./backups/backup_mydatabase_20250727_160844.sql
 
 echo "Copying backup file..."
 docker cp $FILE $CONTAINER:/tmp/restore.sql
