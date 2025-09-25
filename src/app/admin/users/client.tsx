@@ -20,6 +20,7 @@ import DialogMoveClass from "./components/dialog-move-class"
 import { DataTable } from "@/components/module/data-table"
 import { usePagination } from "@/hooks/use-pagination"
 import { getFullName } from "@/lib/utils"
+import DialogCreateCsv from "./components/dialog-create-csv"
 
 export default () => {
 
@@ -151,6 +152,7 @@ export default () => {
                         isSearchParams
                         serverSide
                     >
+                        <DialogCreateCsv />
                         <DialogCreate />
                         <DialogMoveClass />
                     </DataTable>

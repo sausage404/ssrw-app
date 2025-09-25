@@ -17,7 +17,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: admission_round; Type: TYPE; Schema: public; Owner: myuser
+-- Name: admission_round; Type: TYPE; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE TYPE public.admission_round AS ENUM (
@@ -27,10 +27,10 @@ CREATE TYPE public.admission_round AS ENUM (
 );
 
 
-ALTER TYPE public.admission_round OWNER TO myuser;
+ALTER TYPE public.admission_round OWNER TO 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6;
 
 --
--- Name: admission_status; Type: TYPE; Schema: public; Owner: myuser
+-- Name: admission_status; Type: TYPE; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE TYPE public.admission_status AS ENUM (
@@ -43,10 +43,10 @@ CREATE TYPE public.admission_status AS ENUM (
 );
 
 
-ALTER TYPE public.admission_status OWNER TO myuser;
+ALTER TYPE public.admission_status OWNER TO 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6;
 
 --
--- Name: admission_type; Type: TYPE; Schema: public; Owner: myuser
+-- Name: admission_type; Type: TYPE; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE TYPE public.admission_type AS ENUM (
@@ -55,10 +55,10 @@ CREATE TYPE public.admission_type AS ENUM (
 );
 
 
-ALTER TYPE public.admission_type OWNER TO myuser;
+ALTER TYPE public.admission_type OWNER TO 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6;
 
 --
--- Name: blood_type; Type: TYPE; Schema: public; Owner: myuser
+-- Name: blood_type; Type: TYPE; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE TYPE public.blood_type AS ENUM (
@@ -69,10 +69,10 @@ CREATE TYPE public.blood_type AS ENUM (
 );
 
 
-ALTER TYPE public.blood_type OWNER TO myuser;
+ALTER TYPE public.blood_type OWNER TO 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6;
 
 --
--- Name: user_role; Type: TYPE; Schema: public; Owner: myuser
+-- Name: user_role; Type: TYPE; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE TYPE public.user_role AS ENUM (
@@ -83,14 +83,14 @@ CREATE TYPE public.user_role AS ENUM (
 );
 
 
-ALTER TYPE public.user_role OWNER TO myuser;
+ALTER TYPE public.user_role OWNER TO 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6;
 
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
 --
--- Name: Attendance; Type: TABLE; Schema: public; Owner: myuser
+-- Name: Attendance; Type: TABLE; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE TABLE public."Attendance" (
@@ -103,10 +103,10 @@ CREATE TABLE public."Attendance" (
 );
 
 
-ALTER TABLE public."Attendance" OWNER TO myuser;
+ALTER TABLE public."Attendance" OWNER TO 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6;
 
 --
--- Name: Leave; Type: TABLE; Schema: public; Owner: myuser
+-- Name: Leave; Type: TABLE; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE TABLE public."Leave" (
@@ -118,10 +118,10 @@ CREATE TABLE public."Leave" (
 );
 
 
-ALTER TABLE public."Leave" OWNER TO myuser;
+ALTER TABLE public."Leave" OWNER TO 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6;
 
 --
--- Name: _ClubMembers; Type: TABLE; Schema: public; Owner: myuser
+-- Name: _ClubMembers; Type: TABLE; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE TABLE public."_ClubMembers" (
@@ -130,10 +130,10 @@ CREATE TABLE public."_ClubMembers" (
 );
 
 
-ALTER TABLE public."_ClubMembers" OWNER TO myuser;
+ALTER TABLE public."_ClubMembers" OWNER TO 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6;
 
 --
--- Name: admission_forms; Type: TABLE; Schema: public; Owner: myuser
+-- Name: admission_forms; Type: TABLE; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE TABLE public.admission_forms (
@@ -148,10 +148,10 @@ CREATE TABLE public.admission_forms (
 );
 
 
-ALTER TABLE public.admission_forms OWNER TO myuser;
+ALTER TABLE public.admission_forms OWNER TO 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6;
 
 --
--- Name: admissions; Type: TABLE; Schema: public; Owner: myuser
+-- Name: admissions; Type: TABLE; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE TABLE public.admissions (
@@ -212,10 +212,10 @@ CREATE TABLE public.admissions (
 );
 
 
-ALTER TABLE public.admissions OWNER TO myuser;
+ALTER TABLE public.admissions OWNER TO 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6;
 
 --
--- Name: announcements; Type: TABLE; Schema: public; Owner: myuser
+-- Name: announcements; Type: TABLE; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE TABLE public.announcements (
@@ -228,10 +228,10 @@ CREATE TABLE public.announcements (
 );
 
 
-ALTER TABLE public.announcements OWNER TO myuser;
+ALTER TABLE public.announcements OWNER TO 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6;
 
 --
--- Name: clubs; Type: TABLE; Schema: public; Owner: myuser
+-- Name: clubs; Type: TABLE; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE TABLE public.clubs (
@@ -246,10 +246,10 @@ CREATE TABLE public.clubs (
 );
 
 
-ALTER TABLE public.clubs OWNER TO myuser;
+ALTER TABLE public.clubs OWNER TO 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6;
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: myuser
+-- Name: users; Type: TABLE; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE TABLE public.users (
@@ -270,10 +270,10 @@ CREATE TABLE public.users (
 );
 
 
-ALTER TABLE public.users OWNER TO myuser;
+ALTER TABLE public.users OWNER TO 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6;
 
 --
--- Data for Name: Attendance; Type: TABLE DATA; Schema: public; Owner: myuser
+-- Data for Name: Attendance; Type: TABLE DATA; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 COPY public."Attendance" (id, "userId", period, "studedAt", "createdAt", "updatedAt") FROM stdin;
@@ -363,7 +363,7 @@ cmda4bykr001tq7ukj6qysb7g	cmd9tflq7001tq7u88dneripv	{"null",present,absent,leave
 
 
 --
--- Data for Name: Leave; Type: TABLE DATA; Schema: public; Owner: myuser
+-- Data for Name: Leave; Type: TABLE DATA; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 COPY public."Leave" (id, "userId", reason, "createdAt", "updatedAt") FROM stdin;
@@ -374,7 +374,7 @@ cmdafxcj00000q7zwbjh00b7p	cmd9rlgle0000q7u8p9l5e4n7	To find your public IP addre
 
 
 --
--- Data for Name: _ClubMembers; Type: TABLE DATA; Schema: public; Owner: myuser
+-- Data for Name: _ClubMembers; Type: TABLE DATA; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 COPY public."_ClubMembers" ("A", "B") FROM stdin;
@@ -383,7 +383,7 @@ cmd9vuefz0001q7rkr6kb4rwx	cmd9rlgle0000q7u8p9l5e4n7
 
 
 --
--- Data for Name: admission_forms; Type: TABLE DATA; Schema: public; Owner: myuser
+-- Data for Name: admission_forms; Type: TABLE DATA; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 COPY public.admission_forms (id, type, round, class, "openedAt", "closedAt", "createdAt", "updatedAt") FROM stdin;
@@ -402,7 +402,7 @@ cmd9x2whe0000q7lgwwknbh38	NEW	QOUTA	4	2025-07-21 17:00:00	2025-07-30 17:00:00	20
 
 
 --
--- Data for Name: admissions; Type: TABLE DATA; Schema: public; Owner: myuser
+-- Data for Name: admissions; Type: TABLE DATA; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 COPY public.admissions (id, no, "studentId", "academicYear", type, class, round, plan, "reservePlan", "serviceZone", provenance, prefix, "firstName", "lastName", "cardId", "birthDate", ethnicity, nationality, religion, "bloodType", phone, talent, "houseNo", "villageNo", village, road, alley, "subDistrict", district, province, zipcode, "schoolName", grade, "subDistrictOld", "districtOld", "provinceOld", "zipcodeOld", "fatherName", "fatherJob", "fatherPhone", "motherName", "motherJob", "motherPhone", "guardianName", "guardianJob", "guardianPhone", "guardianRelation", status, "createdAt", "updatedAt", "houseRecord", "studentPhoto", "studentRecord", pdf) FROM stdin;
@@ -410,7 +410,7 @@ COPY public.admissions (id, no, "studentId", "academicYear", type, class, round,
 
 
 --
--- Data for Name: announcements; Type: TABLE DATA; Schema: public; Owner: myuser
+-- Data for Name: announcements; Type: TABLE DATA; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 COPY public.announcements (id, description, "isSummarize", "occurredAt", "createdAt", "updatedAt") FROM stdin;
@@ -420,7 +420,7 @@ cmdkf3dre0000q73kghkzvukm	ข้อผิดพลาด CredentialsSignin จ�
 
 
 --
--- Data for Name: clubs; Type: TABLE DATA; Schema: public; Owner: myuser
+-- Data for Name: clubs; Type: TABLE DATA; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 COPY public.clubs (id, name, description, status, "userId", "maxMember", "createdAt", "updatedAt") FROM stdin;
@@ -429,7 +429,7 @@ cmd9vuefz0001q7rkr6kb4rwx	ICT	ใครกำลังมองหาคอร�
 
 
 --
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: myuser
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 COPY public.users (id, prefix, "firstName", "lastName", email, password, "behaviorPoint", level, room, no, role, verified, "createdAt", "updatedAt") FROM stdin;
@@ -509,7 +509,7 @@ cmd9tflq7001yq7u8u3za2gzw	นาย	เด็กชาย	สมศักดิ�
 
 
 --
--- Name: Attendance Attendance_pkey; Type: CONSTRAINT; Schema: public; Owner: myuser
+-- Name: Attendance Attendance_pkey; Type: CONSTRAINT; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 ALTER TABLE ONLY public."Attendance"
@@ -517,7 +517,7 @@ ALTER TABLE ONLY public."Attendance"
 
 
 --
--- Name: Leave Leave_pkey; Type: CONSTRAINT; Schema: public; Owner: myuser
+-- Name: Leave Leave_pkey; Type: CONSTRAINT; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 ALTER TABLE ONLY public."Leave"
@@ -525,7 +525,7 @@ ALTER TABLE ONLY public."Leave"
 
 
 --
--- Name: _ClubMembers _ClubMembers_AB_pkey; Type: CONSTRAINT; Schema: public; Owner: myuser
+-- Name: _ClubMembers _ClubMembers_AB_pkey; Type: CONSTRAINT; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 ALTER TABLE ONLY public."_ClubMembers"
@@ -533,7 +533,7 @@ ALTER TABLE ONLY public."_ClubMembers"
 
 
 --
--- Name: admission_forms admission_forms_pkey; Type: CONSTRAINT; Schema: public; Owner: myuser
+-- Name: admission_forms admission_forms_pkey; Type: CONSTRAINT; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 ALTER TABLE ONLY public.admission_forms
@@ -541,7 +541,7 @@ ALTER TABLE ONLY public.admission_forms
 
 
 --
--- Name: admissions admissions_pkey; Type: CONSTRAINT; Schema: public; Owner: myuser
+-- Name: admissions admissions_pkey; Type: CONSTRAINT; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 ALTER TABLE ONLY public.admissions
@@ -549,7 +549,7 @@ ALTER TABLE ONLY public.admissions
 
 
 --
--- Name: announcements announcements_pkey; Type: CONSTRAINT; Schema: public; Owner: myuser
+-- Name: announcements announcements_pkey; Type: CONSTRAINT; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 ALTER TABLE ONLY public.announcements
@@ -557,7 +557,7 @@ ALTER TABLE ONLY public.announcements
 
 
 --
--- Name: clubs clubs_pkey; Type: CONSTRAINT; Schema: public; Owner: myuser
+-- Name: clubs clubs_pkey; Type: CONSTRAINT; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 ALTER TABLE ONLY public.clubs
@@ -565,7 +565,7 @@ ALTER TABLE ONLY public.clubs
 
 
 --
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: myuser
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 ALTER TABLE ONLY public.users
@@ -573,42 +573,42 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: _ClubMembers_B_index; Type: INDEX; Schema: public; Owner: myuser
+-- Name: _ClubMembers_B_index; Type: INDEX; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE INDEX "_ClubMembers_B_index" ON public."_ClubMembers" USING btree ("B");
 
 
 --
--- Name: admissions_cardId_key; Type: INDEX; Schema: public; Owner: myuser
+-- Name: admissions_cardId_key; Type: INDEX; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE UNIQUE INDEX "admissions_cardId_key" ON public.admissions USING btree ("cardId");
 
 
 --
--- Name: admissions_studentId_key; Type: INDEX; Schema: public; Owner: myuser
+-- Name: admissions_studentId_key; Type: INDEX; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE UNIQUE INDEX "admissions_studentId_key" ON public.admissions USING btree ("studentId");
 
 
 --
--- Name: clubs_userId_key; Type: INDEX; Schema: public; Owner: myuser
+-- Name: clubs_userId_key; Type: INDEX; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE UNIQUE INDEX "clubs_userId_key" ON public.clubs USING btree ("userId");
 
 
 --
--- Name: users_email_key; Type: INDEX; Schema: public; Owner: myuser
+-- Name: users_email_key; Type: INDEX; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 CREATE UNIQUE INDEX users_email_key ON public.users USING btree (email);
 
 
 --
--- Name: Attendance Attendance_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: myuser
+-- Name: Attendance Attendance_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 ALTER TABLE ONLY public."Attendance"
@@ -616,7 +616,7 @@ ALTER TABLE ONLY public."Attendance"
 
 
 --
--- Name: Leave Leave_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: myuser
+-- Name: Leave Leave_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 ALTER TABLE ONLY public."Leave"
@@ -624,7 +624,7 @@ ALTER TABLE ONLY public."Leave"
 
 
 --
--- Name: _ClubMembers _ClubMembers_A_fkey; Type: FK CONSTRAINT; Schema: public; Owner: myuser
+-- Name: _ClubMembers _ClubMembers_A_fkey; Type: FK CONSTRAINT; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 ALTER TABLE ONLY public."_ClubMembers"
@@ -632,7 +632,7 @@ ALTER TABLE ONLY public."_ClubMembers"
 
 
 --
--- Name: _ClubMembers _ClubMembers_B_fkey; Type: FK CONSTRAINT; Schema: public; Owner: myuser
+-- Name: _ClubMembers _ClubMembers_B_fkey; Type: FK CONSTRAINT; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 ALTER TABLE ONLY public."_ClubMembers"
@@ -640,7 +640,7 @@ ALTER TABLE ONLY public."_ClubMembers"
 
 
 --
--- Name: clubs clubs_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: myuser
+-- Name: clubs clubs_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: 41a6a56af6ab829608770f04e121cb02c4b80cfd1def62711d1e0b4b4e9f5df6
 --
 
 ALTER TABLE ONLY public.clubs

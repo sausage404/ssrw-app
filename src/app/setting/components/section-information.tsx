@@ -104,12 +104,13 @@ export default ({ user }: Readonly<{ user: User }>) => {
                         ) : state.success ? (
                             <p className="text-green-500 text-sm">{state.success}</p>
                         ) : (
-                            <p className="text-muted-foreground text-sm">กรุณากรอกชื่อจริงและนามสกุลของคุณ เนื่องจากจะใช้ชื่อและนามสกุลนี้</p>
+                            // กรุณากรอก
+                            <p className="text-muted-foreground text-sm">ชื่อจริงและนามสกุลของคุณ เนื่องจากจะใช้ชื่อและนามสกุลนี้</p>
                         )}
-                        <Button size="sm" onClick={(e) => {
+                        {/* <Button size="sm" onClick={(e) => {
                             e.preventDefault();
                             onSubmit(form.watch());
-                        }}>บันทึก</Button>
+                        }}>บันทึก</Button> */}
                     </div>
                 </div>
             </form>

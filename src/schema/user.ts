@@ -6,7 +6,7 @@ const role = z.enum(['ADMIN', 'TEACHER', 'STUDENT', 'SUPERVISOR'], { required_er
 
 export default {
     credentials: z.object({
-        email: z.string().email(),
+        prefix: z.string().min(1),
         password: z.string().min(8).max(50),
         verified: z.literal(true, { invalid_type_error: 'ผู้ใช้ยังไม่ได้รับการยืนยัน' })
     }),

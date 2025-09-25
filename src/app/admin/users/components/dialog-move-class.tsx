@@ -11,6 +11,7 @@ import React from "react"
 import { toast } from "sonner"
 import { updateClassInUser } from "@/data/user"
 import { Input } from "@/components/ui/input"
+import { ArrowUpDown } from "lucide-react"
 
 export default () => {
 
@@ -52,7 +53,7 @@ export default () => {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline">ย้ายระดับผู้ใช้งาน</Button>
+                <Button size="icon" variant="outline"><ArrowUpDown /></Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

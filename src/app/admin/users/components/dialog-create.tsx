@@ -18,6 +18,7 @@ import { toast } from "sonner"
 import DialogForm from "./dialog-form"
 import { createUser } from "@/data/user"
 import { useRouter } from "next/navigation"
+import { UserPlus } from "lucide-react"
 
 export default () => {
 
@@ -60,7 +61,7 @@ export default () => {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button>เพิ่มผู้ใช้งาน</Button>
+           <Button size='icon'><UserPlus /></Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

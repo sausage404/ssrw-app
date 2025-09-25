@@ -22,7 +22,7 @@ export default ({ error }: Readonly<{ error: string | null }>) => {
         resolver: zodResolver(user.credentials),
         disabled: isPending,
         defaultValues: {
-            email: "",
+            prefix: "",
             password: "",
             verified: true
         },
@@ -32,7 +32,7 @@ export default ({ error }: Readonly<{ error: string | null }>) => {
         startTransition(async () => {
             if (data.verified) {
                 await signIn("credentials", {
-                    email: data.email,
+                    prefix: data.prefix,
                     password: data.password
                 });
             } else {
@@ -52,12 +52,12 @@ export default ({ error }: Readonly<{ error: string | null }>) => {
                     {error && <p className="text-red-500 text-center">{new AuthError(error).message}</p>}
                     <FormField
                         control={form.control}
-                        name="email"
+                        name="prefix"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Email</FormLabel>
+                                <FormLabel>เลขประจำตัวนักเรียน (หรือ email ของครูไม่ต้องใส่ @ssrw.ac.th)</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="example@gmail.com" {...field} />
+                                    <Input {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -68,7 +68,7 @@ export default ({ error }: Readonly<{ error: string | null }>) => {
                         name="password"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Password</FormLabel>
+                                <FormLabel>รหัสผ่าน</FormLabel>
                                 <FormControl>
                                     <InputPassword {...field} />
                                 </FormControl>

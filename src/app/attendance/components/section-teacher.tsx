@@ -141,7 +141,7 @@ export default () => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {students.length > 0 && checks.length > 0 ? students.map((user, index) => (
+                        {students.length > 0 && checks.length > 0 ? students.sort((a, b) => a.no - b.no).map((user, index) => (
                             <TableRow className="divide-x" key={index}>
                                 <TableCell className="text-center">{user.no}</TableCell>
                                 <TableCell>{getFullName(user)}</TableCell>

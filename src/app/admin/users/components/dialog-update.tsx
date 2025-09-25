@@ -18,6 +18,7 @@ import { DialogData } from "@/hooks/use-dialog-data"
 import { updateUser } from "@/data/user"
 import { User } from "@prisma/client"
 import { useRouter } from "next/navigation"
+import bcrypt from "bcryptjs"
 
 export default (dialog: DialogData<User>) => {
 
@@ -27,7 +28,7 @@ export default (dialog: DialogData<User>) => {
         resolver: zodResolver(user.user),
         defaultValues: {
             ...dialog.data,
-            password: "not changed"
+            password: "unchange"
         }
     })
 
@@ -35,9 +36,10 @@ export default (dialog: DialogData<User>) => {
         toast.promise(
             async () => {
                 let password;
-                if (value.password !== "not changed") {
-                    if (value.password.length > 8) {
-                        password = value.password;
+                if (value.password !== "unchange") {
+                    console.log(value.password.length);
+                    if (value.password.length > 7) {
+                        password = await bcrypt.hash(value.password, 10);
                     } else {
                         throw new Error("รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร");
                     }

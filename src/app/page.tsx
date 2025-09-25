@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { auth } from "@/lib/auth";
 
 export const metadata = {
-  title: "Home",
+  title: "Srisongrak Wittaya School",
 };
 
 export default async () => {
@@ -32,7 +32,7 @@ export default async () => {
       )}
     >
       <h3 className="flex gap-2 items-center text-xl font-semibold leading-tight tracking-tighter lg:leading-[1.5]">
-        <data.icon className="text-primary" />
+        <data.icon />
         {data.title}
       </h3>
       <p className="max-w-2xl text-sm font-light">
@@ -72,7 +72,7 @@ export default async () => {
               size="sm"
               asChild
             >
-              <Link href="/register">เกี่ยวกับโรงเรียน</Link>
+              <Link href="/admission">สมัครเรียน</Link>
             </Button>
           </div>
         </div>

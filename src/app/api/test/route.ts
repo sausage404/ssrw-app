@@ -1,18 +1,14 @@
 import { prisma } from "@/lib/prisma";
 
 export async function GET() {
-    const users = await prisma.user.findMany();
-
-    for (const user of users) {
-        await prisma.user.update({
-            where: {
-                id: user.id
-            },
-            data: {
-                level: Math.floor(Math.random() * 6) + 1
-            }
-        })
-    }
+    await prisma.user.updateMany({
+        where: {
+            password: "12345678"
+        },
+        data: {
+            password: "$2b$10$VtLWwDRrNbrw9q2anM.mOeqt.QL5jW2nFIF9RJiH24DxO2AuXPG4q"
+        }
+    })
 
     return new Response("Hello, Next.js!");
 }

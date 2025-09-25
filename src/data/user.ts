@@ -39,20 +39,40 @@ export const createUser = async (data: z.infer<typeof user.user>) => {
         if (!validatedData.success) {
             throw new Error(validatedData.error.message);
         }
-        await prisma.user.create({ data: validatedData.data });
+        await prisma.user.create({
+            data: {
+                ...validatedData.data,
+                password: await bcrypt.hash(validatedData.data.password, 10)
+            }
+        });
     } catch (error) {
         console.error(error);
         throw new Error("Failed to create user");
     }
 }
 
+export const createUsers = async (data: Prisma.UserCreateInput[]) => {
+    try {
+        const validatedData = data.map(item => user.user.safeParse(item));
+        if (!validatedData.every(item => item.success)) {
+            throw new Error(validatedData.find(item => !item.success)?.error.message);
+        }
+
+        await prisma.user.createMany({
+            data: validatedData.map(item => ({
+                ...item.data,
+                password: bcrypt.hashSync(item.data.password, 10)
+            }))
+        });
+    } catch (error) {
+        console.error(error);
+        throw new Error("Failed to create users");
+    }
+}
+
 export const updateUser = async (id: string, data: Prisma.UserUpdateInput) => {
     try {
-        const validatedData = user.user.safeParse(data);
-        if (!validatedData.success) {
-            throw new Error(validatedData.error.message);
-        }
-        await prisma.user.update({ where: { id }, data: validatedData.data });
+        await prisma.user.update({ where: { id }, data });
     } catch (error) {
         console.error(error);
         throw new Error("Failed to update user");
