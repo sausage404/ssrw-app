@@ -87,21 +87,13 @@ export async function hasAttendance(level: number, room: number, date: Date) {
 
 export async function createAttendance(data: { id: string, status: string[] }[], date: Date) {
     try {
-        await Promise.all(
-            data.map(attendance =>
-                prisma.attendance.create({
-                    data: {
-                        User: {
-                            connect: {
-                                id: attendance.id
-                            }
-                        },
-                        period: attendance.status,
-                        studedAt: date
-                    }
-                })
-            )
-        )
+        await prisma.attendance.createMany({
+            data: data.map(attendance => ({
+                userId: attendance.id,
+                period: attendance.status,
+                studedAt: date
+            }))
+        })
         return true;
     } catch (error) {
         console.error(error);
