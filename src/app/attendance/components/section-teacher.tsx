@@ -96,7 +96,7 @@ export default () => {
                     <div className="border-b border-dashed gap-8 text-sm p-8 sm:grid-cols-2 md:grid-cols-3 sm:grid hidden">
                         {leaves.map((leave, i) => (
                             <div key={i} className="grid gap-2">
-                                <p className="font-semibold">{leave.createdAt.toLocaleDateString("th-TH", {
+                                <p className="font-semibold">ลาโดย {leave.User.prefix}{leave.User.firstName} {leave.User.lastName} {leave.createdAt.toLocaleDateString("th-TH", {
                                     day: "numeric",
                                     month: "long",
                                     year: "numeric"
