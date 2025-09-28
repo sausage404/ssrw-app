@@ -2,7 +2,7 @@
 
 import React from "react"
 import InputUsersWithClass from "../components/input-users-with-class"
-import { Leave, Prisma, User } from "@prisma/client"
+import { Prisma, User } from "@prisma/client"
 import { ThaiCalendarPopover } from "@/components/module/thai-calendar-popover"
 import { Label } from "@/components/ui/label"
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table"
