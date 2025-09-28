@@ -29,7 +29,12 @@ export default ({
                         present: "มา",
                         absent: "ขาด",
                         leave: "ลา"
-                    }[checks.find(s => s.status.length > 0)?.status[0] || "null"]} />
+                    }[
+                        checks.every(c => c.status[col] === "null") ? "null" :
+                            checks.every(c => c.status[col] === "present") ? "present" :
+                                checks.every(c => c.status[col] === "absent") ? "absent" :
+                                    checks.every(c => c.status[col] === "leave") ? "leave" : "null"
+                    ]} />
                 </SelectTrigger>
                 <SelectContent>
                     <SelectItem value="null">ไม่พบ</SelectItem>
