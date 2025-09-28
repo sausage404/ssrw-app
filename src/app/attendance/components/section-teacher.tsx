@@ -34,14 +34,12 @@ export default () => {
         (async () => {
             if (students.length === 0) return
             const attendanceList = await getAttendance(students[0].level, students[0].room, date)
-            if (attendanceList.length > 0) {
-                setChecks(attendanceList.map(attendance => ({
-                    id: attendance.userId,
-                    status: attendance.period
-                })))
-            } else {
-                setChecks(students.map(user => ({ id: user.id, status: Array.from({ length: 10 }).map(() => 'null') })))
-            }
+            setChecks(students.map(user => ({
+                id: user.id, status: Array.from({ length: 10 }).map((u) => {
+                    const attendance = attendanceList.find(attendance => attendance.userId === user.id)
+                    return attendance ? attendance.period[0] : "null"
+                })
+            })))
             const leaves = await getLeavesByClass(students[0].level, students[0].room, date);
             console.log(leaves);
             setLeaves(leaves);
