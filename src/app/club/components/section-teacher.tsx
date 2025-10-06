@@ -51,11 +51,7 @@ export default ({ user }: Readonly<{ user: User }>) => {
                 async () => {
                     await createClub({
                         ...value,
-                        owner: {
-                            connect: {
-                                id: user.id
-                            }
-                        }
+                        userId: user.id
                     });
                 },
                 {

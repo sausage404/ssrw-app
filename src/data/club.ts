@@ -48,7 +48,7 @@ export async function updateClub(id: string, data: Prisma.ClubUpdateInput) {
     }
 }
 
-export async function createClub(data: Prisma.ClubCreateInput) {
+export async function createClub(data: Prisma.ClubUncheckedCreateInput) {
     try {
         await prisma.club.create({ data });
     } catch (error) {
